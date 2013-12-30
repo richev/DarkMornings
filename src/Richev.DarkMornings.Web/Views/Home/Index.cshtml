@@ -1,23 +1,25 @@
-﻿@model Richev.DarkMornings.Web.Models.CommuteInfo
+﻿@model Richev.DarkMornings.Web.Models.CommuteInfoViewModel
+
+<p class="question">Ever wondered how much longer you'll be commuting in the dark?</p>
 
 @Html.ValidationSummary()
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
 {
-    <p class="question">Ever wondered how much longer you'll be commuting in the dark?</p>
-    @Html.HiddenFor(model => model.Latitude)
-    @Html.HiddenFor(model => model.Longitude)
+    @Html.HiddenFor(model => model.la)
+    @Html.HiddenFor(model => model.lo)
+    @Html.HiddenFor(model => model.wd)
     <h4>Timings</h4>
     <div class="with-icon">
         <i class="fa fa-clock-o"></i><span>I leave for work at</span>
         <span class="nowrap">
-            @Html.DropDownListFor(model => model.MorningCommute.Hour, UIHelpers.GetHours(Model.MorningCommute.Hour))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.MorningCommute.Minute, UIHelpers.GetMinutes(Model.MorningCommute.Minute))
+            @Html.DropDownListFor(model => model.tw.h, UIHelpers.GetHours(Model.tw.h))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.tw.m, UIHelpers.GetMinutes(Model.tw.m))
         </span>
     </div>
     <div class="with-icon">
         <i class="fa fa-clock-o"></i><span>I get home from work at</span>
         <span class="nowrap">
-            @Html.DropDownListFor(model => model.EveningCommute.Hour, UIHelpers.GetHours(Model.EveningCommute.Hour))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.EveningCommute.Minute, UIHelpers.GetMinutes(Model.EveningCommute.Minute))
+            @Html.DropDownListFor(model => model.fw.h, UIHelpers.GetHours(Model.fw.m))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.fw.m, UIHelpers.GetMinutes(Model.fw.m))
         </span>
     </div>
     <h4>Workdays</h4>
@@ -37,16 +39,16 @@
     </div>
 }
 
-@if (Model.MorningCommute.Daylights != null && Model.EveningCommute.Daylights != null)
+@if (Model.tw.Daylights != null && Model.fw.Daylights != null)
 {
     <hr />
     <h3>You have...</h3>
     <div class="results journey with-icon">
-        @UIHelpers.GetJourneyText(Model.MorningCommute.Daylights)
+        @UIHelpers.GetJourneyText(Model.tw.Daylights)
     </div>
     <hr class="and" />
     <div class="results journey with-icon">
-        @UIHelpers.GetJourneyText(Model.EveningCommute.Daylights)
+        @UIHelpers.GetJourneyText(Model.fw.Daylights)
     </div>
     <p class="ignoring">(excluding Bank and national holidays...)</p>
     <div class="share">
@@ -59,13 +61,29 @@
         var latitude = position.coords.latitude;
         var longitude = position.coords.longitude;
 
-        $("#Latitude").val(latitude);
-        $("#Longitude").val(longitude);
+        $("#la").val(latitude.toFixed(2));
+        $("#lo").val(longitude.toFixed(2));
     }
+
+    var setWorkingDaysString = function () {
+        var wd = (($("#WorkingDays_Sunday").is(':checked') ? "x" : "o") +
+            ($("#WorkingDays_Monday").is(':checked') ? "x" : "o") +
+            ($("#WorkingDays_Tuesday").is(':checked') ? "x" : "o") +
+            ($("#WorkingDays_Wednesday").is(':checked') ? "x" : "o") +
+            ($("#WorkingDays_Thursday").is(':checked') ? "x" : "o") +
+            ($("#WorkingDays_Friday").is(':checked') ? "x" : "o") +
+            ($("#WorkingDays_Saturday").is(':checked') ? "x" : "o"));
+
+        $("#wd").val(wd);
+    };
 
     document.ready = function() {
         if (Modernizr.geolocation) {
             navigator.geolocation.getCurrentPosition(storePosition);
         }
+
+        $("input[type=checkbox]").change(setWorkingDaysString);
+
+        setWorkingDaysString();
     };
 </script>

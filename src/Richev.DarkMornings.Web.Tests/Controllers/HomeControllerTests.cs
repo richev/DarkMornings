@@ -34,7 +34,7 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
         [Test]
         public void IndexReturnsLocationErrorWhenLocationNotFound()
         {
-            var model = new CommuteInfo();
+            var model = new CommuteInfoModel { tw = { h = 7 } };
 
             _homeController.Index(model);
 
@@ -44,7 +44,7 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
         [Test]
         public void IndexReturnsWorkingDaysErrorWhenNoWorkingDaysSet()
         {
-            var model = new CommuteInfo();
+            var model = new CommuteInfoModel { tw = { h = 7 } };
 
             _homeController.Index(model);
 
@@ -59,16 +59,16 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
 
             _locationServiceMock.Setup(m => m.GetLocationFromIPAddress(null, out latitude, out longitude));
 
-            var model = new CommuteInfo { WorkingDays = { Monday = true } };
+            var model = new CommuteInfoModel { tw = { h = 7 }, wd = "oxoooooo" };
 
             var actionResult = _homeController.Index(model);
 
-            var returnedModel = (CommuteInfo)((ViewResult)actionResult).Model;
+            var returnedModel = (CommuteInfoModel)((ViewResult)actionResult).Model;
 
             _locationServiceMock.Verify(s => s.GetLocationFromIPAddress(null, out latitude, out longitude), Times.Once());
             Assert.IsTrue(_homeController.ModelState.IsValid);
-            Assert.AreEqual(latitude, returnedModel.Latitude);
-            Assert.AreEqual(longitude, returnedModel.Longitude);
+            Assert.AreEqual(latitude, returnedModel.la);
+            Assert.AreEqual(longitude, returnedModel.lo);
         }
 
         [Test]
@@ -79,16 +79,16 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
 
             _locationServiceMock.Setup(m => m.GetLocationFromIPAddress(null, out latitude, out longitude));
 
-            var model = new CommuteInfo { WorkingDays = { Monday = true }, Latitude = latitude, Longitude = longitude };
+            var model = new CommuteInfoModel { wd = "oxoooooo", la = latitude, lo = longitude };
 
             var actionResult = _homeController.Index(model);
 
-            var returnedModel = (CommuteInfo)((ViewResult)actionResult).Model;
+            var returnedModel = (CommuteInfoModel)((ViewResult)actionResult).Model;
 
             _locationServiceMock.Verify(s => s.GetLocationFromIPAddress(null, out latitude, out longitude), Times.Never());
             Assert.IsTrue(_homeController.ModelState.IsValid);
-            Assert.AreEqual(latitude, returnedModel.Latitude);
-            Assert.AreEqual(longitude, returnedModel.Longitude);
+            Assert.AreEqual(latitude, returnedModel.la);
+            Assert.AreEqual(longitude, returnedModel.lo);
         }
     }
 }

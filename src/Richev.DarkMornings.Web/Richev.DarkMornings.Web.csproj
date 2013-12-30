@@ -142,7 +142,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\CommuteInfo.cs" />
+    <Compile Include="Models\CommuteInfoModel.cs" />
+    <Compile Include="Models\CommuteInfoViewModel.cs" />
     <Compile Include="Models\CommuteTime.cs" />
     <Compile Include="Models\DaylightInfo.cs" />
     <Compile Include="Models\WorkingDays.cs" />

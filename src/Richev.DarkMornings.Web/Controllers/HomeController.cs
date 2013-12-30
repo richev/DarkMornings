@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Richev.DarkMornings.Web.Models;
 using Richev.DarkMornings.Web.Services;
-using CommuteInfo = Richev.DarkMornings.Web.Models.CommuteInfo;
+using CommuteInfo = Richev.DarkMornings.Web.Models.CommuteInfoModel;
 
 namespace Richev.DarkMornings.Web.Controllers
 {
@@ -16,38 +17,46 @@ namespace Richev.DarkMornings.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index([Bind(Exclude = "WorkingDays")] CommuteInfo model)
         {
-            var model = new CommuteInfo
-            { 
-                MorningCommute = { Hour = 7 },
-                EveningCommute = { Hour = 18, Minute = 30 },
-                WorkingDays = { Monday = true, Tuesday = true, Wednesday = true, Thursday = true, Friday = true }
-            };
+            CommuteInfoViewModel viewModel;
 
-            return View(model);
-        }
+            if (model == null || model.HasDefaultValues())
+            {
+                viewModel = new CommuteInfoViewModel
+                {
+                    tw = { h = 7 },
+                    fw = { h = 18, m = 30 },
+                    WorkingDays = { Monday = true, Tuesday = true, Wednesday = true, Thursday = true, Friday = true }
+                };
 
-        [HttpPost]
-        public ActionResult Index(CommuteInfo model)
-        {
-            if (!model.WorkingDays.ToArray().Where(d => d).Any())
+                return View(viewModel);
+            }
+
+            viewModel = new CommuteInfoViewModel();
+
+            if (!model.wd.ToArray().Where(d => d == 'x').Any())
             {
                 ModelState.AddModelError("WorkingDays", "Please select at least one day of the week.");
             }
 
-            if (!model.Latitude.HasValue || !model.Longitude.HasValue)
+            if (!model.la.HasValue || !model.lo.HasValue)
             {
                 double? latitude;
                 double? longitude;
 
                 _locationService.GetLocationFromIPAddress(Request.UserHostAddress, out latitude, out longitude);
 
-                model.Latitude = latitude;
-                model.Longitude = longitude;
+                viewModel.la = latitude;
+                viewModel.lo = longitude;
+            }
+            else
+            {
+                viewModel.la = model.la;
+                viewModel.lo = model.lo;
             }
 
-            if (!model.Latitude.HasValue || !model.Longitude.HasValue)
+            if (!viewModel.la.HasValue || !viewModel.lo.HasValue)
             {
                 ModelState.AddModelError("Location", "Sorry, we couldn't figure out your location.");
             }
@@ -56,16 +65,17 @@ namespace Richev.DarkMornings.Web.Controllers
             {
                 var sunHunter = new Core.DaylightHunter();
 
-                var morningCommute = DateTime.Now.Date.AddHours(model.MorningCommute.Hour).AddMinutes(model.MorningCommute.Minute);
-                var eveningCommute = DateTime.Now.Date.AddHours(model.EveningCommute.Hour).AddMinutes(model.EveningCommute.Minute);
+                var morningCommute = DateTime.Now.Date.AddHours(model.tw.h).AddMinutes(model.tw.m);
+                var eveningCommute = DateTime.Now.Date.AddHours(model.fw.h).AddMinutes(model.fw.m);
 
-                var commuteInfo = sunHunter.GetDaylight(model.Latitude.Value, model.Longitude.Value, morningCommute, eveningCommute);
+                var commuteInfo = sunHunter.GetDaylight(viewModel.la.Value, viewModel.lo.Value, morningCommute, eveningCommute);
 
-                model.MorningCommute.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.OutboundCommute, Commute.Outbound, model.WorkingDays);
-                model.EveningCommute.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.ReturnCommute, Commute.Return, model.WorkingDays);
+                viewModel.WorkingDays = Builders.BuildWorkingDays(model.wd);
+                viewModel.tw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.OutboundCommute, Commute.Outbound, viewModel.WorkingDays);
+                viewModel.fw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.ReturnCommute, Commute.Return, viewModel.WorkingDays);
             }
 
-            return View(model);
+            return View(viewModel);
         }
 
         [HttpGet]

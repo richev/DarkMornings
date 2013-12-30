@@ -54,5 +54,23 @@ namespace Richev.DarkMornings.Web
                 NumberOfDaysToTransition = daysToTransition
             };
         }
+
+        public static WorkingDays BuildWorkingDays(string w)
+        {
+            var workingDays = new WorkingDays();
+
+            if (w.Length == 7)
+            {
+                workingDays.Sunday = w[0] == 'x';
+                workingDays.Monday = w[1] == 'x';
+                workingDays.Tuesday = w[2] == 'x';
+                workingDays.Wednesday = w[3] == 'x';
+                workingDays.Thursday = w[4] == 'x';
+                workingDays.Friday = w[5] == 'x';
+                workingDays.Saturday = w[6] == 'x';
+            }
+
+            return workingDays;
+        }
     }
 }
