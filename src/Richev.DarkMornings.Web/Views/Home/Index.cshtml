@@ -9,15 +9,13 @@
     <div>
         I leave for work at
         <span class="nowrap">
-            @Html.DropDownListFor(model => model.MorningCommute.Hour, UIHelpers.GetHours(Model.MorningCommute.Hour)) :
-            @Html.DropDownListFor(model => model.MorningCommute.Minute, UIHelpers.GetMinutes(Model.MorningCommute.Minute))
+            @Html.DropDownListFor(model => model.MorningCommute.Hour, UIHelpers.GetHours(Model.MorningCommute.Hour))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.MorningCommute.Minute, UIHelpers.GetMinutes(Model.MorningCommute.Minute))
         </span>
     </div>
     <div>
         I get home from work at
         <span class="nowrap">
-            @Html.DropDownListFor(model => model.EveningCommute.Hour, UIHelpers.GetHours(Model.EveningCommute.Hour)) :
-            @Html.DropDownListFor(model => model.EveningCommute.Minute, UIHelpers.GetMinutes(Model.EveningCommute.Minute))
+            @Html.DropDownListFor(model => model.EveningCommute.Hour, UIHelpers.GetHours(Model.EveningCommute.Hour))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.EveningCommute.Minute, UIHelpers.GetMinutes(Model.EveningCommute.Minute))
         </span>
     </div>
     <div class="working-days">
@@ -31,18 +29,25 @@
         @Html.CheckBoxFor(model => model.WorkingDays.Sunday)@Html.LabelFor(model => model.WorkingDays.Sunday)
     </div>
     <div>
+        <hr />
         <button type="submit">Go</button>
     </div>
-    <i class="fa fa-sun-o"></i> 
-    <i class="fa fa-moon-o"></i> 
 }
 
 @if (Model.MorningCommute.Daylights != null && Model.EveningCommute.Daylights != null)
 {
     <hr />
-    @UIHelpers.GetJourneyText(Model.MorningCommute.Daylights)
-    @UIHelpers.GetJourneyText(Model.EveningCommute.Daylights)
-    <p>(ignoring Bank and national holidays...)</p>
+    <h3>You have...</h3>
+    <div class="results journey">
+        @UIHelpers.GetJourneyText(Model.MorningCommute.Daylights)
+    </div>
+    <div class="results and">
+        and
+    </div>
+    <div class="results journey">
+        @UIHelpers.GetJourneyText(Model.EveningCommute.Daylights)
+    </div>
+    <p class="ignoring">(excluding Bank and national holidays...)</p>
 }
 <script type="text/javascript">
     function storePosition(position) {

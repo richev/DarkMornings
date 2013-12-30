@@ -41,6 +41,14 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
+h3 {
+    font-weight: bold;
+}
+
+form > div {
+    margin-bottom: 20px;
+}
+
 input, select, .working-days label {
     border: 2px solid rgb(170, 170, 170);
 }
@@ -53,10 +61,18 @@ input, select, .working-days label, button {
 button {
     border-color: black;
     border-width: 3px;
+    font-weight: bold;
 }
 
 select {
     padding: 6px;
+    font-weight: bold;
+}
+
+.time-separator {
+    font-size: 30px;
+    line-height: 1;
+    padding: 0 4px;
 }
 
 .nowrap {
@@ -79,16 +95,17 @@ select {
 }
 
 .calendar {
+    display: block;
     background-color: rgb(238, 229, 187);
     border: 2px solid rgb(120, 115, 95);
     color: rgb(120, 115, 95);
     width: 150px;
+    height: 144px;
     border-radius: 16px;
     line-height:normal;
 }
 .calendar span {
     display: block;
-    text-align: center;
     padding: 8px 0;
 }
 .calendar .day {
@@ -103,4 +120,57 @@ select {
 }
 .calendar .month {
     padding-top: 0;
+}
+
+.until {
+    width: 160px;
+    padding-top: 48px;
+}
+
+.days-more {
+    display: block;
+    width: 250px;
+    height: 90px;
+    margin-top: 26px;
+    padding: 16px 0;
+    border-radius: 16px;
+    background-color: rgb(201, 170, 170);
+    position: relative;
+    line-height: 1;
+}
+.days-more span {
+    display: block;
+}
+.days-more .count {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+.days-more i {
+    color: rgb(236, 240, 0);
+    font-size: 40px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.results > span {
+    float: left;
+}
+.results {
+    clear: both;
+    text-align: center;
+    width: 560px;
+}
+.results.and {
+    background-color: white;
+    border-radius: 24px;
+    margin: 10px 0;
+}
+.results.journey {
+    height: 144px;
+}
+.ignoring {
+    font-size: 12px;
+    color: rgb(170, 170, 170);
+    margin: 20px 0 0 0;
 }

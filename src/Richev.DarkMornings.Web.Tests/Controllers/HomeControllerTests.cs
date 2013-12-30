@@ -52,7 +52,7 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
         }
 
         [Test]
-        public void IndexReturnsModelWithLocation()
+        public void IndexDoesNotCallLocationServiceIfLocationIsSet()
         {
             double? latitude = 10;
             double? longitude = 20;
@@ -65,6 +65,27 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
 
             var returnedModel = (CommuteInfo)((ViewResult)actionResult).Model;
 
+            _locationServiceMock.Verify(s => s.GetLocationFromIPAddress(null, out latitude, out longitude), Times.Once());
+            Assert.IsTrue(_homeController.ModelState.IsValid);
+            Assert.AreEqual(latitude, returnedModel.Latitude);
+            Assert.AreEqual(longitude, returnedModel.Longitude);
+        }
+
+        [Test]
+        public void IndexGetsLocationfromLocationServiceIfNotSet()
+        {
+            double? latitude = 10;
+            double? longitude = 20;
+
+            _locationServiceMock.Setup(m => m.GetLocationFromIPAddress(null, out latitude, out longitude));
+
+            var model = new CommuteInfo { WorkingDays = { Monday = true }, Latitude = latitude, Longitude = longitude };
+
+            var actionResult = _homeController.Index(model);
+
+            var returnedModel = (CommuteInfo)((ViewResult)actionResult).Model;
+
+            _locationServiceMock.Verify(s => s.GetLocationFromIPAddress(null, out latitude, out longitude), Times.Never());
             Assert.IsTrue(_homeController.ModelState.IsValid);
             Assert.AreEqual(latitude, returnedModel.Latitude);
             Assert.AreEqual(longitude, returnedModel.Longitude);

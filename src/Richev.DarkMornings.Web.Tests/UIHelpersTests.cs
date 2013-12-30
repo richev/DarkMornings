@@ -23,7 +23,7 @@ namespace Richev.DarkMornings.Web.Tests
 
             var journeyText = UIHelpers.GetJourneyText(_daylightInfo);
 
-            Assert.AreEqual("<p>You have <strong>10 more</strong> dark journeys to work, until <div class=\"calendar\"><span class=\"day\">Saturday</span> <span class=\"date\">1</span> <span class=\"month\">March</span></div></p>", journeyText.ToString());
+            Assert.AreEqual("<span class=\"days-more\"><span class=\"count\">10 more</span> dark journeys<i class=\"fa fa-moon-o\"></i> to work</span><span class=\"until\"><span>until</span></span><span class=\"calendar\"><span class=\"day\">Saturday</span> <span class=\"date\">1</span> <span class=\"month\">March</span></span>", journeyText.ToString());
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace Richev.DarkMornings.Web.Tests
 
             var journeyText = UIHelpers.GetJourneyText(_daylightInfo);
 
-            Assert.AreEqual("<p>Your journey to work is always in the <strong>light</strong>.</p>", journeyText.ToString());
+            Assert.AreEqual("<span>Your journey to work is always in the <strong>light <i class=\"fa fa-sun-o\"></i></strong></span>", journeyText.ToString());
         }
     }
 }
