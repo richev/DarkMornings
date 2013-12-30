@@ -16,8 +16,10 @@ namespace Richev.DarkMornings.Web.Controllers
             _locationService = locationService;
         }
 
+        // TODO: Exclude WorkingDays from form submission
+
         [HttpGet]
-        public ActionResult Index([Bind(Exclude = "WorkingDays")] CommuteInfo model)
+        public ActionResult Index(CommuteInfo model)
         {
             CommuteInfoViewModel viewModel;
 
@@ -61,6 +63,8 @@ namespace Richev.DarkMornings.Web.Controllers
                 ModelState.AddModelError("Location", "Sorry, we couldn't figure out your location.");
             }
 
+            viewModel.WorkingDays = Builders.BuildWorkingDays(model.wd);
+
             if (ModelState.IsValid)
             {
                 var sunHunter = new Core.DaylightHunter();
@@ -70,7 +74,6 @@ namespace Richev.DarkMornings.Web.Controllers
 
                 var commuteInfo = sunHunter.GetDaylight(viewModel.la.Value, viewModel.lo.Value, morningCommute, eveningCommute);
 
-                viewModel.WorkingDays = Builders.BuildWorkingDays(model.wd);
                 viewModel.tw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.OutboundCommute, Commute.Outbound, viewModel.WorkingDays);
                 viewModel.fw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.ReturnCommute, Commute.Return, viewModel.WorkingDays);
             }
