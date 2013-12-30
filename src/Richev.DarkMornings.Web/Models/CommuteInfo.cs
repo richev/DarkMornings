@@ -18,7 +18,5 @@
         public CommuteTime MorningCommute { get; set; }
 
         public CommuteTime EveningCommute { get; set; }
-
-        public string Message { get; set; }
     }
 }

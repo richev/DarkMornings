@@ -1,55 +1,49 @@
 ﻿@model Richev.DarkMornings.Web.Models.CommuteInfo
 
-<div class="jumbotron">
-    <h1>Dark Mornings</h1>
-    @using (Html.BeginForm())
-    {
-        @Html.HiddenFor(model => model.Latitude)
-        @Html.HiddenFor(model => model.Longitude)
-        <div>
-            I leave for work at
+@Html.ValidationSummary()
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.Latitude)
+    @Html.HiddenFor(model => model.Longitude)
+    <div>
+        I leave for work at
+        <span class="nowrap">
             @Html.DropDownListFor(model => model.MorningCommute.Hour, UIHelpers.GetHours(Model.MorningCommute.Hour)) :
             @Html.DropDownListFor(model => model.MorningCommute.Minute, UIHelpers.GetMinutes(Model.MorningCommute.Minute))
-        </div>
-        <div>
-            I get home from work at
+        </span>
+    </div>
+    <div>
+        I get home from work at
+        <span class="nowrap">
             @Html.DropDownListFor(model => model.EveningCommute.Hour, UIHelpers.GetHours(Model.EveningCommute.Hour)) :
             @Html.DropDownListFor(model => model.EveningCommute.Minute, UIHelpers.GetMinutes(Model.EveningCommute.Minute))
-        </div>
-        <div>
-            I work on the following days
-            @Html.CheckBoxFor(model => model.WorkingDays.Monday)
-            @Html.LabelFor(model => model.WorkingDays.Monday)
-            @Html.CheckBoxFor(model => model.WorkingDays.Tuesday)
-            @Html.LabelFor(model => model.WorkingDays.Tuesday)
-            @Html.CheckBoxFor(model => model.WorkingDays.Wednesday)
-            @Html.LabelFor(model => model.WorkingDays.Wednesday)
-            @Html.CheckBoxFor(model => model.WorkingDays.Thursday)
-            @Html.LabelFor(model => model.WorkingDays.Thursday)
-            @Html.CheckBoxFor(model => model.WorkingDays.Friday)
-            @Html.LabelFor(model => model.WorkingDays.Friday)
-            @Html.CheckBoxFor(model => model.WorkingDays.Saturday)
-            @Html.LabelFor(model => model.WorkingDays.Saturday)
-            @Html.CheckBoxFor(model => model.WorkingDays.Sunday)
-            @Html.LabelFor(model => model.WorkingDays.Sunday)
-        </div>
-        <div>
-            <button type="submit">Go</button>
-        </div>
-    }
+        </span>
+    </div>
+    <div class="working-days">
+        I go to work every
+        @Html.CheckBoxFor(model => model.WorkingDays.Monday)@Html.LabelFor(model => model.WorkingDays.Monday)
+        @Html.CheckBoxFor(model => model.WorkingDays.Tuesday)@Html.LabelFor(model => model.WorkingDays.Tuesday)
+        @Html.CheckBoxFor(model => model.WorkingDays.Wednesday)@Html.LabelFor(model => model.WorkingDays.Wednesday)
+        @Html.CheckBoxFor(model => model.WorkingDays.Thursday)@Html.LabelFor(model => model.WorkingDays.Thursday)
+        @Html.CheckBoxFor(model => model.WorkingDays.Friday)@Html.LabelFor(model => model.WorkingDays.Friday)
+        @Html.CheckBoxFor(model => model.WorkingDays.Saturday)@Html.LabelFor(model => model.WorkingDays.Saturday)
+        @Html.CheckBoxFor(model => model.WorkingDays.Sunday)@Html.LabelFor(model => model.WorkingDays.Sunday)
+    </div>
+    <div>
+        <button type="submit">Go</button>
+    </div>
+    <i class="fa fa-sun-o"></i> 
+    <i class="fa fa-moon-o"></i> 
+}
 
-    @if (Model.MorningCommute.Daylights != null && Model.EveningCommute.Daylights != null)
-    {
-        <hr />
-        @UIHelpers.GetJourneyText(Model.MorningCommute.Daylights)
-        @UIHelpers.GetJourneyText(Model.EveningCommute.Daylights)
-        <p>(ignoring Bank and national holidays...)</p>
-    }
-    else if (!string.IsNullOrEmpty(Model.Message))
-    {
-        <p>@Model.Message</p>
-    }
-</div>
+@if (Model.MorningCommute.Daylights != null && Model.EveningCommute.Daylights != null)
+{
+    <hr />
+    @UIHelpers.GetJourneyText(Model.MorningCommute.Daylights)
+    @UIHelpers.GetJourneyText(Model.EveningCommute.Daylights)
+    <p>(ignoring Bank and national holidays...)</p>
+}
 <script type="text/javascript">
     function storePosition(position) {
         var latitude = position.coords.latitude;

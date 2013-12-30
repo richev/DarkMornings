@@ -23,11 +23,11 @@ namespace Richev.DarkMornings.Web.Tests
 
             var journeyText = UIHelpers.GetJourneyText(_daylightInfo);
 
-            Assert.AreEqual("<p>You have <strong>10 more</strong> dark journeys to work, until <strong>Saturday 1 March</strong>.</p>", journeyText.ToString());
+            Assert.AreEqual("<p>You have <strong>10 more</strong> dark journeys to work, until <div class=\"calendar\"><span class=\"day\">Saturday</span> <span class=\"date\">1</span> <span class=\"month\">March</span></div></p>", journeyText.ToString());
         }
 
         [Test]
-        public void GetJOurneyTextShouldReturnCorrectTextInEdgeCase()
+        public void GetJourneyTextShouldReturnCorrectTextInEdgeCase()
         {
             _daylightInfo.IsCurrentlyInDaylight = true;
 

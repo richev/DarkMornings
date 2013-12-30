@@ -15,8 +15,7 @@ namespace Richev.DarkMornings.Web
             {
                 var days = new List<DateTime>();
 
-                // in the same order (Sunday first) as the System.DayOfWeek enumeration
-                var workingDayBools = new[] { workingDays.Sunday, workingDays.Monday, workingDays.Tuesday, workingDays.Wednesday, workingDays.Thursday, workingDays.Friday, workingDays.Saturday };
+                var workingDayBools = workingDays.ToArray();
 
                 var day = today;
                 while (day < daylightInfo.NextDaylightTransition.Value)

@@ -48,11 +48,11 @@ namespace Richev.DarkMornings.Web
             if (daylightInfo.NextWorkingDayDaylightTransition.HasValue)
             {
                 journeyText = string.Format(
-                    "You have <strong>{0} more</strong> {1} journeys {2}, until <strong>{3}</strong>.",
+                    "You have <strong>{0} more</strong> {1} journeys {2}, until <div class=\"calendar\"><span class=\"day\">{3:dddd}</span> <span class=\"date\">{3:%d}</span> <span class=\"month\">{3:MMMM}</span></div>",
                     daylightInfo.NumberOfDaysToTransition,
                     GetDaylightText(daylightInfo.IsCurrentlyInDaylight),
                     GetCommuteText(daylightInfo.CommuteType),
-                    daylightInfo.NextWorkingDayDaylightTransition.Value.ToString("dddd d MMMM"));
+                    daylightInfo.NextWorkingDayDaylightTransition.Value);
             }
             else
             {

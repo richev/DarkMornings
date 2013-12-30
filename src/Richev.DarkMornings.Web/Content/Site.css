@@ -40,3 +40,67 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+input, select, .working-days label {
+    border: 2px solid rgb(170, 170, 170);
+}
+
+input, select, .working-days label, button {
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button {
+    border-color: black;
+    border-width: 3px;
+}
+
+select {
+    padding: 6px;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.working-days input {
+    display: none;
+}
+
+.working-days label {
+    padding: 0 12px;
+    line-height: 1.7;
+}
+
+/* :nth-child(n) fixes a repaint issue in WebKit browsers http://stackoverflow.com/questions/14201694/chrome-webkit-not-rendering-css-display-change-on-inputchecked-element-elem */
+.working-days :checked + input:nth-child(n) + label {
+    background-color: rgb(104, 188, 104);
+    border-color: rgb(104, 188, 104);
+}
+
+.calendar {
+    background-color: rgb(238, 229, 187);
+    border: 2px solid rgb(120, 115, 95);
+    color: rgb(120, 115, 95);
+    width: 150px;
+    border-radius: 16px;
+    line-height:normal;
+}
+.calendar span {
+    display: block;
+    text-align: center;
+    padding: 8px 0;
+}
+.calendar .day {
+    background-color: rgb(120, 115, 95);
+    color: rgb(238, 229, 187);
+    border-radius: 12px 12px 0 0;
+}
+.calendar .date {
+    font-size: 50px;
+    font-weight: bold;
+    padding-bottom: 0;
+}
+.calendar .month {
+    padding-top: 0;
+}
