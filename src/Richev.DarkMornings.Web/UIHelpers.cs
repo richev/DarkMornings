@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Richev.DarkMornings.Web
@@ -40,7 +41,30 @@ namespace Richev.DarkMornings.Web
             return minutes;
         }
 
-        public static string GetCommuteText(Commute commuteType)
+        public static HtmlString GetJourneyText(Models.DaylightInfo daylightInfo)
+        {
+            string journeyText;
+
+            if (daylightInfo.NextWorkingDayDaylightTransition.HasValue)
+            {
+                journeyText = string.Format(
+                    "You have <strong>{0} more</strong> {1} journeys {2}, until <strong>{3}</strong>.",
+                    daylightInfo.NumberOfDaysToTransition,
+                    daylightInfo.IsCurrentlyInDaylight ? "light" : "dark",
+                    GetCommuteText(daylightInfo.CommuteType),
+                    daylightInfo.NextWorkingDayDaylightTransition.Value.ToString("dddd d MMMM"));
+            }
+            else
+            {
+                journeyText = string.Format(
+                    "Your journey {0} is always in the <strong>{1}</strong>.",
+                    GetCommuteText(daylightInfo.CommuteType), daylightInfo.IsCurrentlyInDaylight ? "light" : "dark");
+            }
+
+            return new HtmlString(string.Format("<p>{0}</p>", journeyText));
+        }
+
+        private static string GetCommuteText(Commute commuteType)
         {
             switch (commuteType)
             {

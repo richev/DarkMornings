@@ -1,5 +1,4 @@
-﻿@using Richev.DarkMornings.Web
-@model Richev.DarkMornings.Web.Models.CommuteInfo
+﻿@model Richev.DarkMornings.Web.Models.CommuteInfo
 
 <div class="jumbotron">
     <h1>Dark Mornings</h1>
@@ -42,16 +41,8 @@
     @if (Model.MorningCommute.Daylights != null && Model.EveningCommute.Daylights != null)
     { 
         <hr />
-        
-        if (Model.MorningCommute.Daylights != null)
-        {
-            @Html.Partial("_Commute", Model.MorningCommute.Daylights)
-        }
-        if (Model.EveningCommute.Daylights != null)
-        {
-            @Html.Partial("_Commute", Model.EveningCommute.Daylights)
-        }
-
+        @UIHelpers.GetJourneyText(Model.MorningCommute.Daylights)
+        @UIHelpers.GetJourneyText(Model.EveningCommute.Daylights)
         <p>(ignoring Bank and national holidays...)</p>
     }
     else if (!string.IsNullOrEmpty(Model.Message))
