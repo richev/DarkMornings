@@ -50,7 +50,7 @@ namespace Richev.DarkMornings.Web
                 journeyText = string.Format(
                     "You have <strong>{0} more</strong> {1} journeys {2}, until <strong>{3}</strong>.",
                     daylightInfo.NumberOfDaysToTransition,
-                    daylightInfo.IsCurrentlyInDaylight ? "light" : "dark",
+                    GetDaylightText(daylightInfo.IsCurrentlyInDaylight),
                     GetCommuteText(daylightInfo.CommuteType),
                     daylightInfo.NextWorkingDayDaylightTransition.Value.ToString("dddd d MMMM"));
             }
@@ -58,10 +58,15 @@ namespace Richev.DarkMornings.Web
             {
                 journeyText = string.Format(
                     "Your journey {0} is always in the <strong>{1}</strong>.",
-                    GetCommuteText(daylightInfo.CommuteType), daylightInfo.IsCurrentlyInDaylight ? "light" : "dark");
+                    GetCommuteText(daylightInfo.CommuteType), GetDaylightText(daylightInfo.IsCurrentlyInDaylight));
             }
 
             return new HtmlString(string.Format("<p>{0}</p>", journeyText));
+        }
+
+        private static string GetDaylightText(bool isCurrentlyInDaylight)
+        {
+            return isCurrentlyInDaylight ? "light" : "dark";
         }
 
         private static string GetCommuteText(Commute commuteType)
