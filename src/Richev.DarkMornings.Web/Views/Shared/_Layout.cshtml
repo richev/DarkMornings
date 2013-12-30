@@ -21,7 +21,6 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
@@ -30,8 +29,7 @@
     </div>
     <div class="container body-content">
         <div class="jumbotron">
-            <h1>Dark Mornings</h1>
-
+            <h1><span>Dark Mornings</span><i class="fa fa-sun-o"></i><i class="fa fa-moon-o"></i></h1>
             @RenderBody()
         </div>
         <hr />

@@ -4,22 +4,25 @@
 
 @using (Html.BeginForm())
 {
+    <p class="question">Ever wondered how much longer you'll be commuting in the dark?</p>
     @Html.HiddenFor(model => model.Latitude)
     @Html.HiddenFor(model => model.Longitude)
-    <div>
-        I leave for work at
+    <h4>Timings</h4>
+    <div class="with-icon">
+        <i class="fa fa-clock-o"></i><span>I leave for work at</span>
         <span class="nowrap">
             @Html.DropDownListFor(model => model.MorningCommute.Hour, UIHelpers.GetHours(Model.MorningCommute.Hour))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.MorningCommute.Minute, UIHelpers.GetMinutes(Model.MorningCommute.Minute))
         </span>
     </div>
-    <div>
-        I get home from work at
+    <div class="with-icon">
+        <i class="fa fa-clock-o"></i><span>I get home from work at</span>
         <span class="nowrap">
             @Html.DropDownListFor(model => model.EveningCommute.Hour, UIHelpers.GetHours(Model.EveningCommute.Hour))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.EveningCommute.Minute, UIHelpers.GetMinutes(Model.EveningCommute.Minute))
         </span>
     </div>
-    <div class="working-days">
-        I go to work every
+    <h4>Workdays</h4>
+    <div class="working-days with-icon">
+        <i class="fa fa-road"></i><span>I travel to work on</span>
         @Html.CheckBoxFor(model => model.WorkingDays.Monday)@Html.LabelFor(model => model.WorkingDays.Monday)
         @Html.CheckBoxFor(model => model.WorkingDays.Tuesday)@Html.LabelFor(model => model.WorkingDays.Tuesday)
         @Html.CheckBoxFor(model => model.WorkingDays.Wednesday)@Html.LabelFor(model => model.WorkingDays.Wednesday)
@@ -30,7 +33,7 @@
     </div>
     <div>
         <hr />
-        <button type="submit">Go</button>
+        <button type="submit">Calculate your commute &raquo;</button>
     </div>
 }
 
@@ -38,16 +41,18 @@
 {
     <hr />
     <h3>You have...</h3>
-    <div class="results journey">
+    <div class="results journey with-icon">
         @UIHelpers.GetJourneyText(Model.MorningCommute.Daylights)
     </div>
-    <div class="results and">
-        and
-    </div>
-    <div class="results journey">
+    <hr class="and" />
+    <div class="results journey with-icon">
         @UIHelpers.GetJourneyText(Model.EveningCommute.Daylights)
     </div>
     <p class="ignoring">(excluding Bank and national holidays...)</p>
+    <div class="share">
+        <a href="http://twitter.com"><i class="fa fa-twitter"></i>Tweet this on Twitter</a>
+        <a href="http://facebook.com"><i class="fa fa-facebook-square"></i>Share this on Facebook</a>
+    </div>
 }
 <script type="text/javascript">
     function storePosition(position) {

@@ -48,7 +48,9 @@ namespace Richev.DarkMornings.Web
             if (daylightInfo.NextWorkingDayDaylightTransition.HasValue)
             {
                 journeyText = string.Format(
-                    "<span class=\"days-more\"><span class=\"count\">{0} more</span> {1} {2}</span><span class=\"until\"><span>until</span></span><span class=\"calendar\"><span class=\"day\">{3:dddd}</span> <span class=\"date\">{3:%d}</span> <span class=\"month\">{3:MMMM}</span></span>",
+                    "<span class=\"days-more\">{0}{1}<span class=\"count\">{2} more</span><span>{3} journeys {4}</span></span><span class=\"until\"><span>until</span></span><span class=\"calendar\"><span class=\"day\">{5:dddd}</span> <span class=\"date\">{5:%d}</span> <span class=\"month\">{5:MMMM}</span></span>",
+                    GetDaylightIcon(daylightInfo.IsCurrentlyInDaylight),
+                    GetCommuteDirectionIcon(daylightInfo.CommuteType),
                     daylightInfo.NumberOfDaysToTransition,
                     GetDaylightText(daylightInfo.IsCurrentlyInDaylight),
                     GetCommuteText(daylightInfo.CommuteType),
@@ -57,17 +59,38 @@ namespace Richev.DarkMornings.Web
             else
             {
                 journeyText = string.Format(
-                    "<span>Your journey {0} is always in the <strong>{1}</strong></span>",
+                    "<span>{0}Your journey {1} is always in the <strong>{2}</strong></span>",
+                    GetDaylightIcon(daylightInfo.IsCurrentlyInDaylight),
                     GetCommuteText(daylightInfo.CommuteType),
-                    daylightInfo.IsCurrentlyInDaylight ? "light <i class=\"fa fa-sun-o\"></i>" : "dark <i class=\"fa fa-moon-o\"></i>");
+                    GetDaylightText(daylightInfo.IsCurrentlyInDaylight));
             }
 
             return new HtmlString(journeyText);
         }
 
+        private static string GetDaylightIcon(bool isCurrentlyInDaylight)
+        {
+            return isCurrentlyInDaylight ? "<i class=\"fa fa-sun-o\"></i>" : "<i class=\"fa fa-moon-o\"></i>";
+        }
+
         private static string GetDaylightText(bool isCurrentlyInDaylight)
         {
-            return isCurrentlyInDaylight ? "light journeys<i class=\"fa fa-sun-o\"></i>" : "dark journeys<i class=\"fa fa-moon-o\"></i>";
+            return isCurrentlyInDaylight ? "light" : "dark";
+        }
+
+        private static string GetCommuteDirectionIcon(Commute commuteType)
+        {
+            switch (commuteType)
+            {
+                case Commute.Outbound:
+                    return "<i class=\"fa fa-arrow-circle-o-right commute-direction\"></i>";
+
+                case Commute.Return:
+                    return "<i class=\"fa fa-arrow-circle-o-left commute-direction\"></i>";
+
+                default:
+                    throw new ArgumentOutOfRangeException("commuteType");
+            }
         }
 
         private static string GetCommuteText(Commute commuteType)
