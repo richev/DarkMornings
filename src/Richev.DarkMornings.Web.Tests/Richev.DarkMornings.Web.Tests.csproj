@@ -35,6 +35,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,6 +45,7 @@
   <ItemGroup>
     <Compile Include="BuildersTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIHelpersTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RichEv.DarkMornings.Core\Richev.DarkMornings.Core.csproj">
