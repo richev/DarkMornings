@@ -22,11 +22,11 @@ namespace Richev.DarkMornings.Core.Tests
 
             var commuteInfo = _daylightHunter.GetDaylight(51, -3, outboundCommuteAt, returnCommuteAt);
 
-            Assert.AreEqual(false, commuteInfo.ToWork.IsCurrentlyInDaylight);
+            Assert.IsFalse(commuteInfo.ToWork.IsCurrentlyInDaylight);
             Assert.AreEqual(new DateTime(2014, 02, 27, 7, 10, 0), commuteInfo.ToWork.NextDaylightTransition);
             Assert.AreEqual(DaylightTransition.SunRise, commuteInfo.ToWork.TransitionType);
 
-            Assert.AreEqual(false, commuteInfo.FromWork.IsCurrentlyInDaylight);
+            Assert.IsFalse(commuteInfo.FromWork.IsCurrentlyInDaylight);
             Assert.AreEqual(new DateTime(2014, 03, 10, 18, 0, 0), commuteInfo.FromWork.NextDaylightTransition);
             Assert.AreEqual(DaylightTransition.SunSet, commuteInfo.FromWork.TransitionType);
         }
@@ -39,11 +39,26 @@ namespace Richev.DarkMornings.Core.Tests
 
             var commuteInfo = _daylightHunter.GetDaylight(51, -3, outboundCommuteAt, returnCommuteAt);
 
-            Assert.AreEqual(true, commuteInfo.ToWork.IsCurrentlyInDaylight);
+            Assert.IsTrue(commuteInfo.ToWork.IsCurrentlyInDaylight);
             Assert.AreEqual(new DateTime(2014, 09, 24, 7, 11, 0), commuteInfo.ToWork.NextDaylightTransition);
 
-            Assert.AreEqual(true, commuteInfo.FromWork.IsCurrentlyInDaylight);
+            Assert.IsTrue(commuteInfo.FromWork.IsCurrentlyInDaylight);
             Assert.AreEqual(new DateTime(2014, 10, 21, 17, 59, 0), commuteInfo.FromWork.NextDaylightTransition);
+        }
+
+        [Test]
+        public void IsCorrectInSouthernHemisphereWinter()
+        {
+            var outboundCommuteAt = new DateTime(2014, 6, 24, 7, 10, 0);
+            var returnCommuteAt = new DateTime(2014, 6, 24, 18, 0, 0);
+
+            var commuteInfo = _daylightHunter.GetDaylight(-51, -3, outboundCommuteAt, returnCommuteAt);
+
+            Assert.IsFalse(commuteInfo.ToWork.IsCurrentlyInDaylight);
+            Assert.AreEqual(new DateTime(2014, 9, 19, 7, 09, 0), commuteInfo.ToWork.NextDaylightTransition);
+
+            Assert.IsFalse(commuteInfo.FromWork.IsCurrentlyInDaylight);
+            Assert.AreEqual(new DateTime(2014, 8, 11, 18, 0, 0), commuteInfo.FromWork.NextDaylightTransition);
         }
 
         [Test]
@@ -69,10 +84,10 @@ namespace Richev.DarkMornings.Core.Tests
 
             var commuteInfo = _daylightHunter.GetDaylight(51, -3, outboundCommuteAt, returnCommuteAt);
 
-            Assert.AreEqual(false, commuteInfo.ToWork.IsCurrentlyInDaylight);
+            Assert.IsFalse(commuteInfo.ToWork.IsCurrentlyInDaylight);
             Assert.AreEqual(null, commuteInfo.ToWork.NextDaylightTransition);
 
-            Assert.AreEqual(false, commuteInfo.FromWork.IsCurrentlyInDaylight);
+            Assert.IsFalse(commuteInfo.FromWork.IsCurrentlyInDaylight);
             Assert.AreEqual(null, commuteInfo.FromWork.NextDaylightTransition);
         }
 
@@ -84,10 +99,10 @@ namespace Richev.DarkMornings.Core.Tests
 
             var commuteInfo = _daylightHunter.GetDaylight(51, -3, outboundCommuteAt, returnCommuteAt);
 
-            Assert.AreEqual(true, commuteInfo.ToWork.IsCurrentlyInDaylight);
+            Assert.IsFalse(commuteInfo.ToWork.IsCurrentlyInDaylight);
             Assert.AreEqual(null, commuteInfo.ToWork.NextDaylightTransition);
 
-            Assert.AreEqual(true, commuteInfo.FromWork.IsCurrentlyInDaylight);
+            Assert.IsTrue(commuteInfo.FromWork.IsCurrentlyInDaylight);
             Assert.AreEqual(null, commuteInfo.FromWork.NextDaylightTransition);
         }
     }
