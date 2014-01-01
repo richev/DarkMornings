@@ -99,7 +99,7 @@ namespace Richev.DarkMornings.Core.Tests
 
             var commuteInfo = _daylightHunter.GetDaylight(51, -3, outboundCommuteAt, returnCommuteAt);
 
-            Assert.IsFalse(commuteInfo.ToWork.IsCurrentlyInDaylight);
+            Assert.IsTrue(commuteInfo.ToWork.IsCurrentlyInDaylight);
             Assert.AreEqual(null, commuteInfo.ToWork.NextDaylightTransition);
 
             Assert.IsTrue(commuteInfo.FromWork.IsCurrentlyInDaylight);
