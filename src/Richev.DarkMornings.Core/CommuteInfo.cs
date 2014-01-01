@@ -2,8 +2,8 @@
 {
     public class CommuteInfo
     {
-        public DaylightInfo OutboundCommute { get; set; }
+        public DaylightInfo ToWork { get; set; }
 
-        public DaylightInfo ReturnCommute { get; set; }
+        public DaylightInfo FromWork { get; set; }
     }
 }

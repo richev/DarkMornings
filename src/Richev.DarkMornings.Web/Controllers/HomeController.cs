@@ -74,8 +74,8 @@ namespace Richev.DarkMornings.Web.Controllers
 
                 var commuteInfo = sunHunter.GetDaylight(viewModel.la.Value, viewModel.lo.Value, morningCommute, eveningCommute);
 
-                viewModel.tw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.OutboundCommute, Commute.Outbound, viewModel.WorkingDays);
-                viewModel.fw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.ReturnCommute, Commute.Return, viewModel.WorkingDays);
+                viewModel.tw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.ToWork, Commute.ToWork, viewModel.WorkingDays);
+                viewModel.fw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.FromWork, Commute.FromWork, viewModel.WorkingDays);
             }
 
             return View(viewModel);

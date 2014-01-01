@@ -26,10 +26,10 @@ namespace Richev.DarkMornings.Web.Tests
         {
             _daylights.IsCurrentlyInDaylight = true;
 
-            var daylights = Builders.BuildDaylights(_today, _daylights, Commute.Return, _workingDays);
+            var daylights = Builders.BuildDaylights(_today, _daylights, Commute.FromWork, _workingDays);
 
             Assert.IsNull(daylights.NextWorkingDayDaylightTransition);
-            Assert.AreEqual(Commute.Return, daylights.CommuteType);
+            Assert.AreEqual(Commute.FromWork, daylights.CommuteType);
             Assert.AreEqual(0, daylights.NumberOfDaysToTransition);
             Assert.IsTrue(daylights.IsCurrentlyInDaylight);
         }
@@ -39,10 +39,10 @@ namespace Richev.DarkMornings.Web.Tests
         {
             _daylights.NextDaylightTransition = _today.AddDays(4); // a Friday
 
-            var daylights = Builders.BuildDaylights(_today, _daylights, Commute.Return, _workingDays);
+            var daylights = Builders.BuildDaylights(_today, _daylights, Commute.FromWork, _workingDays);
 
             Assert.AreEqual(_today.AddDays(4), daylights.NextWorkingDayDaylightTransition); // same day as the NextDaylightTransition
-            Assert.AreEqual(Commute.Return, daylights.CommuteType);
+            Assert.AreEqual(Commute.FromWork, daylights.CommuteType);
             Assert.AreEqual(4, daylights.NumberOfDaysToTransition); // Tuesday to Friday
             Assert.IsFalse(daylights.IsCurrentlyInDaylight);
         }
@@ -52,10 +52,10 @@ namespace Richev.DarkMornings.Web.Tests
         {
             _daylights.NextDaylightTransition = _today.AddDays(6); // a Sunday
 
-            var daylights = Builders.BuildDaylights(_today, _daylights, Commute.Return, _workingDays);
+            var daylights = Builders.BuildDaylights(_today, _daylights, Commute.FromWork, _workingDays);
 
             Assert.AreEqual(_today.AddDays(4), daylights.NextWorkingDayDaylightTransition); // not quite the same as the NextDaylightTransition
-            Assert.AreEqual(Commute.Return, daylights.CommuteType);
+            Assert.AreEqual(Commute.FromWork, daylights.CommuteType);
             Assert.AreEqual(4, daylights.NumberOfDaysToTransition); // Tuesday to Friday (ignoring the non-working Saturday and Sunday)
             Assert.IsFalse(daylights.IsCurrentlyInDaylight);
         }

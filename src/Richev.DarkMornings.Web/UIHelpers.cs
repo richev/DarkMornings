@@ -82,10 +82,10 @@ namespace Richev.DarkMornings.Web
         {
             switch (commuteType)
             {
-                case Commute.Outbound:
+                case Commute.ToWork:
                     return "<i class=\"fa fa-arrow-circle-o-right commute-direction\"></i>";
 
-                case Commute.Return:
+                case Commute.FromWork:
                     return "<i class=\"fa fa-arrow-circle-o-left commute-direction\"></i>";
 
                 default:
@@ -97,10 +97,10 @@ namespace Richev.DarkMornings.Web
         {
             switch (commuteType)
             {
-                case Commute.Outbound:
+                case Commute.ToWork:
                     return "to work";
 
-                case Commute.Return:
+                case Commute.FromWork:
                     return "from work";
 
                 default:

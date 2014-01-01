@@ -2,7 +2,7 @@
 {
     public enum Commute
     {
-        Outbound,
-        Return
+        ToWork,
+        FromWork
     }
 }

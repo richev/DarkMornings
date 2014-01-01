@@ -15,8 +15,8 @@ namespace Richev.DarkMornings.Core
 
             var commuteInfo = new CommuteInfo();
 
-            commuteInfo.OutboundCommute = CalculateDaylightInfo(outboundCommuteAt, sunCalculator);
-            commuteInfo.ReturnCommute = CalculateDaylightInfo(returnCommuteAt, sunCalculator);
+            commuteInfo.ToWork = CalculateDaylightInfo(outboundCommuteAt, sunCalculator);
+            commuteInfo.FromWork = CalculateDaylightInfo(returnCommuteAt, sunCalculator);
 
             return commuteInfo;
         }
