@@ -245,3 +245,19 @@ hr.and {
 .question {
     margin-bottom: 20px;
 }
+
+@media (max-width: 768px) {
+  h1 .fa {
+      font-size: 70px;
+  }
+    h1 .fa-sun-o {
+        left: 136px;
+        top: -30px;
+    }
+
+    h1 .fa-moon-o {
+        top: -5px;
+        left: 205px;
+    }
+
+}
