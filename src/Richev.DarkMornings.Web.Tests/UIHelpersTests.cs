@@ -45,5 +45,25 @@ namespace Richev.DarkMornings.Web.Tests
 
             Assert.AreEqual("12:05", formattedCommuteTime);
         }
+
+        [Test]
+        public void FormatWorkingDaysWorksForSingleDay()
+        {
+            var workingDays = new WorkingDays { Thursday = true };
+
+            var formattedWorkingDays = UIHelpers.FormatWorkingDays(workingDays);
+
+            Assert.AreEqual("Thursday", formattedWorkingDays);
+        }
+
+        [Test]
+        public void FormatWorkingDaysWorksForMultipleDays()
+        {
+            var workingDays = new WorkingDays { Monday = true, Tuesday = true, Thursday = true };
+
+            var formattedWorkingDays = UIHelpers.FormatWorkingDays(workingDays);
+
+            Assert.AreEqual("Monday, Tuesday and Thursday", formattedWorkingDays);
+        }
     }
 }

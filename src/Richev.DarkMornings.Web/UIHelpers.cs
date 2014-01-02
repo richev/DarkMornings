@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Richev.DarkMornings.Web.Models;
@@ -112,6 +114,46 @@ namespace Richev.DarkMornings.Web
         public static string FormatCommuteTime(CommuteTime commuteTime)
         {
             return string.Format("{0:00}:{1:00}", commuteTime.h, commuteTime.m);
+        }
+
+        public static string FormatWorkingDays(WorkingDays workingDays)
+        {
+            var setWorkingDayNames = new List<string>();
+
+            var props = workingDays.GetType().GetProperties();
+
+            foreach (var prop in props)
+            {
+                var propValue = (bool)prop.GetValue(workingDays);
+                if (propValue)
+                {
+                    setWorkingDayNames.Add(prop.Name);
+                }
+            }
+
+            var formattedWorkingDays = string.Join(", ", setWorkingDayNames);
+
+            if (setWorkingDayNames.Count > 1)
+            {
+                formattedWorkingDays = ReplaceLastOccurrence(formattedWorkingDays, ", ", " and ");
+            }
+
+            return formattedWorkingDays;
+        }
+
+        private static string ReplaceLastOccurrence(string source, string find, string replace)
+        {
+            var place = source.LastIndexOf(find, StringComparison.InvariantCulture);
+            var result = source.Remove(place, find.Length).Insert(place, replace);
+
+            return result;
+        }
+
+        public static string FormatDaysCount(string workingDays)
+        {
+            var workingDaysCount = workingDays.Count(d => d == 'x');
+
+            return string.Format("{0} day{1}", workingDaysCount, workingDaysCount == 1 ? " " : "s");
         }
     }
 }
