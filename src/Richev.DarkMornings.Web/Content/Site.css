@@ -76,6 +76,13 @@ form > div {
 select, .working-days label {
     border: 2px solid #dce4ec;
 }
+select:hover, .working-days label:hover {
+    border-color: rgb(149, 165, 166);
+}
+
+.working-days label:hover {
+    background-color: rgb(149, 165, 166);
+}
 
 input, select, .working-days label, button {
     border-radius: 8px;
