@@ -2,7 +2,7 @@
 
 @if (Model.tw.Daylights == null || Model.fw.Daylights == null)
 {
-    <p class="question">Ever wondered how much longer you'll be commuting in the dark?</p>
+    <p class="question">Ever wonder how much longer you'll be commuting in the dark?</p>
 
     using (Html.BeginForm("Index", "Home", FormMethod.Get))
     {
@@ -11,13 +11,13 @@
         @Html.HiddenFor(model => model.wd)
         <h3>Timings</h3>
         <div class="with-icon">
-            <i class="fa fa-clock-o"></i><span>I leave for work at</span>
+            <i class="fa fa-clock-o"></i><span>I get to work at</span>
             <span class="time-selector">
                 @Html.DropDownListFor(model => model.tw.h, UIHelpers.GetHours(Model.tw.h))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.tw.m, UIHelpers.GetMinutes(Model.tw.m))
             </span>
         </div>
         <div class="with-icon">
-            <i class="fa fa-clock-o"></i><span>I get home from work at</span>
+            <i class="fa fa-clock-o"></i><span>I get home after work at</span>
             <span class="time-selector">
                 @Html.DropDownListFor(model => model.fw.h, UIHelpers.GetHours(Model.fw.h))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.fw.m, UIHelpers.GetMinutes(Model.fw.m))
             </span>
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div style="clear: both;">
-            <button class="btn btn-lg btn-success" type="submit">Calculate your commute &raquo;</button>
+            <button class="btn btn-lg btn-success" type="submit">Count your journeys &raquo;</button>
         </div>
     }
 
@@ -46,9 +46,11 @@
 }
 else
 {
-    <p>You leave for work at @UIHelpers.FormatCommuteTime(Model.tw) and get back home at @UIHelpers.FormatCommuteTime(Model.fw).</p>
-    <p>You do this @Model.wd.Count(d => d == 'x') days a week.</p>
-    <p>This means you have...</p>
+    <div>
+        <p>You get to work at @UIHelpers.FormatCommuteTime(Model.tw) and get back home at @UIHelpers.FormatCommuteTime(Model.fw).</p>
+        <p>You do this @Model.wd.Count(d => d == 'x') days a week.</p>
+        <h3>This means you have&hellip;</h3>
+    </div>
     <div class="results journey with-icon">
         @UIHelpers.GetJourneyText(Model.tw.Daylights)
     </div>
@@ -63,20 +65,21 @@ else
     </div>
 
     <hr class="and" />
-    <a href="@Url.Action("Index", "Home")"><i class="fa fa-clock-o"></i>Have another go...</a>
+    <a href="@Url.Action("Index", "Home")"><i class="fa fa-sun-o"></i>Have another go...</a>
 }
 
-<script type="text/javascript">
-    function storePosition(position) {
-        var latitude = position.coords.latitude;
-        var longitude = position.coords.longitude;
+@section scripts {
+    <script type="text/javascript">
+        function storePosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
 
-        $("#la").val(latitude.toFixed(2));
-        $("#lo").val(longitude.toFixed(2));
-    }
+            $("#la").val(latitude.toFixed(2));
+            $("#lo").val(longitude.toFixed(2));
+        }
 
-    var setWorkingDaysString = function () {
-        var wd = (($("#WorkingDays_Sunday").is(':checked') ? "x" : "o") +
+        var setWorkingDaysString = function() {
+            var wd = (($("#WorkingDays_Sunday").is(':checked') ? "x" : "o") +
             ($("#WorkingDays_Monday").is(':checked') ? "x" : "o") +
             ($("#WorkingDays_Tuesday").is(':checked') ? "x" : "o") +
             ($("#WorkingDays_Wednesday").is(':checked') ? "x" : "o") +
@@ -84,18 +87,25 @@ else
             ($("#WorkingDays_Friday").is(':checked') ? "x" : "o") +
             ($("#WorkingDays_Saturday").is(':checked') ? "x" : "o"));
 
-        $("#wd").val(wd);
-    };
+            $("#wd").val(wd);
+        };
 
-    document.ready = function() {
-        if (Modernizr.geolocation) {
-            navigator.geolocation.getCurrentPosition(storePosition);
-        }
+        $(document).ready(function() {
+            if (Modernizr.geolocation) {
+                navigator.geolocation.getCurrentPosition(storePosition);
+            }
 
-        $("input[type=checkbox]").change(setWorkingDaysString);
+            $("input[type=checkbox]").change(setWorkingDaysString);
 
-        $(".accordion").accordion({ header: "h3", collapsible: true, active: false, heightStyle: "content" });;
+            $(".accordion").accordion({
+                header: "h3",
+                collapsible: true,
+                active: false,
+                heightStyle: "content",
+                activate: resizeOverlay
+            });;
 
-        setWorkingDaysString();
-    };
-</script>
+            setWorkingDaysString();
+        });
+    </script>
+}

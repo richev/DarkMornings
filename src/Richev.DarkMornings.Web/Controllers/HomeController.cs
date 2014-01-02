@@ -27,7 +27,7 @@ namespace Richev.DarkMornings.Web.Controllers
             {
                 viewModel = new CommuteInfoViewModel
                 {
-                    tw = { h = 7 },
+                    tw = { h = 8 },
                     fw = { h = 18, m = 30 },
                     WorkingDays = { Monday = true, Tuesday = true, Wednesday = true, Thursday = true, Friday = true }
                 };

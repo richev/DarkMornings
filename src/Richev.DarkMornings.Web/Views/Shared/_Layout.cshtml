@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <title>Dark Mornings</title>
-    <meta name="description" content="Ever wondered how much longer you'll be commuting in the dark?">
+    <meta name="description" content="Ever wonder how much longer you'll be commuting in the dark?">
+    <link rel="icon" type="image/png" href="/favicon.png">
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -28,7 +30,10 @@
         </div>
     </div>
     <div class="container body-content">
-        <div class="jumbotron">
+        <div class="jumbotron overlay">
+            
+        </div>
+        <div class="jumbotron content">
             <h1><a href="@Url.Action("Index", "Home")">Dark Mornings</a><i class="fa fa-sun-o"></i><i class="fa fa-moon-o"></i></h1>
             @RenderBody()
         </div>
@@ -36,10 +41,30 @@
             <p>Made by <a href="http://twitter.com/richev">Richard</a>, copyright &copy; @DateTime.Now.Year</p>
         </footer>
     </div>
+    
+    
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    
+    <script type="text/javascript">
+        var overlay;
+        var content;
+
+        var resizeOverlay = function () {
+            overlay.width(content.width());
+            overlay.height(content.height());
+        };
+
+        $(document).ready(function () {
+            overlay = $(".jumbotron.overlay");
+            content = $(".jumbotron.content");
+            resizeOverlay();
+
+            $(window).resize(resizeOverlay);
+        });
+    </script>
 </body>
 </html>
