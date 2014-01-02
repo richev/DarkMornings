@@ -86,11 +86,5 @@ namespace Richev.DarkMornings.Web.Controllers
         {
             return View();
         }
-
-        [HttpGet]
-        public ActionResult Contact()
-        {
-            return View();
-        }
     }
 }

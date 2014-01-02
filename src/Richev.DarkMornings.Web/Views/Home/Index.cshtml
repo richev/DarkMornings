@@ -1,51 +1,54 @@
 ﻿@model Richev.DarkMornings.Web.Models.CommuteInfoViewModel
 
-<p class="question">Ever wondered how much longer you'll be commuting in the dark?</p>
-
-@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+@if (Model.tw.Daylights == null || Model.fw.Daylights == null)
 {
-    @Html.HiddenFor(model => model.la)
-    @Html.HiddenFor(model => model.lo)
-    @Html.HiddenFor(model => model.wd)
-    <h3>Timings</h3>
-    <div class="with-icon">
-        <i class="fa fa-clock-o"></i><span>I leave for work at</span>
-        <span class="time-selector">
-            @Html.DropDownListFor(model => model.tw.h, UIHelpers.GetHours(Model.tw.h))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.tw.m, UIHelpers.GetMinutes(Model.tw.m))
-        </span>
-    </div>
-    <div class="with-icon">
-        <i class="fa fa-clock-o"></i><span>I get home from work at</span>
-        <span class="time-selector">
-            @Html.DropDownListFor(model => model.fw.h, UIHelpers.GetHours(Model.fw.h))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.fw.m, UIHelpers.GetMinutes(Model.fw.m))
-        </span>
-    </div>
-    <div class="accordion">
-        <h3><span class="header-text">Workdays</span> <span class="text-info">Which days do you travel to work? Defaults to Mon-Fri, click to change.</span></h3>
-        <div class="working-days with-icon">
-            <i class="fa fa-road"></i><span>I travel to work on</span>
-            <div class="btn-group">
-                @Html.CheckBoxFor(model => model.WorkingDays.Monday)@Html.LabelFor(model => model.WorkingDays.Monday, new { @class = "btn btn-lg first" })
-                @Html.CheckBoxFor(model => model.WorkingDays.Tuesday)@Html.LabelFor(model => model.WorkingDays.Tuesday, new { @class = "btn btn-lg" })
-                @Html.CheckBoxFor(model => model.WorkingDays.Wednesday)@Html.LabelFor(model => model.WorkingDays.Wednesday, new { @class = "btn btn-lg" })
-                @Html.CheckBoxFor(model => model.WorkingDays.Thursday)@Html.LabelFor(model => model.WorkingDays.Thursday, new { @class = "btn btn-lg" })
-                @Html.CheckBoxFor(model => model.WorkingDays.Friday)@Html.LabelFor(model => model.WorkingDays.Friday, new { @class = "btn btn-lg" })
-                @Html.CheckBoxFor(model => model.WorkingDays.Saturday)@Html.LabelFor(model => model.WorkingDays.Saturday, new { @class = "btn btn-lg" })
-                @Html.CheckBoxFor(model => model.WorkingDays.Sunday)@Html.LabelFor(model => model.WorkingDays.Sunday, new { @class = "btn btn-lg" })
+    <p class="question">Ever wondered how much longer you'll be commuting in the dark?</p>
+
+    using (Html.BeginForm("Index", "Home", FormMethod.Get))
+    {
+        @Html.HiddenFor(model => model.la)
+        @Html.HiddenFor(model => model.lo)
+        @Html.HiddenFor(model => model.wd)
+        <h3>Timings</h3>
+        <div class="with-icon">
+            <i class="fa fa-clock-o"></i><span>I leave for work at</span>
+            <span class="time-selector">
+                @Html.DropDownListFor(model => model.tw.h, UIHelpers.GetHours(Model.tw.h))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.tw.m, UIHelpers.GetMinutes(Model.tw.m))
+            </span>
+        </div>
+        <div class="with-icon">
+            <i class="fa fa-clock-o"></i><span>I get home from work at</span>
+            <span class="time-selector">
+                @Html.DropDownListFor(model => model.fw.h, UIHelpers.GetHours(Model.fw.h))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.fw.m, UIHelpers.GetMinutes(Model.fw.m))
+            </span>
+        </div>
+        <div class="accordion">
+            <h3><span class="header-text">Workdays</span> <span class="text-info">Which days do you travel to work? Defaults to Mon-Fri, click to change.</span></h3>
+            <div class="working-days with-icon">
+                <i class="fa fa-road"></i><span>I travel to work on</span>
+                <div class="btn-group">
+                    @Html.CheckBoxFor(model => model.WorkingDays.Monday)@Html.LabelFor(model => model.WorkingDays.Monday, new { @class = "btn btn-lg first" })
+                    @Html.CheckBoxFor(model => model.WorkingDays.Tuesday)@Html.LabelFor(model => model.WorkingDays.Tuesday, new { @class = "btn btn-lg" })
+                    @Html.CheckBoxFor(model => model.WorkingDays.Wednesday)@Html.LabelFor(model => model.WorkingDays.Wednesday, new { @class = "btn btn-lg" })
+                    @Html.CheckBoxFor(model => model.WorkingDays.Thursday)@Html.LabelFor(model => model.WorkingDays.Thursday, new { @class = "btn btn-lg" })
+                    @Html.CheckBoxFor(model => model.WorkingDays.Friday)@Html.LabelFor(model => model.WorkingDays.Friday, new { @class = "btn btn-lg" })
+                    @Html.CheckBoxFor(model => model.WorkingDays.Saturday)@Html.LabelFor(model => model.WorkingDays.Saturday, new { @class = "btn btn-lg" })
+                    @Html.CheckBoxFor(model => model.WorkingDays.Sunday)@Html.LabelFor(model => model.WorkingDays.Sunday, new { @class = "btn btn-lg" })
+                </div>
             </div>
         </div>
-    </div>
-    <div style="clear:both;">
-        <button class="btn btn-lg btn-success" type="submit">Calculate your commute &raquo;</button>
-    </div>
+        <div style="clear: both;">
+            <button class="btn btn-lg btn-success" type="submit">Calculate your commute &raquo;</button>
+        </div>
+    }
+
+    @Html.ValidationSummary()
 }
-
-@Html.ValidationSummary()
-
-@if (Model.tw.Daylights != null && Model.fw.Daylights != null)
+else
 {
-    <h3>Results</h3>
-    <p>Leaving for work at @UIHelpers.FormatCommuteTime(Model.tw) and getting back home at @UIHelpers.FormatCommuteTime(Model.fw) you have...</p>
+    <p>You leave for work at @UIHelpers.FormatCommuteTime(Model.tw) and get back home at @UIHelpers.FormatCommuteTime(Model.fw).</p>
+    <p>You do this @Model.wd.Count(d => d == 'x') days a week.</p>
+    <p>This means you have...</p>
     <div class="results journey with-icon">
         @UIHelpers.GetJourneyText(Model.tw.Daylights)
     </div>
@@ -58,7 +61,11 @@
         <a href="http://twitter.com"><i class="fa fa-twitter"></i>Tweet this on Twitter</a>
         <a href="http://facebook.com"><i class="fa fa-facebook-square"></i>Share this on Facebook</a>
     </div>
+
+    <hr class="and" />
+    <a href="@Url.Action("Index", "Home")"><i class="fa fa-clock-o"></i>Have another go...</a>
 }
+
 <script type="text/javascript">
     function storePosition(position) {
         var latitude = position.coords.latitude;

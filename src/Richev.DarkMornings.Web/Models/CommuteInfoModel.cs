@@ -15,20 +15,22 @@ namespace Richev.DarkMornings.Web.Models
         /// <summary>
         /// Latitude
         /// </summary>
-        [DisplayName("latitude")]
+        [DisplayName("latitude (la)")]
         [Range(-90, 90)]
         public double? la { get; set; }
 
         /// <summary>
         /// Longitude
         /// </summary>
-        [DisplayName("longitude")]
+        [DisplayName("longitude (lo)")]
         [Range(-180, 180)]
         public double? lo { get; set; }
 
         /// <summary>
         /// Working days
         /// </summary>
+        [DisplayName("working days (wd)")]
+        [StringLength(7)]
         public string wd { get; set; }
 
         /// <summary>
