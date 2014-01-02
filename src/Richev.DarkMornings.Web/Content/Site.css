@@ -69,33 +69,17 @@ h3 {
     font-weight: bold;
 }
 
-h4 {
-    font-weight: bold;
-    color: rgb(115, 115, 115);
-    font-size: 21px;
-}
-
 form > div {
     margin-bottom: 20px;
 }
 
-input, select, .working-days label {
-    border: 2px solid rgb(170, 170, 170);
+select, .working-days label {
+    border: 2px solid #dce4ec;
 }
 
 input, select, .working-days label, button {
     border-radius: 8px;
     cursor: pointer;
-}
-
-button {
-    border-color: rgb(104, 188, 104);
-    background-color: rgb(104, 188, 104);
-    padding: 0 20px;
-    font-style: italic;
-    font-weight: 500;
-    border-style: none;
-    border-width: 3px;
 }
 
 select {
@@ -122,22 +106,24 @@ select {
     padding: 0 8px;
     line-height: 1.2;
     font-weight: 500;
+    font-size: 21px;
+    vertical-align: auto;
 }
 
 /* :nth-child(n) fixes a repaint issue in WebKit browsers http://stackoverflow.com/questions/14201694/chrome-webkit-not-rendering-css-display-change-on-inputchecked-element-elem */
 .working-days :checked + input:nth-child(n) + label {
-    background-color: silver;
-    border-color: silver;
+    background-color: #95a5a6;
+    border-color: #95a5a6;
 }
 
 .calendar {
     display: block;
     text-align: center;
-    background-color: rgb(246, 236, 190);
-    border: 2px solid rgb(102, 89, 36);
-    color: rgb(102, 89, 36);
+    background-color: white;
+    border: 2px solid rgb(243, 156, 18);
+    color: rgb(243, 156, 18);
     width: 150px;
-    height: 144px;
+    /*height: 144px;*/
     border-radius: 16px;
     line-height:normal;
 }
@@ -146,8 +132,8 @@ select {
     padding: 8px 0;
 }
 .calendar .day {
-    background-color: rgb(102, 89, 36);
-    color: rgb(246, 236, 190);
+    background-color: rgb(243, 156, 18);
+    color: white;
     border-radius: 12px 12px 0 0;
 }
 .calendar .date {
@@ -163,6 +149,7 @@ select {
     width: 150px;
     padding-top: 48px;
     text-align: center;
+    line-height: 1;
 }
 
 .days-more {
@@ -172,9 +159,12 @@ select {
     margin-top: 26px;
     padding: 16px 16px;
     border-radius: 16px;
-    background-color: rgb(224, 224, 224);
-    position: relative;
+    color: white;
+    background-color: rgb(52, 152, 219);
     line-height: 1;
+}
+.days-more .fa {
+    color: rgb(52, 152, 219);
 }
 .days-more span {
     display: block;
@@ -197,11 +187,6 @@ hr.and {
 .results.journey {
     height: 144px;
 }
-.ignoring {
-    font-size: 12px;
-    color: rgb(170, 170, 170);
-    margin: 20px 0 0 0;
-}
 
 .with-icon {
     position: relative;
@@ -211,8 +196,8 @@ hr.and {
     position: relative;
 }
 
-.with-icon i {
-    color: rgb(224, 224, 224);
+.with-icon .fa {
+    color: #dce4ec;
     font-size: 60px;
     position: absolute;
     left: -22px;
@@ -220,23 +205,27 @@ hr.and {
     z-index: 10;
 }
 
-.with-icon i.commute-direction {
+.results.with-icon .fa {
+    top: 10px;
+}
+
+.with-icon .fa.commute-direction {
     color: white;
     font-size: 80px;
     left: 180px;
     top: 6px;
 }
 
+.excluding {
+    clear: both;
+    margin-top: 30px;
+}
+
 .share {
     margin-top: 30px;
 }
 .share a {
-    color: rgb(59, 74, 156);
-    text-decoration: underline;
     margin-right: 20px;
-}
-.share a:hover {
-    text-decoration: none;
 }
 .share .fa {
     font-size: 30px;
@@ -246,19 +235,16 @@ hr.and {
     margin-bottom: 20px;
 }
 
-h4 .note {
-    font-size: 12px;
-    color: rgb(170, 170, 170);
-    font-weight: normal;
+.accordion > .ui-accordion-header-active .text-info {
+    display: none;
 }
 
-.accordion > h4.ui-accordion-header-active .note {
-    visibility: hidden;
-}
-
-.accordion > h4 {
+.accordion > h3 {
     cursor: pointer;
     margin-left: -16px;
+}
+.accordion > h3:hover > .header-text {
+    text-decoration: underline;
 }
 
 .accordion .ui-icon {
@@ -278,6 +264,10 @@ h4 .note {
 }
 .accordion .ui-icon-triangle-1-s:before {
     content: "\f0d7"; /* fa-caret-down */
+}
+
+.text-info {
+    font-size: 15px;
 }
 
 @media (max-width: 768px) {

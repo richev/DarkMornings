@@ -2,14 +2,12 @@
 
 <p class="question">Ever wondered how much longer you'll be commuting in the dark?</p>
 
-@Html.ValidationSummary()
-
 @using (Html.BeginForm("Index", "Home", FormMethod.Get))
 {
     @Html.HiddenFor(model => model.la)
     @Html.HiddenFor(model => model.lo)
     @Html.HiddenFor(model => model.wd)
-    <h4>Timings</h4>
+    <h3>Timings</h3>
     <div class="with-icon">
         <i class="fa fa-clock-o"></i><span>I leave for work at</span>
         <span class="nowrap">
@@ -23,28 +21,30 @@
         </span>
     </div>
     <div class="accordion">
-        <h4>Workdays <span class="note">Which days do you travel to work? Defaults to Mon-Fri, click to change.</span></h4>
+        <h3><span class="header-text">Workdays</span> <span class="text-info">Which days do you travel to work? Defaults to Mon-Fri, click to change.</span></h3>
         <div class="working-days with-icon">
             <i class="fa fa-road"></i><span>I travel to work on</span>
-            @Html.CheckBoxFor(model => model.WorkingDays.Monday)@Html.LabelFor(model => model.WorkingDays.Monday)
-            @Html.CheckBoxFor(model => model.WorkingDays.Tuesday)@Html.LabelFor(model => model.WorkingDays.Tuesday)
-            @Html.CheckBoxFor(model => model.WorkingDays.Wednesday)@Html.LabelFor(model => model.WorkingDays.Wednesday)
-            @Html.CheckBoxFor(model => model.WorkingDays.Thursday)@Html.LabelFor(model => model.WorkingDays.Thursday)
-            @Html.CheckBoxFor(model => model.WorkingDays.Friday)@Html.LabelFor(model => model.WorkingDays.Friday)
-            @Html.CheckBoxFor(model => model.WorkingDays.Saturday)@Html.LabelFor(model => model.WorkingDays.Saturday)
-            @Html.CheckBoxFor(model => model.WorkingDays.Sunday)@Html.LabelFor(model => model.WorkingDays.Sunday)
+            @Html.CheckBoxFor(model => model.WorkingDays.Monday)@Html.LabelFor(model => model.WorkingDays.Monday, new { @class = "btn btn-lg" })
+            @Html.CheckBoxFor(model => model.WorkingDays.Tuesday)@Html.LabelFor(model => model.WorkingDays.Tuesday, new { @class = "btn btn-lg" })
+            @Html.CheckBoxFor(model => model.WorkingDays.Wednesday)@Html.LabelFor(model => model.WorkingDays.Wednesday, new { @class = "btn btn-lg" })
+            @Html.CheckBoxFor(model => model.WorkingDays.Thursday)@Html.LabelFor(model => model.WorkingDays.Thursday, new { @class = "btn btn-lg" })
+            @Html.CheckBoxFor(model => model.WorkingDays.Friday)@Html.LabelFor(model => model.WorkingDays.Friday, new { @class = "btn btn-lg" })
+            @Html.CheckBoxFor(model => model.WorkingDays.Saturday)@Html.LabelFor(model => model.WorkingDays.Saturday, new { @class = "btn btn-lg" })
+            @Html.CheckBoxFor(model => model.WorkingDays.Sunday)@Html.LabelFor(model => model.WorkingDays.Sunday, new { @class = "btn btn-lg" })
         </div>
     </div>
     <div>
         <hr />
-        <button type="submit">Calculate your commute &raquo;</button>
+        <button class="btn btn-lg btn-success" type="submit">Calculate your commute &raquo;</button>
     </div>
 }
 
+@Html.ValidationSummary()
+
 @if (Model.tw.Daylights != null && Model.fw.Daylights != null)
 {
-    <hr />
-    <h3>Leaving for work at @UIHelpers.FormatCommuteTime(Model.tw) and getting back home at @UIHelpers.FormatCommuteTime(Model.fw) you have...</h3>
+    <h3>Results</h3>
+    <p>Leaving for work at @UIHelpers.FormatCommuteTime(Model.tw) and getting back home at @UIHelpers.FormatCommuteTime(Model.fw) you have...</p>
     <div class="results journey with-icon">
         @UIHelpers.GetJourneyText(Model.tw.Daylights)
     </div>
@@ -52,7 +52,7 @@
     <div class="results journey with-icon">
         @UIHelpers.GetJourneyText(Model.fw.Daylights)
     </div>
-    <p class="ignoring">(excluding Bank and national holidays...)</p>
+    <p class="text-info excluding">(excluding Bank and national holidays...)</p>
     <div class="share">
         <a href="http://twitter.com"><i class="fa fa-twitter"></i>Tweet this on Twitter</a>
         <a href="http://facebook.com"><i class="fa fa-facebook-square"></i>Share this on Facebook</a>
@@ -86,7 +86,7 @@
 
         $("input[type=checkbox]").change(setWorkingDaysString);
 
-        $(".accordion").accordion({ header: "h4", collapsible: true, active: false });;
+        $(".accordion").accordion({ header: "h3", collapsible: true, active: false });;
 
         setWorkingDaysString();
     };

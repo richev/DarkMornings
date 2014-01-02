@@ -42,14 +42,14 @@ namespace Richev.DarkMornings.Web
             return minutes;
         }
 
-        public static HtmlString GetJourneyText(Models.DaylightInfo daylightInfo)
+        public static HtmlString GetJourneyText(DaylightInfo daylightInfo)
         {
             string journeyText;
 
             if (daylightInfo.NextWorkingDayDaylightTransition.HasValue)
             {
                 journeyText = string.Format(
-                    "<span class=\"days-more\">{0}{1}<span class=\"count\">{2} more</span><span>{3} journeys {4}</span></span><span class=\"until\"><span>until</span></span><span class=\"calendar\"><span class=\"day\">{5:dddd}</span> <span class=\"date\">{5:%d}</span> <span class=\"month\">{5:MMMM}</span></span>",
+                    "{0}<span class=\"days-more\">{1}<span class=\"count\">{2} more</span><span>{3} journeys</span></span><span class=\"until\"><span>{4},<br />until</span></span><span class=\"calendar\"><span class=\"day\">{5:dddd}</span> <span class=\"date\">{5:%d}</span> <span class=\"month\">{5:MMMM}</span></span>",
                     GetDaylightIcon(daylightInfo.IsCurrentlyInDaylight),
                     GetCommuteDirectionIcon(daylightInfo.CommuteType),
                     daylightInfo.NumberOfDaysToTransition,
