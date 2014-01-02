@@ -4,9 +4,6 @@
     {
         public CommuteInfoViewModel()
         {
-            WorkingDays = new WorkingDays();
         }
-
-        public WorkingDays WorkingDays { get; set; }
     }
 }

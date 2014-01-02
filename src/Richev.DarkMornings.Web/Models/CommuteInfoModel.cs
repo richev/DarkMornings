@@ -30,7 +30,7 @@ namespace Richev.DarkMornings.Web.Models
         /// Working days
         /// </summary>
         [DisplayName("working days (wd)")]
-        [StringLength(7)]
+        [StringLength(7, MinimumLength = 7)]
         public string wd { get; set; }
 
         /// <summary>

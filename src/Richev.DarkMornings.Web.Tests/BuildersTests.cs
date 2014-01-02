@@ -11,14 +11,14 @@ namespace Richev.DarkMornings.Web.Tests
 
         private Core.DaylightInfo _daylights;
 
-        private WorkingDays _workingDays;
+        private bool[] _workingDays;
 
         [SetUp]
         public void SetUp()
         {
             _daylights = new Core.DaylightInfo { TransitionType = Core.DaylightTransition.SunRise };
 
-            _workingDays = new WorkingDays { Monday = true, Tuesday = true, Wednesday = true, Thursday = true, Friday = true };
+            _workingDays = new[] { false, true, true, true, true, true, false };
         }
 
         [Test]

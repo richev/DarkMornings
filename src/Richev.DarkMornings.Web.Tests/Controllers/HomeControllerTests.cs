@@ -59,7 +59,7 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
 
             _locationServiceMock.Setup(m => m.GetLocationFromIPAddress(null, out latitude, out longitude));
 
-            var model = new CommuteInfoModel { tw = { h = 7 }, wd = "oxoooooo" };
+            var model = new CommuteInfoModel { tw = { h = 7 }, wd = string.Format("{1}{0}{1}{1}{1}{1}{1}", UIHelpers.WorkingDayTrue, UIHelpers.WorkingDayFalse) };
 
             var actionResult = _homeController.Index(model);
 
@@ -78,7 +78,7 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
             var toWorkMinutes = 15;
             var fromWorkHour = 8;
             var fromWorkMinutes = 30;
-            var workingDays = "oxooooo";
+            var workingDays = string.Format("{1}{0}{1}{1}{1}{1}{1}", UIHelpers.WorkingDayTrue, UIHelpers.WorkingDayFalse);
             double? latitude = 10;
             double? longitude = 20;
 

@@ -49,7 +49,7 @@ namespace Richev.DarkMornings.Web.Tests
         [Test]
         public void FormatWorkingDaysWorksForSingleDay()
         {
-            var workingDays = new WorkingDays { Thursday = true };
+            var workingDays = new[] { false, false, false, false, true, false, false };
 
             var formattedWorkingDays = UIHelpers.FormatWorkingDays(workingDays);
 
@@ -59,7 +59,7 @@ namespace Richev.DarkMornings.Web.Tests
         [Test]
         public void FormatWorkingDaysWorksForMultipleDays()
         {
-            var workingDays = new WorkingDays { Monday = true, Tuesday = true, Thursday = true };
+            var workingDays = new[] { false, true, true, false, true, false, false };
 
             var formattedWorkingDays = UIHelpers.FormatWorkingDays(workingDays);
 

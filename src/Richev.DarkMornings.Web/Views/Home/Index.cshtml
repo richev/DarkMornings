@@ -27,13 +27,13 @@
             <div class="working-days with-icon">
                 <i class="fa fa-road"></i><span>I travel to work on</span>
                 <div class="btn-group">
-                    @Html.CheckBoxFor(model => model.WorkingDays.Monday)@Html.LabelFor(model => model.WorkingDays.Monday, new { @class = "btn btn-lg first" })
-                    @Html.CheckBoxFor(model => model.WorkingDays.Tuesday)@Html.LabelFor(model => model.WorkingDays.Tuesday, new { @class = "btn btn-lg" })
-                    @Html.CheckBoxFor(model => model.WorkingDays.Wednesday)@Html.LabelFor(model => model.WorkingDays.Wednesday, new { @class = "btn btn-lg" })
-                    @Html.CheckBoxFor(model => model.WorkingDays.Thursday)@Html.LabelFor(model => model.WorkingDays.Thursday, new { @class = "btn btn-lg" })
-                    @Html.CheckBoxFor(model => model.WorkingDays.Friday)@Html.LabelFor(model => model.WorkingDays.Friday, new { @class = "btn btn-lg" })
-                    @Html.CheckBoxFor(model => model.WorkingDays.Saturday)@Html.LabelFor(model => model.WorkingDays.Saturday, new { @class = "btn btn-lg" })
-                    @Html.CheckBoxFor(model => model.WorkingDays.Sunday)@Html.LabelFor(model => model.WorkingDays.Sunday, new { @class = "btn btn-lg" })
+                    <button class="btn">Sun</button>
+                    <button class="btn">Mon</button>
+                    <button class="btn">Tue</button>
+                    <button class="btn">Wed</button>
+                    <button class="btn">Thu</button>
+                    <button class="btn">Fri</button>
+                    <button class="btn">Sat</button>
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@ else
 {
     <div>
         <p>You get to work at @UIHelpers.FormatCommuteTime(Model.tw) and get back home at @UIHelpers.FormatCommuteTime(Model.fw).</p>
-        <p>You do this @UIHelpers.FormatDaysCount(@Model.wd) a week; every @UIHelpers.FormatWorkingDays(Model.WorkingDays).</p>
+        <p>You do this @UIHelpers.FormatDaysCount(@Model.wd) a week; every @UIHelpers.FormatWorkingDays(Model.wd.Select(d => d == UIHelpers.WorkingDayTrue).ToArray()).</p>
         <h3>This means you have&hellip;</h3>
     </div>
     <div class="results journey with-icon">
@@ -78,16 +78,28 @@ else
             $("#lo").val(longitude.toFixed(2));
         }
 
-        var setWorkingDaysString = function() {
-            var wd = (($("#WorkingDays_Sunday").is(':checked') ? "x" : "o") +
-            ($("#WorkingDays_Monday").is(':checked') ? "x" : "o") +
-            ($("#WorkingDays_Tuesday").is(':checked') ? "x" : "o") +
-            ($("#WorkingDays_Wednesday").is(':checked') ? "x" : "o") +
-            ($("#WorkingDays_Thursday").is(':checked') ? "x" : "o") +
-            ($("#WorkingDays_Friday").is(':checked') ? "x" : "o") +
-            ($("#WorkingDays_Saturday").is(':checked') ? "x" : "o"));
+        var setWorkingDaysString = function () {
+            var buttons = $(".working-days .btn-group button");
+
+            var wd = "";
+
+            buttons.each(function(i, elem) {
+                wd += $(elem).hasClass("checked") ? "@UIHelpers.WorkingDayTrue" : "@UIHelpers.WorkingDayFalse";
+            });
 
             $("#wd").val(wd);
+        };
+
+        var setWorkingDaysButtons = function() {
+            var buttons = $(".working-days .btn-group button");
+            var workingDays = $("#wd").val();
+
+            buttons.each(function(i, elem) {
+                $(elem).removeClass("checked");
+                if (workingDays[i] == "@UIHelpers.WorkingDayTrue") {
+                    $(buttons[i]).addClass("checked");
+                }
+            });
         };
 
         $(document).ready(function() {
@@ -95,7 +107,13 @@ else
                 navigator.geolocation.getCurrentPosition(storePosition);
             }
 
-            $("input[type=checkbox]").change(setWorkingDaysString);
+            $(".working-days button").click(function() {
+                $(this).toggleClass("checked");
+
+                setWorkingDaysString();
+
+                return false;
+            });
 
             $(".accordion").accordion({
                 header: "h3",
@@ -105,7 +123,7 @@ else
                 activate: resizeOverlay
             });;
 
-            setWorkingDaysString();
+            setWorkingDaysButtons();
         });
     </script>
 }

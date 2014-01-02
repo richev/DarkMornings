@@ -7,15 +7,13 @@ namespace Richev.DarkMornings.Web
 {
     public static class Builders
     {
-        public static DaylightInfo BuildDaylights(DateTime today, Core.DaylightInfo daylightInfo, Commute commuteType, WorkingDays workingDays)
+        public static DaylightInfo BuildDaylights(DateTime today, Core.DaylightInfo daylightInfo, Commute commuteType, bool[] workingDays)
         {
             int daysToTransition = 0;
 
             if (daylightInfo.NextDaylightTransition.HasValue)
             {
                 var days = new List<DateTime>();
-
-                var workingDayBools = workingDays.ToArray();
 
                 var day = today;
                 while (day < daylightInfo.NextDaylightTransition.Value)
@@ -29,21 +27,21 @@ namespace Richev.DarkMornings.Web
                 switch (daylightInfo.TransitionType)
                 {
                     case Core.DaylightTransition.SunRise:
-                        while (!workingDayBools[(int)days.Last().DayOfWeek])
+                        while (!workingDays[(int)days.Last().DayOfWeek])
                         {
                             days.Add(days.Last().AddDays(1));
                         }
                         break;
 
                     case Core.DaylightTransition.SunSet:
-                        while (!workingDayBools[(int)days.Last().DayOfWeek])
+                        while (!workingDays[(int)days.Last().DayOfWeek])
                         {
                             days.RemoveAt(days.Count - 1);
                         }
                         break;
                 }
 
-                daysToTransition = days.Count(d => workingDayBools[(int)d.DayOfWeek]);
+                daysToTransition = days.Count(d => workingDays[(int)d.DayOfWeek]);
             }
 
             return new DaylightInfo
@@ -53,24 +51,6 @@ namespace Richev.DarkMornings.Web
                 CommuteType = commuteType,
                 NumberOfDaysToTransition = daysToTransition
             };
-        }
-
-        public static WorkingDays BuildWorkingDays(string w)
-        {
-            var workingDays = new WorkingDays();
-
-            if (w.Length == 7)
-            {
-                workingDays.Sunday = w[0] == 'x';
-                workingDays.Monday = w[1] == 'x';
-                workingDays.Tuesday = w[2] == 'x';
-                workingDays.Wednesday = w[3] == 'x';
-                workingDays.Thursday = w[4] == 'x';
-                workingDays.Friday = w[5] == 'x';
-                workingDays.Saturday = w[6] == 'x';
-            }
-
-            return workingDays;
         }
     }
 }

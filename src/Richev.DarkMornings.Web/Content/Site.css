@@ -88,20 +88,16 @@ form > div {
     margin-bottom: 20px;
 }
 
-select, .working-days label {
-    border: 2px solid #dce4ec;
+select {
+    background-color: #ecf0f1;
+    border: 2px solid #ecf0f1;
+    color: #2c3e50;
 }
 select:hover {
     border-color: rgb(149, 165, 166);
 }
 
-.working-days label.first {
-    /* Should be managed by Twitter Bootstrap, but not working properly. */
-    border-top-left-radius: 6px !important;
-    border-bottom-left-radius: 6px !important;
-}
-
-.working-days label:hover {
+.working-days button:hover {
     background-color: #dce4ec;
 }
 
@@ -127,22 +123,17 @@ input, select, button {
     white-space: nowrap;
 }
 
-.working-days input[type="checkbox"] {
-    display: none;
-}
-
-.working-days label {
-    padding: 0 8px;
+.working-days button {
+    color: #2c3e50;
+    padding: 0;
     line-height: 1.2;
-    font-weight: 500;
     font-size: 21px;
+    width: 60px;
     vertical-align: auto;
 }
 
-/* :nth-child(n) fixes a repaint issue in WebKit browsers http://stackoverflow.com/questions/14201694/chrome-webkit-not-rendering-css-display-change-on-inputchecked-element-elem */
-.working-days :checked + input:nth-child(n) + label {
+.working-days button.checked {
     background-color: #95a5a6;
-    border-color: #95a5a6;
 }
 
 .calendar {
@@ -307,8 +298,8 @@ a .fa {
     font-weight: normal;
 }
 
-.btn-group {
-    margin-bottom: 6px;
+.working-days .btn-group {
+    margin-bottom: 4px;
 }
 
 .jumbotron.overlay {

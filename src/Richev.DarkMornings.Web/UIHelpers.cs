@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Richev.DarkMornings.Web.Models;
@@ -10,6 +9,14 @@ namespace Richev.DarkMornings.Web
 {
     public static class UIHelpers
     {
+        /// <summary>
+        /// <para>Character 'x', used in a Sunday-first seven-character string to indicate a working day</para>
+        /// <para>e.g. oxxxxxo indicates that Mon-Fri are working days.</para>
+        /// </summary>
+        public const char WorkingDayTrue = 'x';
+
+        public const char WorkingDayFalse = 'o';
+
         public static List<SelectListItem> GetHours(int selectedHour)
         {
             var hours = new List<SelectListItem>();
@@ -116,18 +123,22 @@ namespace Richev.DarkMornings.Web
             return string.Format("{0:00}:{1:00}", commuteTime.h, commuteTime.m);
         }
 
-        public static string FormatWorkingDays(WorkingDays workingDays)
+        public static string FormatWorkingDays(bool[] workingDays)
         {
             var setWorkingDayNames = new List<string>();
 
-            var props = workingDays.GetType().GetProperties();
+            var dayNames = Enum.GetNames(typeof(DayOfWeek));
 
-            foreach (var prop in props)
+            if (workingDays.Length != dayNames.Length)
             {
-                var propValue = (bool)prop.GetValue(workingDays);
-                if (propValue)
+                throw new InvalidOperationException();
+            }
+
+            for (int i = 0; i < dayNames.Length; i++)
+            {
+                if (workingDays[i])
                 {
-                    setWorkingDayNames.Add(prop.Name);
+                    setWorkingDayNames.Add(dayNames[i]);
                 }
             }
 
@@ -151,7 +162,7 @@ namespace Richev.DarkMornings.Web
 
         public static string FormatDaysCount(string workingDays)
         {
-            var workingDaysCount = workingDays.Count(d => d == 'x');
+            var workingDaysCount = workingDays.Count(d => d == WorkingDayTrue);
 
             return string.Format("{0} day{1}", workingDaysCount, workingDaysCount == 1 ? " " : "s");
         }

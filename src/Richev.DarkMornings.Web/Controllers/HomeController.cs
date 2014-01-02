@@ -29,8 +29,10 @@ namespace Richev.DarkMornings.Web.Controllers
                 {
                     tw = { h = 8 },
                     fw = { h = 18, m = 30 },
-                    WorkingDays = { Monday = true, Tuesday = true, Wednesday = true, Thursday = true, Friday = true }
+                    wd = string.Format("{1}{0}{0}{0}{0}{0}{1}", UIHelpers.WorkingDayTrue, UIHelpers.WorkingDayFalse)
                 };
+
+                ModelState.Clear();
 
                 return View(viewModel);
             }
@@ -42,7 +44,7 @@ namespace Richev.DarkMornings.Web.Controllers
                             wd = model.wd
                         };
 
-            if (!model.wd.ToArray().Where(d => d == 'x').Any())
+            if (!model.wd.ToArray().Where(d => d == UIHelpers.WorkingDayTrue).Any())
             {
                 ModelState.AddModelError("WorkingDays", "Please select at least one workday.");
             }
@@ -68,8 +70,6 @@ namespace Richev.DarkMornings.Web.Controllers
                 ModelState.AddModelError("Location", "Sorry, we couldn't figure out your location.");
             }
 
-            viewModel.WorkingDays = Builders.BuildWorkingDays(model.wd);
-
             if (ModelState.IsValid)
             {
                 var sunHunter = new Core.DaylightHunter();
@@ -79,8 +79,10 @@ namespace Richev.DarkMornings.Web.Controllers
 
                 var commuteInfo = sunHunter.GetDaylight(viewModel.la.Value, viewModel.lo.Value, morningCommute, eveningCommute);
 
-                viewModel.tw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.ToWork, Commute.ToWork, viewModel.WorkingDays);
-                viewModel.fw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.FromWork, Commute.FromWork, viewModel.WorkingDays);
+                var workingDays = viewModel.wd.Select(d => d == UIHelpers.WorkingDayTrue).ToArray();
+
+                viewModel.tw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.ToWork, Commute.ToWork, workingDays);
+                viewModel.fw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.FromWork, Commute.FromWork, workingDays);
             }
 
             return View(viewModel);
