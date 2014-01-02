@@ -1,19 +1,28 @@
-﻿namespace Richev.DarkMornings.Web.Models
+﻿using System.ComponentModel;
+
+namespace Richev.DarkMornings.Web.Models
 {
     public class WorkingDays
     {
+        [DisplayName("Sun")]
         public bool Sunday { get; set; }
 
+        [DisplayName("Mon")]
         public bool Monday { get; set; }
 
+        [DisplayName("Tue")]
         public bool Tuesday { get; set; }
 
+        [DisplayName("Wed")]
         public bool Wednesday { get; set; }
 
+        [DisplayName("Thu")]
         public bool Thursday { get; set; }
 
+        [DisplayName("Fri")]
         public bool Friday { get; set; }
 
+        [DisplayName("Sat")]
         public bool Saturday { get; set; }
 
         /// <summary>

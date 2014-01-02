@@ -18,7 +18,7 @@ textarea {
 
 /* styles for validation helpers */
 .field-validation-error {
-    color: #b94a48;
+    color: #e74c3c;
 }
 
 .field-validation-valid {
@@ -26,7 +26,7 @@ textarea {
 }
 
 input.input-validation-error {
-    border: 1px solid #b94a48;
+    border: 1px solid #e74c3c;
 }
 
 input[type="checkbox"].input-validation-error {
@@ -34,7 +34,7 @@ input[type="checkbox"].input-validation-error {
 }
 
 .validation-summary-errors {
-    color: #b94a48;
+    color: #e74c3c;
 }
 
 .validation-summary-valid {
@@ -45,9 +45,14 @@ h1 {
     position: relative;
     margin-bottom: 30px;
 }
-h1 span {
+h1 a {
     position: relative;
     z-index: 20;
+    color: inherit;
+}
+h1 a:hover, h1 a:active {
+    color: inherit;
+    text-decoration: none;
 }
 h1 .fa {
     font-size: 120px;
@@ -76,23 +81,30 @@ form > div {
 select, .working-days label {
     border: 2px solid #dce4ec;
 }
-select:hover, .working-days label:hover {
+select:hover {
     border-color: rgb(149, 165, 166);
 }
 
-.working-days label:hover {
-    background-color: rgb(149, 165, 166);
+.working-days label.first {
+    /* Should be managed by Twitter Bootstrap, but not working properly. */
+    border-top-left-radius: 6px !important;
+    border-bottom-left-radius: 6px !important;
 }
 
-input, select, .working-days label, button {
+.working-days label:hover {
+    background-color: #dce4ec;
+}
+
+input, select, button {
     border-radius: 8px;
     cursor: pointer;
 }
 
-select {
+.time-selector select {
     padding: 6px;
     font-weight: bold;
     width: 70px;
+    outline: none; /* To prevent orange outline when clicked in Chrome */
 }
 
 .time-separator {
@@ -101,11 +113,11 @@ select {
     padding: 0 4px;
 }
 
-.nowrap {
+.time-selector {
     white-space: nowrap;
 }
 
-.working-days input {
+.working-days input[type="checkbox"] {
     display: none;
 }
 
@@ -189,7 +201,7 @@ select {
     width: 560px;
 }
 hr.and {
-    border: 4px solid white;
+    border: 4px solid #dce4ec;
 }
 .results.journey {
     height: 144px;
@@ -232,6 +244,10 @@ hr.and {
     margin-top: 30px;
 }
 .share a {
+    white-space: nowrap;
+}
+
+.share a:first-child {
     margin-right: 20px;
 }
 .share .fa {
@@ -248,7 +264,8 @@ hr.and {
 
 .accordion > h3 {
     cursor: pointer;
-    margin-left: -16px;
+    margin-left: -20px;
+    outline: none; /* To prevent orange outline when clicked in Chrome */
 }
 .accordion > h3:hover > .header-text {
     text-decoration: underline;
@@ -256,7 +273,8 @@ hr.and {
 
 .accordion .ui-icon {
     display: inline-block;
-    width: 16px;
+    width: 20px;
+    color: rgb(149, 165, 166);
     text-align: center;
     font-family: FontAwesome;
     font-style: normal;
@@ -275,6 +293,11 @@ hr.and {
 
 .text-info {
     font-size: 15px;
+    font-weight: normal;
+}
+
+.btn-group {
+    margin-bottom: 6px;
 }
 
 @media (max-width: 768px) {

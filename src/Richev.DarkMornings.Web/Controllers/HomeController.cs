@@ -39,7 +39,7 @@ namespace Richev.DarkMornings.Web.Controllers
 
             if (!model.wd.ToArray().Where(d => d == 'x').Any())
             {
-                ModelState.AddModelError("WorkingDays", "Please select at least one day of the week.");
+                ModelState.AddModelError("WorkingDays", "Please select at least one workday.");
             }
 
             if (!model.la.HasValue || !model.lo.HasValue)
