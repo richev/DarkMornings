@@ -19,19 +19,21 @@
     <div class="with-icon">
         <i class="fa fa-clock-o"></i><span>I get home from work at</span>
         <span class="nowrap">
-            @Html.DropDownListFor(model => model.fw.h, UIHelpers.GetHours(Model.fw.m))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.fw.m, UIHelpers.GetMinutes(Model.fw.m))
+            @Html.DropDownListFor(model => model.fw.h, UIHelpers.GetHours(Model.fw.h))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.fw.m, UIHelpers.GetMinutes(Model.fw.m))
         </span>
     </div>
-    <h4>Workdays</h4>
-    <div class="working-days with-icon">
-        <i class="fa fa-road"></i><span>I travel to work on</span>
-        @Html.CheckBoxFor(model => model.WorkingDays.Monday)@Html.LabelFor(model => model.WorkingDays.Monday)
-        @Html.CheckBoxFor(model => model.WorkingDays.Tuesday)@Html.LabelFor(model => model.WorkingDays.Tuesday)
-        @Html.CheckBoxFor(model => model.WorkingDays.Wednesday)@Html.LabelFor(model => model.WorkingDays.Wednesday)
-        @Html.CheckBoxFor(model => model.WorkingDays.Thursday)@Html.LabelFor(model => model.WorkingDays.Thursday)
-        @Html.CheckBoxFor(model => model.WorkingDays.Friday)@Html.LabelFor(model => model.WorkingDays.Friday)
-        @Html.CheckBoxFor(model => model.WorkingDays.Saturday)@Html.LabelFor(model => model.WorkingDays.Saturday)
-        @Html.CheckBoxFor(model => model.WorkingDays.Sunday)@Html.LabelFor(model => model.WorkingDays.Sunday)
+    <div class="accordion">
+        <h4>Workdays <span class="note">Which days do you travel to work? Defaults to Mon-Fri, click to change.</span></h4>
+        <div class="working-days with-icon">
+            <i class="fa fa-road"></i><span>I travel to work on</span>
+            @Html.CheckBoxFor(model => model.WorkingDays.Monday)@Html.LabelFor(model => model.WorkingDays.Monday)
+            @Html.CheckBoxFor(model => model.WorkingDays.Tuesday)@Html.LabelFor(model => model.WorkingDays.Tuesday)
+            @Html.CheckBoxFor(model => model.WorkingDays.Wednesday)@Html.LabelFor(model => model.WorkingDays.Wednesday)
+            @Html.CheckBoxFor(model => model.WorkingDays.Thursday)@Html.LabelFor(model => model.WorkingDays.Thursday)
+            @Html.CheckBoxFor(model => model.WorkingDays.Friday)@Html.LabelFor(model => model.WorkingDays.Friday)
+            @Html.CheckBoxFor(model => model.WorkingDays.Saturday)@Html.LabelFor(model => model.WorkingDays.Saturday)
+            @Html.CheckBoxFor(model => model.WorkingDays.Sunday)@Html.LabelFor(model => model.WorkingDays.Sunday)
+        </div>
     </div>
     <div>
         <hr />
@@ -42,7 +44,7 @@
 @if (Model.tw.Daylights != null && Model.fw.Daylights != null)
 {
     <hr />
-    <h3>You have...</h3>
+    <h3>Leaving for work at @UIHelpers.FormatCommuteTime(Model.tw) and getting back home at @UIHelpers.FormatCommuteTime(Model.fw) you have...</h3>
     <div class="results journey with-icon">
         @UIHelpers.GetJourneyText(Model.tw.Daylights)
     </div>
@@ -83,6 +85,8 @@
         }
 
         $("input[type=checkbox]").change(setWorkingDaysString);
+
+        $(".accordion").accordion({ header: "h4", collapsible: true, active: false });;
 
         setWorkingDaysString();
     };

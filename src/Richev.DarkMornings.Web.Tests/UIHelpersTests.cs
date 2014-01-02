@@ -35,5 +35,15 @@ namespace Richev.DarkMornings.Web.Tests
 
             Assert.AreEqual("<span><i class=\"fa fa-sun-o\"></i>Your journey to work is always in the <strong>light</strong></span>", journeyText.ToString());
         }
+
+        [Test]
+        public void FormatCommuteTimeWorks()
+        {
+            var commuteTime = new CommuteTime { h = 12, m = 5 };
+
+            var formattedCommuteTime = UIHelpers.FormatCommuteTime(commuteTime);
+
+            Assert.AreEqual("12:05", formattedCommuteTime);
+        }
     }
 }

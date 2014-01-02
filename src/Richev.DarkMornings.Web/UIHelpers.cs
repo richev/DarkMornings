@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
+using Richev.DarkMornings.Web.Models;
 
 namespace Richev.DarkMornings.Web
 {
@@ -106,6 +107,11 @@ namespace Richev.DarkMornings.Web
                 default:
                     throw new ArgumentOutOfRangeException("commuteType");
             }
+        }
+
+        public static string FormatCommuteTime(CommuteTime commuteTime)
+        {
+            return string.Format("{0:00}:{1:00}", commuteTime.h, commuteTime.m);
         }
     }
 }
