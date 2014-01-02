@@ -35,7 +35,12 @@ namespace Richev.DarkMornings.Web.Controllers
                 return View(viewModel);
             }
 
-            viewModel = new CommuteInfoViewModel();
+            viewModel = new CommuteInfoViewModel
+                        {
+                            tw = model.tw,
+                            fw = model.fw,
+                            wd = model.wd
+                        };
 
             if (!model.wd.ToArray().Where(d => d == 'x').Any())
             {

@@ -74,12 +74,24 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
         [Test]
         public void IndexGetsLocationfromLocationServiceIfNotSet()
         {
+            var toWorkHour = 7;
+            var toWorkMinutes = 15;
+            var fromWorkHour = 8;
+            var fromWorkMinutes = 30;
+            var workingDays = "oxooooo";
             double? latitude = 10;
             double? longitude = 20;
 
             _locationServiceMock.Setup(m => m.GetLocationFromIPAddress(null, out latitude, out longitude));
 
-            var model = new CommuteInfoModel { wd = "oxoooooo", la = latitude, lo = longitude };
+            var model = new CommuteInfoModel
+                        {
+                            tw = { h = toWorkHour, m = toWorkMinutes },
+                            fw = { h = fromWorkHour, m = fromWorkMinutes },
+                            wd = workingDays, 
+                            la = latitude, 
+                            lo = longitude
+                        };
 
             var actionResult = _homeController.Index(model);
 
@@ -87,7 +99,12 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
 
             _locationServiceMock.Verify(s => s.GetLocationFromIPAddress(null, out latitude, out longitude), Times.Never());
             Assert.IsTrue(_homeController.ModelState.IsValid);
+            Assert.AreEqual(toWorkHour, returnedModel.tw.h);
+            Assert.AreEqual(toWorkMinutes, returnedModel.tw.m);
+            Assert.AreEqual(fromWorkHour, returnedModel.fw.h);
+            Assert.AreEqual(fromWorkMinutes, returnedModel.fw.m);
             Assert.AreEqual(latitude, returnedModel.la);
+            Assert.AreEqual(workingDays, returnedModel.wd);
             Assert.AreEqual(longitude, returnedModel.lo);
         }
     }
