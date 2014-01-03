@@ -317,10 +317,10 @@ a .fa {
     }
 
 }
-@media (min-width: 768px) {
+@media (min-width: 480px) {
     body {
         background-image: url(/Content/city-sunrise.jpg);
-        background-size: auto 100%;
+        background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-position: bottom center;
@@ -339,6 +339,10 @@ a .fa {
 
     h3 {
         font-size: 18px;
+    }
+
+    .time-selector select {
+        width: auto;
     }
 
     .text-info, body {
@@ -380,12 +384,16 @@ a .fa {
     }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 320px) {
     .btn-group {
         width: 100%;
     }
 
     .btn-group .btn {
         width: inherit;
+    }
+
+    .time-selector {
+        display: block;
     }
 }
