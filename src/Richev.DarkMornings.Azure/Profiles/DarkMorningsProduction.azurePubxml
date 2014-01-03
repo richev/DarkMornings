@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <AzureCredentials />
+    <AzureCredentials>{"ServiceManagementEndpoint":"https:\/\/management.core.windows.net\/","SubscriptionId":"36c455ab-8587-4b22-9861-0ae7083255e6"}</AzureCredentials>
     <AzureDeleteDeploymentOnFailure>False</AzureDeleteDeploymentOnFailure>
     <AzureDeploymentLabel>Richev.DarkMornings.Azure</AzureDeploymentLabel>
     <AzureDeploymentReplacementMethod>AutomaticUpgrade</AzureDeploymentReplacementMethod>
