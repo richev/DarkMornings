@@ -8,12 +8,6 @@ body {
     background-color: rgb(59, 68, 99);
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
@@ -97,8 +91,8 @@ select:hover {
     border-color: rgb(149, 165, 166);
 }
 
-.working-days button:hover {
-    background-color: #dce4ec;
+.working-days button:hover, .working-days button.checked:hover {
+    background-color: rgb(149, 165, 166);
 }
 
 input, select, button {
@@ -133,7 +127,8 @@ input, select, button {
 }
 
 .working-days button.checked {
-    background-color: #95a5a6;
+    background-color: rgb(52, 152, 219);
+    color: white;
 }
 
 .calendar {
@@ -330,5 +325,56 @@ a .fa {
         background-attachment: fixed;
         background-position: bottom center;
         height: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .jumbotron, .working-days button {
+        font-size: 16px;
+    }
+
+    h1 {
+        display: none;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+
+    .text-info, body {
+        font-size: 12px;
+    }
+
+    .fa {
+        display: none;
+    }
+
+    .container {
+        padding: 0 5px;
+    }
+
+    .question {
+        margin-top: 10px;
+    }
+
+    .container .jumbotron {
+        padding: 5px;
+    }
+
+    .accordion > h3 {
+        margin-left: 0;
+    }
+
+    .btn-group {
+        width: 100%;
+    }
+
+    .btn-group .btn {
+        width:inherit;
+        padding: 4px;
+    }
+
+    .accordion .text-info {
+        display: none;
     }
 }
