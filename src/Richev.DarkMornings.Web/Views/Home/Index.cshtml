@@ -73,7 +73,7 @@ else
     <div>
         Share this...
         <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-size="large" data-url="@Request.Url.Scheme://@Request.Url.Host" data-text="@UIHelpers.GetTweetText(Model)">Tweet this on Twitter</a>
-        <div class="fb-share-button" data-href="http://developers.facebook.com/docs/plugins/" data-type="button_count"></div>
+        <div class="fb-share-button" data-href="@Request.Url.Scheme://@Request.Url.Host" data-type="button_count"></div>
         or 
         <a href="@Url.Action("Index", "Home")"><i class="fa fa-sun-o"></i>have another go...</a>
     </div>
