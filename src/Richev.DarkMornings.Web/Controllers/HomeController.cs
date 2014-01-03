@@ -16,8 +16,6 @@ namespace Richev.DarkMornings.Web.Controllers
             _locationService = locationService;
         }
 
-        // TODO: Exclude WorkingDays from form submission
-
         [HttpGet]
         public ActionResult Index(CommuteInfo model)
         {
@@ -41,7 +39,8 @@ namespace Richev.DarkMornings.Web.Controllers
                         {
                             tw = model.tw,
                             fw = model.fw,
-                            wd = model.wd
+                            wd = model.wd,
+                            tz = model.tz
                         };
 
             if (!model.wd.ToArray().Where(d => d == UIHelpers.WorkingDayTrue).Any())
@@ -74,10 +73,14 @@ namespace Richev.DarkMornings.Web.Controllers
             {
                 var daylightHunter = new Core.DaylightHunter();
 
-                var morningCommute = DateTime.Now.Date.AddHours(model.tw.h).AddMinutes(model.tw.m);
-                var eveningCommute = DateTime.Now.Date.AddHours(model.fw.h).AddMinutes(model.fw.m);
+                var today = DateTime.Now.Date;
+                
+                // TODO: Use the timezone offset
 
-                var commuteInfo = daylightHunter.GetDaylight(viewModel.la.Value, viewModel.lo.Value, morningCommute, eveningCommute);
+                var outboundCommuteAt = today.AddHours(model.tw.h).AddMinutes(model.tw.m);
+                var returnCommuteAt = today.AddHours(model.fw.h).AddMinutes(model.fw.m);
+
+                var commuteInfo = daylightHunter.GetDaylight(viewModel.la.Value, viewModel.lo.Value, viewModel.tz.Value, outboundCommuteAt, returnCommuteAt);
 
                 var workingDays = viewModel.wd.Select(d => d == UIHelpers.WorkingDayTrue).ToArray();
 

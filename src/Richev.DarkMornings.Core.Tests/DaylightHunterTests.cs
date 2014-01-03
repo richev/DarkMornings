@@ -6,6 +6,10 @@ namespace Richev.DarkMornings.Core.Tests
     [TestFixture]
     public class DaylightHunterTests
     {
+        private const int TimezoneUK = 0;
+
+        private const int TimeZoneNewYork = -5;
+
         private DaylightHunter _daylightHunter;
 
         [SetUp]
@@ -20,7 +24,7 @@ namespace Richev.DarkMornings.Core.Tests
             var outboundCommuteAt = new DateTime(2013, 12, 24, 7, 10, 0);
             var returnCommuteAt = new DateTime(2013, 12, 24, 18, 0, 0);
 
-            var commuteInfo = _daylightHunter.GetDaylight(51, -3, outboundCommuteAt, returnCommuteAt);
+            var commuteInfo = _daylightHunter.GetDaylight(51, -3, TimezoneUK, outboundCommuteAt, returnCommuteAt);
 
             Assert.IsFalse(commuteInfo.ToWork.IsCurrentlyInDaylight);
             Assert.AreEqual(new DateTime(2014, 02, 27, 7, 10, 0), commuteInfo.ToWork.NextDaylightTransition);
@@ -37,7 +41,7 @@ namespace Richev.DarkMornings.Core.Tests
             var outboundCommuteAt = new DateTime(2014, 6, 24, 7, 10, 0);
             var returnCommuteAt = new DateTime(2014, 6, 24, 18, 0, 0);
 
-            var commuteInfo = _daylightHunter.GetDaylight(51, -3, outboundCommuteAt, returnCommuteAt);
+            var commuteInfo = _daylightHunter.GetDaylight(51, -3, TimezoneUK, outboundCommuteAt, returnCommuteAt);
 
             Assert.IsTrue(commuteInfo.ToWork.IsCurrentlyInDaylight);
             Assert.AreEqual(new DateTime(2014, 09, 24, 7, 11, 0), commuteInfo.ToWork.NextDaylightTransition);
@@ -52,7 +56,7 @@ namespace Richev.DarkMornings.Core.Tests
             var outboundCommuteAt = new DateTime(2014, 6, 24, 7, 10, 0);
             var returnCommuteAt = new DateTime(2014, 6, 24, 18, 0, 0);
 
-            var commuteInfo = _daylightHunter.GetDaylight(-51, -3, outboundCommuteAt, returnCommuteAt);
+            var commuteInfo = _daylightHunter.GetDaylight(-51, -3, TimezoneUK, outboundCommuteAt, returnCommuteAt);
 
             Assert.IsFalse(commuteInfo.ToWork.IsCurrentlyInDaylight);
             Assert.AreEqual(new DateTime(2014, 9, 19, 7, 09, 0), commuteInfo.ToWork.NextDaylightTransition);
@@ -67,7 +71,7 @@ namespace Richev.DarkMornings.Core.Tests
             var outboundCommuteAt = new DateTime(2014, 6, 24, 0, 10, 0);
             var eveningCommuteAt = new DateTime(2014, 6, 24, 12, 0, 0);
 
-            var commuteInfo = _daylightHunter.GetDaylight(51, -3, outboundCommuteAt, eveningCommuteAt);
+            var commuteInfo = _daylightHunter.GetDaylight(51, -3, TimezoneUK, outboundCommuteAt, eveningCommuteAt);
 
             Assert.AreEqual(false, commuteInfo.ToWork.IsCurrentlyInDaylight);
             Assert.AreEqual(null, commuteInfo.ToWork.NextDaylightTransition);
@@ -82,7 +86,7 @@ namespace Richev.DarkMornings.Core.Tests
             var outboundCommuteAt = new DateTime(2014, 6, 24, 0, 10, 0);
             var returnCommuteAt = new DateTime(2014, 6, 24, 3, 0, 0);
 
-            var commuteInfo = _daylightHunter.GetDaylight(51, -3, outboundCommuteAt, returnCommuteAt);
+            var commuteInfo = _daylightHunter.GetDaylight(51, -3, TimezoneUK, outboundCommuteAt, returnCommuteAt);
 
             Assert.IsFalse(commuteInfo.ToWork.IsCurrentlyInDaylight);
             Assert.AreEqual(null, commuteInfo.ToWork.NextDaylightTransition);
@@ -97,7 +101,7 @@ namespace Richev.DarkMornings.Core.Tests
             var outboundCommuteAt = new DateTime(2014, 6, 24, 12, 0, 0);
             var returnCommuteAt = new DateTime(2014, 6, 24, 13, 0, 0);
 
-            var commuteInfo = _daylightHunter.GetDaylight(51, -3, outboundCommuteAt, returnCommuteAt);
+            var commuteInfo = _daylightHunter.GetDaylight(51, -3, TimezoneUK, outboundCommuteAt, returnCommuteAt);
 
             Assert.IsTrue(commuteInfo.ToWork.IsCurrentlyInDaylight);
             Assert.AreEqual(null, commuteInfo.ToWork.NextDaylightTransition);
@@ -112,7 +116,13 @@ namespace Richev.DarkMornings.Core.Tests
             var outboundCommuteAt = new DateTime(2014, 6, 24, 12, 0, 0);
             var returnCommuteAt = new DateTime(2014, 6, 24, 13, 0, 0);
 
-            var commuteInfo = _daylightHunter.GetDaylight(40.67, -73.94, outboundCommuteAt, returnCommuteAt);
+            var commuteInfo = _daylightHunter.GetDaylight(40.67, -73.94, TimeZoneNewYork, outboundCommuteAt, returnCommuteAt);
+
+            Assert.IsFalse(commuteInfo.ToWork.IsCurrentlyInDaylight);
+            Assert.AreEqual(new DateTime(2014, 9, 15, 7, 09, 0), commuteInfo.ToWork.NextDaylightTransition);
+
+            Assert.IsFalse(commuteInfo.FromWork.IsCurrentlyInDaylight);
+            Assert.AreEqual(new DateTime(2014, 8, 11, 18, 0, 0), commuteInfo.FromWork.NextDaylightTransition);
         }
     }
 }

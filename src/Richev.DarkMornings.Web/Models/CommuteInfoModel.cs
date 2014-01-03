@@ -27,6 +27,14 @@ namespace Richev.DarkMornings.Web.Models
         public double? lo { get; set; }
 
         /// <summary>
+        /// Timezone hours offset
+        /// </summary>
+        [DisplayName("timezone hours offset (wd)")]
+        [Required]
+        [Range(-12, 13)]
+        public double? tz { get; set; } // not an int, because some timezones are half an hour out
+
+        /// <summary>
         /// Working days
         /// </summary>
         [DisplayName("working days (wd)")]
@@ -47,6 +55,7 @@ namespace Richev.DarkMornings.Web.Models
         {
             return !la.HasValue &&
                    !lo.HasValue &&
+                   !tz.HasValue &&
                    tw.h == 0 &&
                    tw.m == 0 &&
                    fw.h == 0 &&

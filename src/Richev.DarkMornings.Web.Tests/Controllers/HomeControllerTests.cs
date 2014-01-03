@@ -59,7 +59,7 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
 
             _locationServiceMock.Setup(m => m.GetLocationFromIPAddress(null, out latitude, out longitude));
 
-            var model = new CommuteInfoModel { tw = { h = 7 }, wd = string.Format("{1}{0}{1}{1}{1}{1}{1}", UIHelpers.WorkingDayTrue, UIHelpers.WorkingDayFalse) };
+            var model = new CommuteInfoModel { tw = { h = 7 }, wd = string.Format("{1}{0}{1}{1}{1}{1}{1}", UIHelpers.WorkingDayTrue, UIHelpers.WorkingDayFalse), tz = 0 };
 
             var actionResult = _homeController.Index(model);
 
@@ -81,6 +81,7 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
             var workingDays = string.Format("{1}{0}{1}{1}{1}{1}{1}", UIHelpers.WorkingDayTrue, UIHelpers.WorkingDayFalse);
             double? latitude = 10;
             double? longitude = 20;
+            double? timeZone = 1;
 
             _locationServiceMock.Setup(m => m.GetLocationFromIPAddress(null, out latitude, out longitude));
 
@@ -90,7 +91,8 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
                             fw = { h = fromWorkHour, m = fromWorkMinutes },
                             wd = workingDays, 
                             la = latitude, 
-                            lo = longitude
+                            lo = longitude,
+                            tz = timeZone
                         };
 
             var actionResult = _homeController.Index(model);
@@ -103,9 +105,10 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
             Assert.AreEqual(toWorkMinutes, returnedModel.tw.m);
             Assert.AreEqual(fromWorkHour, returnedModel.fw.h);
             Assert.AreEqual(fromWorkMinutes, returnedModel.fw.m);
-            Assert.AreEqual(latitude, returnedModel.la);
             Assert.AreEqual(workingDays, returnedModel.wd);
+            Assert.AreEqual(latitude, returnedModel.la);
             Assert.AreEqual(longitude, returnedModel.lo);
+            Assert.AreEqual(timeZone, returnedModel.tz);
         }
     }
 }
