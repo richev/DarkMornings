@@ -166,5 +166,19 @@ namespace Richev.DarkMornings.Web
 
             return string.Format("{0} day{1}", workingDaysCount, workingDaysCount == 1 ? " " : "s");
         }
+
+        public static string GetTweetText(CommuteInfoModel model)
+        {
+            var tweetText = string.Format(
+                "I have {0} more {1} journeys to work and {2} more {3} journeys home! {4}://{5}",
+                model.tw.Daylights.NumberOfDaysToTransition,
+                GetDaylightText(model.tw.Daylights.IsCurrentlyInDaylight),
+                model.fw.Daylights.NumberOfDaysToTransition,
+                GetDaylightText(model.fw.Daylights.IsCurrentlyInDaylight),
+                HttpContext.Current.Request.Url.Scheme,
+                HttpContext.Current.Request.Url.Host);
+
+            return tweetText;
+        }
     }
 }
