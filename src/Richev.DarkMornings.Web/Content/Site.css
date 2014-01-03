@@ -365,16 +365,27 @@ a .fa {
         margin-left: 0;
     }
 
+    .btn-group .btn {
+        width: 40px;
+        padding: 4px 0;
+    }
+
+    .accordion .text-info {
+        display: none;
+    }
+
+    .btn-lg {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 380px) {
     .btn-group {
         width: 100%;
     }
 
     .btn-group .btn {
-        width:inherit;
-        padding: 4px;
-    }
-
-    .accordion .text-info {
-        display: none;
+        width: inherit;
     }
 }
