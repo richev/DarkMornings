@@ -1,6 +1,5 @@
 ﻿using System;
 using NUnit.Framework;
-using Richev.DarkMornings.Web.Models;
 
 namespace Richev.DarkMornings.Web.Tests
 {
@@ -18,11 +17,11 @@ namespace Richev.DarkMornings.Web.Tests
         {
             _daylights = new Core.DaylightInfo { TransitionType = Core.DaylightTransition.SunRise };
 
-            _workingDays = new[] { false, true, true, true, true, true, false };
+            _workingDays = new[] { false, true, true, true, true, true, false }; // Mon-Fri
         }
 
         [Test]
-        public void ShouldBuildDaylightsWhenNextDaylightTransitionIsNull()
+        public void ShouldBuildDaylightInfoWhenNextDaylightTransitionIsNull()
         {
             _daylights.IsCurrentlyInDaylight = true;
 
@@ -35,7 +34,7 @@ namespace Richev.DarkMornings.Web.Tests
         }
 
         [Test]
-        public void ShouldBuildDaylightsWhenNextdaylightTransitionIsSetToWorkingDay()
+        public void ShouldBuildDaylightInfoWhenNextdaylightTransitionIsSetToWorkingDay()
         {
             _daylights.NextDaylightTransition = _today.AddDays(4); // a Friday
 
@@ -48,7 +47,7 @@ namespace Richev.DarkMornings.Web.Tests
         }
 
         [Test]
-        public void ShouldBuildDaylightsWhenNextdaylightTransitionIsSetToNonWorkingDay()
+        public void ShouldBuildDaylightInfoWhenNextdaylightTransitionIsSetToNonWorkingDay()
         {
             _daylights.NextDaylightTransition = _today.AddDays(6); // a Sunday
 

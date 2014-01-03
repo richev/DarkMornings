@@ -67,17 +67,17 @@ namespace Richev.DarkMornings.Web.Controllers
 
             if (!viewModel.la.HasValue || !viewModel.lo.HasValue)
             {
-                ModelState.AddModelError("Location", "Sorry, we couldn't figure out your location. Depending on your browser, you should see a prompt at the top (or bottom) of this screen saying that Dark Mornings wants to track your location. You'll have to accept this in order for this site to work.");
+                ModelState.AddModelError("Location", "Sorry, we couldn't figure out your location.");
             }
 
             if (ModelState.IsValid)
             {
-                var sunHunter = new Core.DaylightHunter();
+                var daylightHunter = new Core.DaylightHunter();
 
                 var morningCommute = DateTime.Now.Date.AddHours(model.tw.h).AddMinutes(model.tw.m);
                 var eveningCommute = DateTime.Now.Date.AddHours(model.fw.h).AddMinutes(model.fw.m);
 
-                var commuteInfo = sunHunter.GetDaylight(viewModel.la.Value, viewModel.lo.Value, morningCommute, eveningCommute);
+                var commuteInfo = daylightHunter.GetDaylight(viewModel.la.Value, viewModel.lo.Value, morningCommute, eveningCommute);
 
                 var workingDays = viewModel.wd.Select(d => d == UIHelpers.WorkingDayTrue).ToArray();
 

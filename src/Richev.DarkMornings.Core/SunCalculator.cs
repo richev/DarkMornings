@@ -24,10 +24,6 @@ namespace Richev.DarkMornings.Core
 
         private readonly bool _useSummerTime;
 
-        public SunCalculator()
-        {
-        }
-
         public SunCalculator(double longitude, double latitude, double longituteTimeZone, bool useSummerTime)
         {
             _longitude = longitude;

@@ -105,5 +105,14 @@ namespace Richev.DarkMornings.Core.Tests
             Assert.IsTrue(commuteInfo.FromWork.IsCurrentlyInDaylight);
             Assert.AreEqual(null, commuteInfo.FromWork.NextDaylightTransition);
         }
+
+        [Test]
+        public void IsCorrectInNewYork()
+        {
+            var outboundCommuteAt = new DateTime(2014, 6, 24, 12, 0, 0);
+            var returnCommuteAt = new DateTime(2014, 6, 24, 13, 0, 0);
+
+            var commuteInfo = _daylightHunter.GetDaylight(40.67, -73.94, outboundCommuteAt, returnCommuteAt);
+        }
     }
 }

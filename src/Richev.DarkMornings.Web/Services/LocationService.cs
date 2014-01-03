@@ -13,14 +13,7 @@ namespace Richev.DarkMornings.Web.Services
 
                 var doc = XDocument.Load(url);
 
-                XNamespace ns = "gml";
-
-                var coordinates = doc.Root.Element(ns + "featureMember").Element("ipLocation").Element(ns + "pointProperty").Element(ns + "Point").Element(ns + "coordinates").Value;
-
-                var coordParts = coordinates.Split(',');
-
-                latitude = double.Parse(coordParts[0]);
-                longitude = double.Parse(coordParts[1]);
+                ResponseParser.Parse(doc, out latitude, out longitude);
             }
             catch (Exception) // a problem during parsing
             {
@@ -28,5 +21,6 @@ namespace Richev.DarkMornings.Web.Services
                 longitude = null;
             }
         }
+
     }
 }
