@@ -245,13 +245,6 @@ hr.and {
 .share {
     margin-top: 30px;
 }
-.share a {
-    white-space: nowrap;
-}
-
-.share a:first-child {
-    margin-right: 20px;
-}
 a .fa {
     font-size: 30px;
     padding-right: 8px;

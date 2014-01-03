@@ -1,5 +1,15 @@
 ﻿@model Richev.DarkMornings.Web.Models.CommuteInfoModel
 
+<div id="fb-root"></div>
+<script>
+(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=684464021575093";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
 @if (Model.tw.Daylights == null || Model.fw.Daylights == null)
 {
     <p class="question">Ever wonder how much longer you'll be commuting in the dark?</p>
@@ -59,13 +69,14 @@ else
         @UIHelpers.GetJourneyText(Model.fw.Daylights)
     </div>
     <p class="text-info excluding">(excluding Bank and national holidays)</p>
-    <div class="share">
-        <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-size="large" data-url="@Request.Url.Scheme://@Request.Url.Host" data-text="@UIHelpers.GetTweetText(Model)">Tweet this on Twitter</a>
-        <a href="http://facebook.com"><i class="fa fa-facebook-square"></i>Share this on Facebook</a>
-    </div>
-
     <hr class="and" />
-    <a href="@Url.Action("Index", "Home")"><i class="fa fa-sun-o"></i>Have another go...</a>
+    <div>
+        Share this...
+        <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-size="large" data-url="@Request.Url.Scheme://@Request.Url.Host" data-text="@UIHelpers.GetTweetText(Model)">Tweet this on Twitter</a>
+        <div class="fb-share-button" data-href="http://developers.facebook.com/docs/plugins/" data-type="button_count"></div>
+        or 
+        <a href="@Url.Action("Index", "Home")"><i class="fa fa-sun-o"></i>have another go...</a>
+    </div>
 }
 
 @section scripts {

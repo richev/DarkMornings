@@ -21,11 +21,11 @@ namespace Richev.DarkMornings.Web.Controllers
         [HttpGet]
         public ActionResult Index(CommuteInfo model)
         {
-            CommuteInfoViewModel viewModel;
+            CommuteInfoModel viewModel;
 
             if (model == null || model.HasDefaultValues())
             {
-                viewModel = new CommuteInfoViewModel
+                viewModel = new CommuteInfoModel
                 {
                     tw = { h = 8 },
                     fw = { h = 18, m = 30 },
@@ -37,7 +37,7 @@ namespace Richev.DarkMornings.Web.Controllers
                 return View(viewModel);
             }
 
-            viewModel = new CommuteInfoViewModel
+            viewModel = new CommuteInfoModel
                         {
                             tw = model.tw,
                             fw = model.fw,
@@ -67,7 +67,7 @@ namespace Richev.DarkMornings.Web.Controllers
 
             if (!viewModel.la.HasValue || !viewModel.lo.HasValue)
             {
-                ModelState.AddModelError("Location", "Sorry, we couldn't figure out your location.");
+                ModelState.AddModelError("Location", "Sorry, we couldn't figure out your location. Depending on your browser, you should see a prompt at the top (or bottom) of this screen saying that Dark Mornings wants to track your location. You'll have to accept this in order for this site to work.");
             }
 
             if (ModelState.IsValid)
