@@ -33,7 +33,7 @@
             </span>
         </div>
         <div class="accordion">
-            <h3><span class="header-text">Workdays</span> <span class="text-info">Which days do you travel to work? Defaults to Mon-Fri, click to change.</span></h3>
+            <h3><span class="header-text">Workdays</span> <span class="text-info">Which days do you go to work? Defaults to Mon-Fri, click to change.</span></h3>
             <div class="working-days with-icon">
                 <i class="fa fa-road"></i><span>I go to work on</span>
                 <div class="btn-group">
@@ -81,7 +81,17 @@ else
 
 @section scripts {
 
-    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+    <script>
+        !function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (!d.getElementById(id)) {
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "https://platform.twitter.com/widgets.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }
+        }(document, "script", "twitter-wjs");
+    </script>
 
     <script type="text/javascript">
         function storePosition(position) {
@@ -92,7 +102,7 @@ else
             $("#lo").val(longitude.toFixed(2));
         }
 
-        var setWorkingDaysString = function () {
+        var setWorkingDaysString = function() {
             var buttons = $(".working-days .btn-group button");
 
             var wd = "";
@@ -117,8 +127,10 @@ else
         };
 
         $(document).ready(function() {
-            if (Modernizr.geolocation) {
-                navigator.geolocation.getCurrentPosition(storePosition);
+            if ($("#la").val() == "" || $("#lo").val() == "") {
+                if (Modernizr.geolocation) {
+                    navigator.geolocation.getCurrentPosition(storePosition);
+                }
             }
 
             $(".working-days button").click(function() {

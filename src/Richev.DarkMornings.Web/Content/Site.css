@@ -103,7 +103,7 @@ input, select, button {
 .time-selector select {
     padding: 6px;
     font-weight: bold;
-    width: 70px;
+    width: 75px;
     outline: none; /* To prevent orange outline when clicked in Chrome */
 }
 
