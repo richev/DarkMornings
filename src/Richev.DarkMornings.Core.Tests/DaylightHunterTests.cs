@@ -127,7 +127,7 @@ namespace Richev.DarkMornings.Core.Tests
             Assert.AreEqual(new DateTime(2014, 3, 6, 6, 30, 0), commuteInfo.ToWork.NextDaylightTransition);
 
             Assert.IsFalse(commuteInfo.FromWork.IsCurrentlyInDaylight);
-            Assert.AreEqual(new DateTime(2014, 4, 17, 18, 30, 0), commuteInfo.FromWork.NextDaylightTransition);
+            Assert.AreEqual(new DateTime(2014, 3, 30, 19, 12, 0), commuteInfo.FromWork.NextDaylightTransition); // day after DST starts
         }
     }
 }
