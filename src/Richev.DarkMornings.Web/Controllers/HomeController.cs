@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Richev.DarkMornings.Core;
 using Richev.DarkMornings.Web.Models;
 using Richev.DarkMornings.Web.Services;
-using CommuteInfo = Richev.DarkMornings.Web.Models.CommuteInfoModel;
 
 namespace Richev.DarkMornings.Web.Controllers
 {
@@ -17,7 +17,7 @@ namespace Richev.DarkMornings.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index(CommuteInfo model)
+        public ActionResult Index(CommuteInfoModel model)
         {
             CommuteInfoModel viewModel;
 
@@ -71,16 +71,17 @@ namespace Richev.DarkMornings.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                var daylightHunter = new Core.DaylightHunter();
+                var daylightHunter = new DaylightHunter();
 
                 var today = DateTime.Now.Date;
                 
                 // TODO: Use the timezone offset
 
+                var location = new Location { Latitude = viewModel.la.Value, Longitude = viewModel.lo.Value };
                 var outboundCommuteAt = today.AddHours(model.tw.h).AddMinutes(model.tw.m);
                 var returnCommuteAt = today.AddHours(model.fw.h).AddMinutes(model.fw.m);
 
-                var commuteInfo = daylightHunter.GetDaylight(viewModel.la.Value, viewModel.lo.Value, viewModel.tz.Value, outboundCommuteAt, returnCommuteAt);
+                var commuteInfo = daylightHunter.GetDaylight(location, viewModel.tz.Value, outboundCommuteAt, returnCommuteAt);
 
                 var workingDays = viewModel.wd.Select(d => d == UIHelpers.WorkingDayTrue).ToArray();
 

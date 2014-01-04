@@ -9,9 +9,12 @@ namespace Richev.DarkMornings.Core
         /// </summary>
         private const int DaysInYear = 365;
 
-        public CommuteInfo GetDaylight(double latitude, double longitude, double longitudeTimeZone, DateTime outboundCommuteAt, DateTime returnCommuteAt)
+        public CommuteInfo GetDaylight(Location location, double timeZone, DateTime outboundCommuteAt, DateTime returnCommuteAt)
         {
-            var sunCalculator = new SunCalculator(longitude, latitude, longitudeTimeZone, outboundCommuteAt.IsDaylightSavingTime());
+            var sunCalculator = new SunCalculator(
+                location.Longitude,
+                location.Latitude,
+                Utils.CalculateLongitudeTimeZone(timeZone));
 
             var commuteInfo = new CommuteInfo();
 

@@ -22,18 +22,31 @@ namespace Richev.DarkMornings.Core
 
         private readonly double _longituteTimeZone;
 
-        private readonly bool _useSummerTime;
+        /// <summary>
+        /// <para>For locations that use daylight savings, you should set UseSummerTime to the actual daylight savings status.</para>
+        /// <para>For locations that don't use daylight savings, set it to false</para>
+        /// </summary>
+        private bool _useSummerTime;
 
-        public SunCalculator(double longitude, double latitude, double longituteTimeZone, bool useSummerTime)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="longitude"></param>
+        /// <param name="latitude"></param>
+        /// <param name="longituteTimeZone">
+        /// The LongituteTimeZone is the nearest longitude in multiple of 15 of the timezone of which you are calculating the sun rise or sun set.
+        /// </param>
+        public SunCalculator(double longitude, double latitude, double longituteTimeZone)
         {
             _longitude = longitude;
             _latituteInRadians = ConvertDegreeToRadian(latitude);
             _longituteTimeZone = longituteTimeZone;
-            _useSummerTime = useSummerTime;
         }
 
         public DateTime CalculateSunRise(DateTime dateTime)
         {
+            _useSummerTime = dateTime.IsDaylightSavingTime();
+
             int dayNumberOfDateTime = ExtractDayNumber(dateTime);
             double differenceSunAndLocalTime = CalculateDifferenceSunAndLocalTime(dayNumberOfDateTime);
             double declanationOfTheSun = CalculateDeclination(dayNumberOfDateTime);
@@ -44,26 +57,14 @@ namespace Richev.DarkMornings.Core
 
         public DateTime CalculateSunSet(DateTime dateTime)
         {
+            _useSummerTime = dateTime.IsDaylightSavingTime();
+
             int dayNumberOfDateTime = ExtractDayNumber(dateTime);
             double differenceSunAndLocalTime = CalculateDifferenceSunAndLocalTime(dayNumberOfDateTime);
             double declanationOfTheSun = CalculateDeclination(dayNumberOfDateTime);
             double tanSunPosition = CalculateTanSunPosition(declanationOfTheSun);
             int sunSetInMinutes = CalculateSunSetInternal(tanSunPosition, differenceSunAndLocalTime);
             return CreateDateTime(dateTime, sunSetInMinutes);
-        }
-
-        public double CalculateMaximumSolarRadiation(DateTime dateTime)
-        {
-            int dayNumberOfDateTime = ExtractDayNumber(dateTime);
-            double differenceSunAndLocalTime = CalculateDifferenceSunAndLocalTime(dayNumberOfDateTime);
-            int numberOfMinutesThisDay = GetNumberOfMinutesThisDay(dateTime, differenceSunAndLocalTime);
-            double declanationOfTheSun = CalculateDeclination(dayNumberOfDateTime);
-            double sinSunPosition = CalculateSinSunPosition(declanationOfTheSun);
-            double cosSunPosition = CalculateCosSunPosition(declanationOfTheSun);
-            double sinSunHeight = sinSunPosition + cosSunPosition * Math.Cos(2.0 * Math.PI * (numberOfMinutesThisDay + 720.0) / 1440.0) + 0.08;
-            double sunConstantePart = Math.Cos(2.0 * Math.PI * dayNumberOfDateTime);
-            double sunCorrection = 1370.0 * (1.0 + (0.033 * sunConstantePart));
-            return CalculateMaximumSolarRadiationInternal(sinSunHeight, sunCorrection);
         }
 
         internal double CalculateDeclination(int numberOfDaysSinceFirstOfJanuary)
@@ -161,25 +162,6 @@ namespace Richev.DarkMornings.Core
         private static double ConvertDegreeToRadian(double degree)
         {
             return degree * Math.PI / 180;
-        }
-
-        private static double CalculateMaximumSolarRadiationInternal(double sinSunHeight, double sunCorrection)
-        {
-            double maximumSolarRadiation;
-            if ((sinSunHeight > 0.0) && Math.Abs(0.25 / sinSunHeight) < 50.0)
-            {
-                maximumSolarRadiation = sunCorrection * sinSunHeight * Math.Exp(-0.25 / sinSunHeight);
-            }
-            else
-            {
-                maximumSolarRadiation = 0;
-            }
-            return maximumSolarRadiation;
-        }
-
-        private static int GetNumberOfMinutesThisDay(DateTime dateTime, double differenceSunAndLocalTime)
-        {
-            return dateTime.Hour * 60 + dateTime.Minute + (int)differenceSunAndLocalTime;
         }
     }
 }
