@@ -14,6 +14,8 @@
 {
     <p class="question">Ever wonder how much longer you'll be commuting in the dark?</p>
 
+    @Html.ValidationSummary()
+
     using (Html.BeginForm("Index", "Home", FormMethod.Get))
     {
         @Html.HiddenFor(model => model.la)
@@ -52,8 +54,6 @@
             <button class="btn btn-lg btn-success" type="submit">Count your journeys &raquo;</button>
         </div>
     }
-
-    @Html.ValidationSummary()
 }
 else
 {
