@@ -19,3 +19,5 @@
 <h3>And?</h3>
 <p>The timezone of your computer/tablet/phone is used, so if you're on the road and your PC timezone is not set to the local timezone then you may get incorrect results.</p>
 <p>Depending on the times of your commutes, it may be that the switch to or from daylight-savings time can plunge you back into darkness. To keep things simple, @Html.ActionLink("Dark Mornings", "Index", "Home") won't tell you if this is the case. It just lets you know the first dates when your commutes will be completely in the light or dark.</p>
+<p>The number of journeys shown is the count of working days between now and the first date when a commute is completely in the light (or dark).</p>
+<p>If the first completely light/dark commute happens to land on a non-working day then the date reported will be the next or previous working day, as appropriate.</p>
