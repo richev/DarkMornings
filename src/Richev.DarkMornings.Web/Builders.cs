@@ -9,7 +9,8 @@ namespace Richev.DarkMornings.Web
     {
         public static DaylightInfo BuildDaylights(DateTime today, Core.DaylightInfo daylightInfo, Commute commuteType, bool[] workingDays)
         {
-            int daysToTransition = 0;
+            var daysToTransition = 0;
+            DateTime? nextWorkingDayDaylightTransition = null;
 
             if (daylightInfo.NextDaylightTransition.HasValue)
             {
@@ -22,32 +23,20 @@ namespace Richev.DarkMornings.Web
                     days.Add(day);
                 }
 
-                // TODO: Get this sorted out
-
-                switch (daylightInfo.TransitionType)
+                // Nudge to the first working day, if necessary
+                while (!workingDays[(int)days.Last().DayOfWeek])
                 {
-                    case Core.DaylightTransition.SunRise:
-                        while (!workingDays[(int)days.Last().DayOfWeek])
-                        {
-                            days.Add(days.Last().AddDays(1));
-                        }
-                        break;
-
-                    case Core.DaylightTransition.SunSet:
-                        while (!workingDays[(int)days.Last().DayOfWeek])
-                        {
-                            days.RemoveAt(days.Count - 1);
-                        }
-                        break;
+                    days.Add(days.Last().AddDays(1));
                 }
 
                 daysToTransition = days.Count(d => workingDays[(int)d.DayOfWeek]);
+                nextWorkingDayDaylightTransition = days.Last();
             }
 
             return new DaylightInfo
             {
                 IsCurrentlyInDaylight = daylightInfo.IsCurrentlyInDaylight,
-                NextWorkingDayDaylightTransition = daylightInfo.NextDaylightTransition, // not quite!
+                NextWorkingDayDaylightTransition = nextWorkingDayDaylightTransition,
                 CommuteType = commuteType,
                 NumberOfDaysToTransition = daysToTransition
             };

@@ -53,9 +53,9 @@ namespace Richev.DarkMornings.Web.Tests
 
             var daylights = Builders.BuildDaylights(_today, _daylights, Commute.FromWork, _workingDays);
 
-            Assert.AreEqual(_today.AddDays(4), daylights.NextWorkingDayDaylightTransition); // not quite the same as the NextDaylightTransition
+            Assert.AreEqual(_today.AddDays(7), daylights.NextWorkingDayDaylightTransition); // not quite the same as the NextDaylightTransition
             Assert.AreEqual(Commute.FromWork, daylights.CommuteType);
-            Assert.AreEqual(4, daylights.NumberOfDaysToTransition); // Tuesday to Friday (ignoring the non-working Saturday and Sunday)
+            Assert.AreEqual(5, daylights.NumberOfDaysToTransition); // Tuesday to Friday, plus the next Monday
             Assert.IsFalse(daylights.IsCurrentlyInDaylight);
         }
     }
