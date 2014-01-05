@@ -58,7 +58,7 @@ namespace Richev.DarkMornings.Web
             if (daylightInfo.NextWorkingDayDaylightTransition.HasValue)
             {
                 journeyText = string.Format(
-                    "{0}<span class=\"days-more\">{1}<span class=\"count\">{2} more</span><span>{3} journeys</span></span><span class=\"until\"><span>{4},<br />until</span></span><span class=\"calendar\"><span class=\"day\">{5:dddd}</span> <span class=\"date\">{5:%d}</span> <span class=\"month\">{5:MMMM}</span></span>",
+                    "<div class=\"days-more\">{0}<div class=\"days-more-content\">{1}<span class=\"count\">{2} more</span><span>{3} journeys</span></div></div><div class=\"until\"><span>{4},</span> until</div><div class=\"calendar\"><span class=\"day\">{5:dddd}</span> <span class=\"date\">{5:%d}</span> <span class=\"month\">{5:MMMM}</span></div>",
                     GetDaylightIcon(daylightInfo.IsCurrentlyInDaylight),
                     GetCommuteDirectionIcon(daylightInfo.CommuteType),
                     daylightInfo.NumberOfDaysToTransition,
@@ -69,7 +69,7 @@ namespace Richev.DarkMornings.Web
             else
             {
                 journeyText = string.Format(
-                    "<span>{0}Your journey {1} is always in the <strong>{2}</strong></span>",
+                    "<div>{0}Your journey {1} is always in the <strong>{2}</strong></div>",
                     GetDaylightIcon(daylightInfo.IsCurrentlyInDaylight),
                     GetCommuteText(daylightInfo.CommuteType),
                     GetDaylightText(daylightInfo.IsCurrentlyInDaylight));

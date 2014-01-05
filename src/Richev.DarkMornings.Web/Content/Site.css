@@ -142,14 +142,13 @@ input, select, button {
     background-color: white;
     border: 2px solid rgb(243, 156, 18);
     color: rgb(243, 156, 18);
-    width: 150px;
-    /*height: 144px;*/
+    width: 6.5em;
     border-radius: 16px;
     line-height:normal;
 }
 .calendar span {
     display: block;
-    padding: 8px 0;
+    padding: 0.3em 0;
 }
 .calendar .day {
     background-color: rgb(243, 156, 18);
@@ -157,7 +156,8 @@ input, select, button {
     border-radius: 12px 12px 0 0;
 }
 .calendar .date {
-    font-size: 50px;
+    font-size: 220%;
+    padding: 0.1em 0 0 0;
     font-weight: bold;
     padding-bottom: 0;
 }
@@ -166,22 +166,26 @@ input, select, button {
 }
 
 .until {
-    width: 150px;
+    width: 6.5em;
     padding-top: 48px;
     text-align: center;
     line-height: 1;
 }
+.until span {
+    display: block;
+}
 
 .days-more {
-    display: block;
-    width: 260px;
-    height: 90px;
+    width: 11.5em;
     margin-top: 26px;
-    padding: 16px 16px;
-    border-radius: 16px;
-    color: white;
-    background-color: rgb(52, 152, 219);
     line-height: 1;
+}
+.days-more-content {
+    padding: 0.7em;
+    color: white;
+    border-radius: 16px;
+    background-color: rgb(52, 152, 219);
+    z-index: 20;
 }
 .days-more .fa {
     color: rgb(52, 152, 219);
@@ -190,51 +194,52 @@ input, select, button {
     display: block;
 }
 .days-more .count {
-    font-size: 30px;
+    font-size: 140%;
     font-weight: bold;
     margin-bottom: 8px;
 }
-.results > span {
+.results > div {
     float: left;
 }
 .results {
     clear: both;
-    width: 560px;
 }
 hr.and {
     border: 4px solid #ecf0f1;
     border-radius: 4px;
 }
 .results.journey {
-    height: 152px;
+    width: 24.5em;
+    height: 148px;
+    margin: 0 auto;
 }
 
 .with-icon {
     position: relative;
 }
-.with-icon span {
+.with-icon span, .with-icon div {
     z-index: 20;
     position: relative;
 }
 
 .with-icon .fa {
     color: #ecf0f1;
-    font-size: 60px;
+    font-size: 250%;
     position: absolute;
-    left: -22px;
-    top: -10px;
+    left: -0.45em;
+    top: -0.2em;
     z-index: 10;
 }
 
 .results.with-icon .fa {
-    top: 10px;
+    top: -0.2em;
 }
 
 .with-icon .fa.commute-direction {
     color: white;
-    font-size: 80px;
-    left: 180px;
-    top: 6px;
+    font-size: 380%;
+    left: 2em;
+    top: 0.05em;
 }
 
 .excluding {
@@ -250,7 +255,7 @@ a .fa {
     padding-right: 8px;
 }
 .question {
-    margin-bottom: 20px;
+    margin-bottom: 1em;
 }
 
 .accordion > .ui-accordion-header-active .text-info {
@@ -308,9 +313,10 @@ a .fa {
 }
 
 @media (max-width: 768px) {
-  h1 .fa {
-      font-size: 70px;
-  }
+    h1 .fa {
+        font-size: 70px;
+    }
+
     h1 .fa-sun-o {
         left: 136px;
         top: -30px;
@@ -321,6 +327,23 @@ a .fa {
         left: 205px;
     }
 
+    .results > div {
+        float: inherit;
+        margin: 0 auto;
+    }
+
+    .results.journey {
+        width: 100%;
+        height: auto;
+    }
+
+    .until {
+        width: auto;
+        padding: 0.8em 0;
+    }
+    .until span {
+        display: inline;
+    }
 }
 @media (min-width: 480px) {
     body {
@@ -354,16 +377,12 @@ a .fa {
         font-size: 12px;
     }
 
-    .fa {
-        display: none;
-    }
-
     .container {
         padding: 0 5px;
     }
 
     .question {
-        margin-top: 10px;
+        margin-top: 1em;
     }
 
     .container .jumbotron {
@@ -386,6 +405,10 @@ a .fa {
     .btn-lg {
         padding: 10px 20px;
         font-size: 16px;
+    }
+
+    form .with-icon .fa {
+        left: 0;
     }
 }
 
