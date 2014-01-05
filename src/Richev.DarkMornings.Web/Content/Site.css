@@ -187,6 +187,16 @@ input, select, button {
     background-color: rgb(52, 152, 219);
     z-index: 20;
 }
+.days-more.always {
+    width: 16.7em;
+}
+.days-more-content.always {
+    padding: 1.05em 3em 1.05em 0.7em;
+}
+.days-more-content.always .fa.commute-direction {
+    left: 3.4em;
+}
+
 .days-more .fa {
     color: rgb(52, 152, 219);
 }
@@ -235,7 +245,7 @@ hr.and {
     top: -0.2em;
 }
 
-.with-icon .fa.commute-direction {
+.days-more-content .fa.commute-direction {
     color: white;
     font-size: 380%;
     left: 2em;
