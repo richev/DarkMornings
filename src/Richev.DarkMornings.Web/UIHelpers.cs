@@ -189,7 +189,7 @@ namespace Richev.DarkMornings.Web
         public static string GetTweetText(CommuteInfoModel model)
         {
             var tweetText = string.Format(
-                "I have {0} more {1} journeys to work and {2} more {3} journeys home!",
+                "I have {0} more {1} journeys to work and {2} more {3} journeys from work!",
                 model.tw.Daylights.NumberOfDaysToTransition,
                 GetDaylightText(model.tw.Daylights.IsCurrentlyInDaylight),
                 model.fw.Daylights.NumberOfDaysToTransition,
