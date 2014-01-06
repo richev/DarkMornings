@@ -30,7 +30,7 @@
             </span>
         </div>
         <div class="with-icon">
-            <i class="fa fa-clock-o"></i><span>I get home after work at</span>
+            <i class="fa fa-clock-o"></i><span>I get home from work at</span>
             <span class="time-selector">
                 @Html.DropDownListFor(model => model.fw.h, UIHelpers.GetHours(Model.fw.h))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.fw.m, UIHelpers.GetMinutes(Model.fw.m))
             </span>
@@ -57,7 +57,7 @@
 }
 else
 {
-    <p class="question">You get to work at @UIHelpers.FormatCommuteTime(Model.tw) and get back home at @UIHelpers.FormatCommuteTime(Model.fw).</p>
+    <p class="question">You get to work at @UIHelpers.FormatCommuteTime(Model.tw) and return from work at @UIHelpers.FormatCommuteTime(Model.fw).</p>
     <p>You do this @UIHelpers.FormatDaysCount(@Model.wd) a week; every @UIHelpers.FormatWorkingDays(Model.wd.Select(d => d == UIHelpers.WorkingDayTrue).ToArray()).</p>
     <h3>This means&hellip;</h3>
     <div class="results journey with-icon">
