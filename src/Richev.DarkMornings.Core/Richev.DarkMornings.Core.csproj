@@ -46,6 +46,7 @@
     <Compile Include="SunCalculator.cs" />
     <Compile Include="DaylightHunter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimeZones.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

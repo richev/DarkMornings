@@ -30,7 +30,19 @@ namespace Richev.DarkMornings.Core.Tests
             Assert.IsFalse(utcDateTime.IsDaylightSavingTime());
             var dateTime = Utils.UtcToUserTimeZone(utcDateTime, 0);
 
-            Assert.IsTrue(Utils.IsGmtDaylightSavingTime(dateTime));
+            Assert.IsTrue(Utils.IsGmtDaylightSavingTime(dateTime, 0));
+        }
+
+        [Test]
+        public void AllTimeZones()
+        {
+            var tzCollection = TimeZoneInfo.GetSystemTimeZones();
+
+            foreach (var tz in tzCollection)
+            {
+                Console.WriteLine("{{ {0},  \"{1}\" }},", tz.BaseUtcOffset.Hours + tz.BaseUtcOffset.Minutes / 60d, tz.Id);
+            }
+
         }
     }
 }

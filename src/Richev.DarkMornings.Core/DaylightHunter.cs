@@ -9,27 +9,27 @@ namespace Richev.DarkMornings.Core
         /// </summary>
         private const int DaysInYear = 365;
 
-        public CommuteInfo GetDaylight(Location location, double timeZone, DateTime outboundCommuteStart, DateTime outboundCommuteEnd, DateTime returnCommuteStart, DateTime returnCommuteEnd)
+        public CommuteInfo GetDaylight(Location location, double timeZoneOffset, DateTime outboundCommuteStart, DateTime outboundCommuteEnd, DateTime returnCommuteStart, DateTime returnCommuteEnd)
         {
             var sunCalculator = new SunCalculator(
                 location.Longitude,
                 location.Latitude,
-                Utils.CalculateLongitudeTimeZone(timeZone));
+                Utils.CalculateLongitudeTimeZone(timeZoneOffset));
 
             var commuteInfo = new CommuteInfo();
 
-            commuteInfo.ToWork = CalculateDaylightInfo(outboundCommuteStart, outboundCommuteEnd, sunCalculator);
-            commuteInfo.FromWork = CalculateDaylightInfo(returnCommuteStart, returnCommuteEnd, sunCalculator);
+            commuteInfo.ToWork = CalculateDaylightInfo(outboundCommuteStart, outboundCommuteEnd, sunCalculator, timeZoneOffset);
+            commuteInfo.FromWork = CalculateDaylightInfo(returnCommuteStart, returnCommuteEnd, sunCalculator, timeZoneOffset);
 
             return commuteInfo;
         }
 
-        private DaylightInfo CalculateDaylightInfo(DateTime commuteStart, DateTime commuteEnd, SunCalculator sunCalculator)
+        private DaylightInfo CalculateDaylightInfo(DateTime commuteStart, DateTime commuteEnd, SunCalculator sunCalculator, double timeZoneOffset)
         {
             var daylightInfo = new DaylightInfo();
 
-            var sunRise = sunCalculator.CalculateSunRise(commuteStart.Date);
-            var sunSet = sunCalculator.CalculateSunSet(commuteStart.Date);
+            var sunRise = sunCalculator.CalculateSunRise(commuteStart.Date, timeZoneOffset);
+            var sunSet = sunCalculator.CalculateSunSet(commuteStart.Date, timeZoneOffset);
             var commuteIsAfterSunrise = commuteStart.TimeOfDay >= sunRise.TimeOfDay;
             var commuteIsBeforeSunSet = commuteEnd.TimeOfDay <= sunSet.TimeOfDay;
 
@@ -45,8 +45,8 @@ namespace Richev.DarkMornings.Core
 
             while (!DaylightTransitionHappened(sunRise, sunSet, commuteStart, commuteEnd, daylightInfo.IsCurrentlyInDaylight) && d <= DaysInYear)
             {
-                sunRise = sunCalculator.CalculateSunRise(commuteStart.Date.AddDays(++d));
-                sunSet = sunCalculator.CalculateSunSet(commuteEnd.Date.AddDays(d));
+                sunRise = sunCalculator.CalculateSunRise(commuteStart.Date.AddDays(++d), timeZoneOffset);
+                sunSet = sunCalculator.CalculateSunSet(commuteEnd.Date.AddDays(d), timeZoneOffset);
             }
             if (DaylightTransitionHappened(sunRise, sunSet, commuteStart, commuteEnd, daylightInfo.IsCurrentlyInDaylight))
             {

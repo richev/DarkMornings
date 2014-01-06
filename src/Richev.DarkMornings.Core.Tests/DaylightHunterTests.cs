@@ -13,7 +13,7 @@ namespace Richev.DarkMornings.Core.Tests
         private const int TimeZoneNewYork = -5;
 
         private readonly Location _locationSydney = new Location { Latitude = -33.859972, Longitude = 151.211111 };
-        private const int TimeZoneSydney = 11;
+        private const int TimeZoneSydney = 10;
 
         private DaylightHunter _daylightHunter;
 
@@ -56,19 +56,18 @@ namespace Richev.DarkMornings.Core.Tests
         }
 
         [Test]
-        [Ignore("Pending fuguring out DST correctly")]
         public void IsCorrectInSydneyWinter()
         {
-            var outboundCommuteStart = new DateTime(2014, 6, 24, 7, 10, 0);
-            var returnCommuteStart = new DateTime(2014, 6, 24, 19, 0, 0);
+            var outboundCommuteStart = new DateTime(2014, 6, 24, 6, 10, 0);
+            var returnCommuteStart = new DateTime(2014, 6, 24, 18, 0, 0);
 
             var commuteInfo = _daylightHunter.GetDaylight(_locationSydney, TimeZoneSydney, outboundCommuteStart, outboundCommuteStart.AddMinutes(30), returnCommuteStart, returnCommuteStart.AddMinutes(30));
 
             Assert.IsFalse(commuteInfo.ToWork.IsCurrentlyInDaylight);
-            Assert.AreEqual(new DateTime(2014, 10, 20, 7, 10, 0), commuteInfo.ToWork.NextDaylightTransition);
+            Assert.AreEqual(new DateTime(2014, 9, 5, 6, 10, 0), commuteInfo.ToWork.NextDaylightTransition);
 
             Assert.IsFalse(commuteInfo.FromWork.IsCurrentlyInDaylight);
-            Assert.AreEqual(new DateTime(2014, 8, 26, 19, 30, 0), commuteInfo.FromWork.NextDaylightTransition);
+            Assert.AreEqual(new DateTime(2014, 10, 5, 18, 30, 0), commuteInfo.FromWork.NextDaylightTransition); // not yet right
         }
 
         [Test]
@@ -140,7 +139,7 @@ namespace Richev.DarkMornings.Core.Tests
             Assert.AreEqual(new DateTime(2014, 3, 6, 6, 30, 0), commuteInfo.ToWork.NextDaylightTransition);
 
             Assert.IsFalse(commuteInfo.FromWork.IsCurrentlyInDaylight);
-            Assert.AreEqual(new DateTime(2014, 3, 31, 19, 13, 0), commuteInfo.FromWork.NextDaylightTransition);
+            Assert.AreEqual(new DateTime(2014, 3, 19, 19, 00, 0), commuteInfo.FromWork.NextDaylightTransition);
         }
     }
 }

@@ -4,25 +4,31 @@ namespace Richev.DarkMornings.Core
 {
     public static class Utils
     {
-        public static double CalculateLongitudeTimeZone(double timeZone)
+        public static double CalculateLongitudeTimeZone(double timeZoneOffset)
         {
-            return timeZone * 15;
+            return timeZoneOffset * 15;
         }
 
         public static DateTime UtcToUserTimeZone(DateTime dateTime, double timeZoneOffset)
         {
             dateTime = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
 
-            var timeZone = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
+            var timeZoneName = TimeZones.Selected[timeZoneOffset];
+
+            var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneName);
 
             var userDateTime = TimeZoneInfo.ConvertTime(dateTime, timeZone);
 
             return userDateTime;
         }
 
-        public static bool IsGmtDaylightSavingTime(DateTime dateTime)
+        public static bool IsGmtDaylightSavingTime(DateTime dateTime, double timeZoneOffset)
         {
-            return TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time").IsDaylightSavingTime(dateTime);
+            var timeZoneName = TimeZones.Selected[timeZoneOffset];
+
+            var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneName);
+
+            return timeZone.IsDaylightSavingTime(dateTime);
         }
 
         public static TimeSpan GetTimeOfDayDifference(DateTime d1, DateTime d2)
@@ -33,6 +39,12 @@ namespace Richev.DarkMornings.Core
             }
 
             return d2 - d1;
+        }
+
+
+        public static void AllTimeZones()
+        {
+            var tzCollection = TimeZoneInfo.GetSystemTimeZones();
         }
     }
 }

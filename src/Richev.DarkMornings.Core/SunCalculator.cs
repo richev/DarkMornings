@@ -43,9 +43,9 @@ namespace Richev.DarkMornings.Core
             _longituteTimeZone = longituteTimeZone;
         }
 
-        public DateTime CalculateSunRise(DateTime dateTime)
+        public DateTime CalculateSunRise(DateTime dateTime, double timeZoneOffset)
         {
-            _useSummerTime = Utils.IsGmtDaylightSavingTime(dateTime);
+            _useSummerTime = Utils.IsGmtDaylightSavingTime(dateTime, timeZoneOffset);
 
             int dayNumberOfDateTime = ExtractDayNumber(dateTime);
             double differenceSunAndLocalTime = CalculateDifferenceSunAndLocalTime(dayNumberOfDateTime);
@@ -55,9 +55,9 @@ namespace Richev.DarkMornings.Core
             return CreateDateTime(dateTime, sunRiseInMinutes);
         }
 
-        public DateTime CalculateSunSet(DateTime dateTime)
+        public DateTime CalculateSunSet(DateTime dateTime, double timeZoneOffset)
         {
-            _useSummerTime = Utils.IsGmtDaylightSavingTime(dateTime);
+            _useSummerTime = Utils.IsGmtDaylightSavingTime(dateTime, timeZoneOffset);
 
             int dayNumberOfDateTime = ExtractDayNumber(dateTime);
             double differenceSunAndLocalTime = CalculateDifferenceSunAndLocalTime(dayNumberOfDateTime);
