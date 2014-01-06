@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using NUnit.Framework;
 
 namespace Richev.DarkMornings.Core.Tests
@@ -23,15 +22,15 @@ namespace Richev.DarkMornings.Core.Tests
             Assert.AreEqual(-75, longitudeTimeZone);
         }
 
-    [Test]
-    public void UtcToUserTimeZoneShouldWork()
-    {
-        var utcDateTime = new DateTime(2014, 6, 1, 12, 0, 0, DateTimeKind.Utc);
+        [Test]
+        public void UtcToUserTimeZoneShouldWork()
+        {
+            var utcDateTime = new DateTime(2014, 6, 1, 12, 0, 0, DateTimeKind.Utc);
 
-        Assert.IsFalse(utcDateTime.IsDaylightSavingTime());
-        var dateTime = Utils.UtcToUserTimeZone(utcDateTime, 0);
+            Assert.IsFalse(utcDateTime.IsDaylightSavingTime());
+            var dateTime = Utils.UtcToUserTimeZone(utcDateTime, 0);
 
-        Assert.IsTrue(dateTime.IsDaylightSavingTime());
-    }
+            Assert.IsTrue(Utils.IsGmtDaylightSavingTime(dateTime));
+        }
     }
 }

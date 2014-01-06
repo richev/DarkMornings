@@ -45,7 +45,7 @@ namespace Richev.DarkMornings.Core
 
         public DateTime CalculateSunRise(DateTime dateTime)
         {
-            _useSummerTime = dateTime.IsDaylightSavingTime();
+            _useSummerTime = Utils.IsGmtDaylightSavingTime(dateTime);
 
             int dayNumberOfDateTime = ExtractDayNumber(dateTime);
             double differenceSunAndLocalTime = CalculateDifferenceSunAndLocalTime(dayNumberOfDateTime);
@@ -57,7 +57,7 @@ namespace Richev.DarkMornings.Core
 
         public DateTime CalculateSunSet(DateTime dateTime)
         {
-            _useSummerTime = dateTime.IsDaylightSavingTime();
+            _useSummerTime = Utils.IsGmtDaylightSavingTime(dateTime);
 
             int dayNumberOfDateTime = ExtractDayNumber(dateTime);
             double differenceSunAndLocalTime = CalculateDifferenceSunAndLocalTime(dayNumberOfDateTime);
