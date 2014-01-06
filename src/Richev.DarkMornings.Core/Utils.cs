@@ -24,5 +24,15 @@ namespace Richev.DarkMornings.Core
         {
             return TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time").IsDaylightSavingTime(dateTime);
         }
+
+        public static TimeSpan GetTimeOfDayDifference(DateTime d1, DateTime d2)
+        {
+            if (d1.TimeOfDay.Ticks > d2.TimeOfDay.Ticks)
+            {
+                return d1 - d2;
+            }
+
+            return d2 - d1;
+        }
     }
 }

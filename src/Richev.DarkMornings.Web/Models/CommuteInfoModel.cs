@@ -27,6 +27,13 @@ namespace Richev.DarkMornings.Web.Models
         public double? lo { get; set; }
 
         /// <summary>
+        /// Journey duration minutes
+        /// </summary>
+        [DisplayName("journey duration minutes (d)")]
+        [Range(5, 120)]
+        public int d { get; set; }
+
+        /// <summary>
         /// Timezone hours offset
         /// </summary>
         [DisplayName("timezone hours offset (wd)")]
@@ -59,7 +66,8 @@ namespace Richev.DarkMornings.Web.Models
                    tw.h == 0 &&
                    tw.m == 0 &&
                    fw.h == 0 &&
-                   fw.m == 0;
+                   fw.m == 0 &&
+                   d == 0;
         }
     }
 }

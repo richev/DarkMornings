@@ -24,21 +24,27 @@
         @Html.HiddenFor(model => model.tz)
         <h3>Timings</h3>
         <div class="with-icon">
-            <i class="fa fa-clock-o"></i><span>I get to work at</span>
+            <i class="fa fa-arrow-circle-o-right"></i><span>I leave home at</span>
             <span class="time-selector">
                 @Html.DropDownListFor(model => model.tw.h, UIHelpers.GetHours(Model.tw.h))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.tw.m, UIHelpers.GetMinutes(Model.tw.m))
             </span>
         </div>
         <div class="with-icon">
-            <i class="fa fa-clock-o"></i><span>I get home from work at</span>
+            <i class="fa fa-arrow-circle-o-left"></i><span>I leave work at</span>
             <span class="time-selector">
                 @Html.DropDownListFor(model => model.fw.h, UIHelpers.GetHours(Model.fw.h))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.fw.m, UIHelpers.GetMinutes(Model.fw.m))
+            </span>
+        </div>
+        <div class="with-icon">
+            <i class="fa fa-clock-o"></i><span>My journey takes</span>
+            <span class="duration-selector">
+                @Html.DropDownListFor(model => model.d, UIHelpers.GetJourneyDurations(Model.d))
             </span>
         </div>
         <div class="accordion">
             <h3><span class="header-text">Workdays</span> <span class="text-info">Which days do you go to work? Defaults to Mon-Fri, click to change.</span></h3>
             <div class="working-days with-icon">
-                <i class="fa fa-road"></i><span>I go to work on</span>
+                <i class="fa fa-exchange"></i><span>I go to work on</span>
                 <div class="btn-group">
                     <button class="btn">Sun</button>
                     <button class="btn">Mon</button>
@@ -57,7 +63,7 @@
 }
 else
 {
-    <p class="question">You get to work at @UIHelpers.FormatCommuteTime(Model.tw) and return from work at @UIHelpers.FormatCommuteTime(Model.fw).</p>
+    <p class="question">Your journey to work is from @UIHelpers.FormatCommuteTime(Model.tw)&nbsp;to&nbsp;@UIHelpers.FormatCommuteTime(Builders.BuildEndCommuteTime(Model.tw, Model.d)) and your journey back home is from @UIHelpers.FormatCommuteTime(Model.fw)&nbsp;to&nbsp;@UIHelpers.FormatCommuteTime(Builders.BuildEndCommuteTime(Model.fw, Model.d)).</p>
     <p>You do this @UIHelpers.FormatDaysCount(@Model.wd) a week; every @UIHelpers.FormatWorkingDays(Model.wd.Select(d => d == UIHelpers.WorkingDayTrue).ToArray()).</p>
     <h3>This means&hellip;</h3>
     <div class="results journey with-icon">
@@ -99,6 +105,10 @@ else
 
             $("#la").val(latitude.toFixed(2));
             $("#lo").val(longitude.toFixed(2));
+        }
+
+        function failPosition(e) {
+            alert("Your location could not be figured out (" + e.message + ").\nThere should be a setting somewhere on your device that will allow this.\nFor now, we'll try to find this out using your IP address.");
         }
 
         var setWorkingDaysString = function() {
@@ -148,8 +158,10 @@ else
 
         $(document).ready(function() {
             if ($("#la").val() == "" || $("#lo").val() == "") {
-                if (Modernizr.geolocation) {
-                    navigator.geolocation.getCurrentPosition(storePosition);
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(storePosition, failPosition);
+                } else {
+                    alert("It looks like you're using a browser that won't tell us your location.\nWe'll try to find this out using your IP address instead.");
                 }
             }
 

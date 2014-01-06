@@ -51,6 +51,34 @@ namespace Richev.DarkMornings.Web
             return minutes;
         }
 
+        public static List<SelectListItem> GetJourneyDurations(int selectedJourneyDuration)
+        {
+            var jds = new List<KeyValuePair<string, int>> 
+                     {
+                         new KeyValuePair<string, int>("5 minutes", 5),
+                         new KeyValuePair<string, int>("15 minutes", 15),
+                         new KeyValuePair<string, int>("30 minutes", 30),
+                         new KeyValuePair<string, int>("45 minutes", 45),
+                         new KeyValuePair<string, int>("1 hour", 60),
+                         new KeyValuePair<string, int>("1½ hours", 90),
+                         new KeyValuePair<string, int>("2 hours", 120)
+                     };
+
+            var journeyDurations = new List<SelectListItem>();
+
+            foreach (var jd in jds)
+            {
+                journeyDurations.Add(new SelectListItem
+                {
+                    Text = jd.Key,
+                    Value = jd.Value.ToString(),
+                    Selected = jd.Value == selectedJourneyDuration
+                });
+            }
+
+            return journeyDurations;
+        }
+
         public static HtmlString GetJourneyText(DaylightInfo daylightInfo)
         {
             string journeyText;
@@ -130,7 +158,7 @@ namespace Richev.DarkMornings.Web
                     return "to work";
 
                 case Commute.FromWork:
-                    return "from work";
+                    return "back home";
 
                 default:
                     throw new ArgumentOutOfRangeException("commuteType");

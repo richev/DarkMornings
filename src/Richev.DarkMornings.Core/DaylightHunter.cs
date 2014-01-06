@@ -9,7 +9,7 @@ namespace Richev.DarkMornings.Core
         /// </summary>
         private const int DaysInYear = 365;
 
-        public CommuteInfo GetDaylight(Location location, double timeZone, DateTime outboundCommuteAt, DateTime returnCommuteAt)
+        public CommuteInfo GetDaylight(Location location, double timeZone, DateTime outboundCommuteStart, DateTime outboundCommuteEnd, DateTime returnCommuteStart, DateTime returnCommuteEnd)
         {
             var sunCalculator = new SunCalculator(
                 location.Longitude,
@@ -18,39 +18,39 @@ namespace Richev.DarkMornings.Core
 
             var commuteInfo = new CommuteInfo();
 
-            commuteInfo.ToWork = CalculateDaylightInfo(outboundCommuteAt, sunCalculator);
-            commuteInfo.FromWork = CalculateDaylightInfo(returnCommuteAt, sunCalculator);
+            commuteInfo.ToWork = CalculateDaylightInfo(outboundCommuteStart, outboundCommuteEnd, sunCalculator);
+            commuteInfo.FromWork = CalculateDaylightInfo(returnCommuteStart, returnCommuteEnd, sunCalculator);
 
             return commuteInfo;
         }
 
-        private DaylightInfo CalculateDaylightInfo(DateTime commuteAt, SunCalculator sunCalculator)
+        private DaylightInfo CalculateDaylightInfo(DateTime commuteStart, DateTime commuteEnd, SunCalculator sunCalculator)
         {
             var daylightInfo = new DaylightInfo();
 
-            var sunRise = sunCalculator.CalculateSunRise(commuteAt);
-            var sunSet = sunCalculator.CalculateSunSet(commuteAt);
-            var commuteIsAfterSunrise = commuteAt.TimeOfDay >= sunRise.TimeOfDay;
-            var commuteIsBeforeSunSet = commuteAt.TimeOfDay <= sunSet.TimeOfDay;
+            var sunRise = sunCalculator.CalculateSunRise(commuteStart.Date);
+            var sunSet = sunCalculator.CalculateSunSet(commuteStart.Date);
+            var commuteIsAfterSunrise = commuteStart.TimeOfDay >= sunRise.TimeOfDay;
+            var commuteIsBeforeSunSet = commuteEnd.TimeOfDay <= sunSet.TimeOfDay;
 
             daylightInfo.IsCurrentlyInDaylight = commuteIsAfterSunrise && commuteIsBeforeSunSet;
 
             var d = 0;
 
-            while (!DaylightTransitionHappened(sunRise, sunSet, commuteAt, daylightInfo.IsCurrentlyInDaylight) && d <= DaysInYear)
+            while (!DaylightTransitionHappened(sunRise, sunSet, commuteStart, commuteEnd, daylightInfo.IsCurrentlyInDaylight) && d <= DaysInYear)
             {
-                sunRise = sunCalculator.CalculateSunRise(commuteAt.AddDays(++d));
-                sunSet = sunCalculator.CalculateSunSet(commuteAt.AddDays(d));
+                sunRise = sunCalculator.CalculateSunRise(commuteStart.Date.AddDays(++d));
+                sunSet = sunCalculator.CalculateSunSet(commuteEnd.Date.AddDays(d));
             }
-            if (DaylightTransitionHappened(sunRise, sunSet, commuteAt, daylightInfo.IsCurrentlyInDaylight))
+            if (DaylightTransitionHappened(sunRise, sunSet, commuteStart, commuteEnd, daylightInfo.IsCurrentlyInDaylight))
             {
                 // We need to work out on which edge the transition happened
-                if (commuteIsAfterSunrise != (commuteAt.TimeOfDay >= sunRise.TimeOfDay))
+                if (commuteIsAfterSunrise != (commuteStart.TimeOfDay >= sunRise.TimeOfDay))
                 {
                     daylightInfo.NextDaylightTransition = sunRise;
                     daylightInfo.TransitionType = DaylightTransition.SunRise;
                 }
-                else if (commuteIsBeforeSunSet != (commuteAt.TimeOfDay <= sunSet.TimeOfDay))
+                else if (commuteIsBeforeSunSet != (commuteEnd.TimeOfDay <= sunSet.TimeOfDay))
                 {
                     daylightInfo.NextDaylightTransition = sunSet;
                     daylightInfo.TransitionType = DaylightTransition.SunSet;
@@ -64,11 +64,11 @@ namespace Richev.DarkMornings.Core
             return daylightInfo;
         }
 
-        private bool DaylightTransitionHappened(DateTime sunRise, DateTime sunSet, DateTime commuteAt, bool startedInDaylight)
+        private bool DaylightTransitionHappened(DateTime sunRise, DateTime sunSet, DateTime commuteStart, DateTime commuteEnd, bool wasInDaylight)
         {
-            var nowInDayLight = commuteAt.TimeOfDay >= sunRise.TimeOfDay && commuteAt.TimeOfDay <= sunSet.TimeOfDay;
+            var nowInDayLight = commuteStart.TimeOfDay >= sunRise.TimeOfDay && commuteEnd.TimeOfDay <= sunSet.TimeOfDay;
 
-            return startedInDaylight != nowInDayLight;
+            return wasInDaylight != nowInDayLight;
         }
     }
 }

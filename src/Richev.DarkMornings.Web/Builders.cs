@@ -41,5 +41,14 @@ namespace Richev.DarkMornings.Web
                 NumberOfDaysToTransition = daysToTransition
             };
         }
+
+        public static CommuteTime BuildEndCommuteTime(CommuteTime commuteTime, int journeyDuration)
+        {
+            var time = new TimeSpan(commuteTime.h, commuteTime.m, 0);
+
+            var endCommuteTime = time.Add(new TimeSpan(0, journeyDuration, 0));
+
+            return new CommuteTime { h = endCommuteTime.Hours, m = endCommuteTime.Minutes };
+        }
     }
 }

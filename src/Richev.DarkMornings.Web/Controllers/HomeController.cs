@@ -19,29 +19,20 @@ namespace Richev.DarkMornings.Web.Controllers
         [HttpGet]
         public ActionResult Index(CommuteInfoModel model)
         {
-            CommuteInfoModel viewModel;
-
             if (model == null || model.HasDefaultValues())
             {
-                viewModel = new CommuteInfoModel
+                model = new CommuteInfoModel
                 {
                     tw = { h = 8 },
                     fw = { h = 18, m = 30 },
+                    d = 30,
                     wd = string.Format("{1}{0}{0}{0}{0}{0}{1}", UIHelpers.WorkingDayTrue, UIHelpers.WorkingDayFalse)
                 };
 
                 ModelState.Clear();
 
-                return View(viewModel);
+                return View(model);
             }
-
-            viewModel = new CommuteInfoModel
-                        {
-                            tw = model.tw,
-                            fw = model.fw,
-                            wd = model.wd,
-                            tz = model.tz
-                        };
 
             if (!model.wd.ToArray().Where(d => d == UIHelpers.WorkingDayTrue).Any())
             {
@@ -55,41 +46,45 @@ namespace Richev.DarkMornings.Web.Controllers
 
                 _locationService.GetLocationFromIPAddress(Request.UserHostAddress, out latitude, out longitude);
 
-                viewModel.la = latitude;
-                viewModel.lo = longitude;
-            }
-            else
-            {
-                viewModel.la = model.la;
-                viewModel.lo = model.lo;
+                model.la = latitude;
+                model.lo = longitude;
             }
 
-            if (!viewModel.la.HasValue || !viewModel.lo.HasValue)
+            if (!model.la.HasValue || !model.lo.HasValue)
             {
                 ModelState.AddModelError("Location", "Sorry, we couldn't figure out your location.");
             }
+
+            var today = DateTime.Now.Date;
+
+
+            var outboundCommuteStart = today.AddHours(model.tw.h).AddMinutes(model.tw.m);
+            var returnCommuteStart = today.AddHours(model.fw.h).AddMinutes(model.fw.m);
+
+            if (Utils.GetTimeOfDayDifference(outboundCommuteStart, returnCommuteStart) <= new TimeSpan(0, model.d, 0))
+            {
+                ModelState.AddModelError("JourneysOverlap", "Your journeys overlap one another, that can't be right.");
+            }
+
 
             if (ModelState.IsValid)
             {
                 var daylightHunter = new DaylightHunter();
 
-                var today = DateTime.Now.Date;
+                var outboundCommuteEnd = outboundCommuteStart.AddMinutes(model.d);
+                var returnCommuteEnd = returnCommuteStart.AddMinutes(model.d);
                 
-                // TODO: Use the timezone offset
+                var location = new Location { Latitude = model.la.Value, Longitude = model.lo.Value };
 
-                var location = new Location { Latitude = viewModel.la.Value, Longitude = viewModel.lo.Value };
-                var outboundCommuteAt = today.AddHours(model.tw.h).AddMinutes(model.tw.m);
-                var returnCommuteAt = today.AddHours(model.fw.h).AddMinutes(model.fw.m);
+                var commuteInfo = daylightHunter.GetDaylight(location, model.tz.Value, outboundCommuteStart, outboundCommuteEnd, returnCommuteStart, returnCommuteEnd);
 
-                var commuteInfo = daylightHunter.GetDaylight(location, viewModel.tz.Value, outboundCommuteAt, returnCommuteAt);
+                var workingDays = model.wd.Select(d => d == UIHelpers.WorkingDayTrue).ToArray();
 
-                var workingDays = viewModel.wd.Select(d => d == UIHelpers.WorkingDayTrue).ToArray();
-
-                viewModel.tw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.ToWork, Commute.ToWork, workingDays);
-                viewModel.fw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.FromWork, Commute.FromWork, workingDays);
+                model.tw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.ToWork, Commute.ToWork, workingDays);
+                model.fw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.FromWork, Commute.FromWork, workingDays);
             }
 
-            return View(viewModel);
+            return View(model);
         }
 
         [HttpGet]
