@@ -322,6 +322,10 @@ a .fa {
     z-index: 6;
 }
 
+.fb-share-button {
+    line-height: 1;
+}
+
 @media (max-width: 768px) {
     h1 .fa {
         font-size: 70px;
@@ -357,7 +361,7 @@ a .fa {
 }
 @media (min-width: 480px) {
     body {
-        background-image: url(/Content/city-sunrise.jpg);
+        background-image: url(/Content/driving-sunrise.jpg);
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
