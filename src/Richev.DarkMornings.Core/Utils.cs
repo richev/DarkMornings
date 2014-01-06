@@ -1,16 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Richev.DarkMornings.Core
 {
     public static class Utils
     {
-        public static double CalculateLongitudeTimeZone(double timezone)
+        public static double CalculateLongitudeTimeZone(double timeZone)
         {
-            return timezone * 15;
+            return timeZone * 15;
+        }
+
+        public static DateTime UtcToUserTimeZone(DateTime dateTime, double timeZoneOffset)
+        {
+            dateTime = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+
+            var timeZone = TimeZoneInfo.FindSystemTimeZoneById("Greenwich Standard Time");
+
+            var userDateTime = TimeZoneInfo.ConvertTime(dateTime, timeZone);
+
+            return DateTime.SpecifyKind(userDateTime, DateTimeKind.Local);
         }
     }
 }

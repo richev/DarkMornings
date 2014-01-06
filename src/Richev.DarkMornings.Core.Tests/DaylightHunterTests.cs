@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using NUnit.Framework;
 
 namespace Richev.DarkMornings.Core.Tests
@@ -118,6 +119,8 @@ namespace Richev.DarkMornings.Core.Tests
         [Test]
         public void IsCorrectInNewYorkWinter()
         {
+            //PersianCalendar persian = new PersianCalendar();
+
             var outboundCommuteAt = new DateTime(2014, 2, 24, 6, 30, 0);
             var returnCommuteAt = new DateTime(2014, 2, 24, 18, 30, 0);
 

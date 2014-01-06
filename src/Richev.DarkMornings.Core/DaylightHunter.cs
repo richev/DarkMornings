@@ -16,6 +16,9 @@ namespace Richev.DarkMornings.Core
                 location.Latitude,
                 Utils.CalculateLongitudeTimeZone(timeZone));
 
+            outboundCommuteAt = Utils.UtcToUserTimeZone(outboundCommuteAt, timeZone);
+            returnCommuteAt = Utils.UtcToUserTimeZone(returnCommuteAt, timeZone);
+
             var commuteInfo = new CommuteInfo();
 
             commuteInfo.ToWork = CalculateDaylightInfo(outboundCommuteAt, sunCalculator);
