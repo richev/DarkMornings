@@ -65,7 +65,8 @@ h1 a:hover, h1 a:active {
 }
 h1 .fa {
     font-size: 120px;
-    color: #ecf0f1;
+    color: rgb(52, 152, 219);
+    opacity: 0.2;
     position: absolute;
     z-index: 10;
 }
@@ -105,11 +106,18 @@ input, select, button {
     cursor: pointer;
 }
 
-.time-selector select {
+select {
     padding: 6px;
     font-weight: bold;
-    width: 75px;
     outline: none; /* To prevent orange outline when clicked in Chrome */
+}
+
+.time-selector select {
+    width: 75px;
+}
+
+.duration-selector select {
+    width: 165px;
 }
 
 .time-separator {
@@ -233,11 +241,12 @@ hr.and {
 }
 
 .with-icon .fa {
-    color: #ecf0f1;
+    color: rgb(52, 152, 219);
     font-size: 250%;
     position: absolute;
     left: -0.45em;
     top: -0.2em;
+    opacity: 0.2;
     z-index: 10;
 }
 
@@ -247,6 +256,7 @@ hr.and {
 
 .days-more-content .fa.commute-direction {
     color: white;
+    opacity: 1;
     font-size: 380%;
     left: 2em;
     top: 0.05em;
