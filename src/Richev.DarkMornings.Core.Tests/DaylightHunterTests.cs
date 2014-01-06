@@ -102,6 +102,18 @@ namespace Richev.DarkMornings.Core.Tests
         }
 
         [Test]
+        public void IsCorrectForAlwaysDarkCommuteThatRollsOverMidnight()
+        {
+            var outboundCommuteStart = new DateTime(2014, 6, 24, 0, 10, 0);
+            var returnCommuteStart = new DateTime(2014, 6, 24, 23, 0, 0);
+
+            var commuteInfo = _daylightHunter.GetDaylight(_locationLondon, TimeZoneLondon, outboundCommuteStart, outboundCommuteStart.AddMinutes(30), returnCommuteStart, returnCommuteStart.AddMinutes(120));
+
+            Assert.IsFalse(commuteInfo.FromWork.IsCurrentlyInDaylight);
+            Assert.AreEqual(null, commuteInfo.FromWork.NextDaylightTransition);
+        }
+
+        [Test]
         public void IsCorrectForAlwaysLightCommutes()
         {
             var outboundCommuteStart = new DateTime(2014, 6, 24, 12, 0, 0);

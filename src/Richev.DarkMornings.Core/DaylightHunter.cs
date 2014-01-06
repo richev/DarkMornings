@@ -33,6 +33,12 @@ namespace Richev.DarkMornings.Core
             var commuteIsAfterSunrise = commuteStart.TimeOfDay >= sunRise.TimeOfDay;
             var commuteIsBeforeSunSet = commuteEnd.TimeOfDay <= sunSet.TimeOfDay;
 
+            if (commuteEnd.Date > commuteStart.Date)
+            {
+                // Special case; overlapping midnight. Just assume that it's always dark
+                return daylightInfo;
+            }
+
             daylightInfo.IsCurrentlyInDaylight = commuteIsAfterSunrise && commuteIsBeforeSunSet;
 
             var d = 0;
