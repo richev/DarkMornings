@@ -54,7 +54,7 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
         [Test]
         public void IndexReturnsWorkingDaysErrorWhenNoWorkingDaysSet()
         {
-            var model = new CommuteInfoModel { tw = { h = 7 } };
+            var model = new CommuteInfoModel { tw = { h = 7 }, tz = 0 };
 
             _homeController.Index(model);
 
@@ -99,6 +99,16 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
             _homeController.Index(model);
 
             Assert.IsFalse(_homeController.ModelState.Keys.Contains("JourneysOverlap"));
+        }
+
+        [Test]
+        public void IndexReturnsTimeZoneErrorIfTimeZoneInvalid()
+        {
+            var model = new CommuteInfoModel { tw = { h = 7 }, fw = { h = 8 }, d = 30, tz = 0.1, wd = _workingDaysMondayOnly };
+
+            _homeController.Index(model);
+
+            Assert.IsTrue(_homeController.ModelState.Keys.Contains("TimeZoneInvalid"));
         }
 
         [Test]

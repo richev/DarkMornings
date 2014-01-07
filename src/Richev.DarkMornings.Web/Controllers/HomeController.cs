@@ -66,6 +66,10 @@ namespace Richev.DarkMornings.Web.Controllers
                 ModelState.AddModelError("JourneysOverlap", "Your journeys overlap one another, that can't be right.");
             }
 
+            if (!TimeZones.Selected.ContainsKey(model.tz.Value))
+            {
+                ModelState.AddModelError("TimeZoneInvalid", string.Format("The selected time zone {0} is not valid.", model.tz.Value));
+            }
 
             if (ModelState.IsValid)
             {
