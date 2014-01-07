@@ -67,7 +67,7 @@ namespace Richev.DarkMornings.Core.Tests
             Assert.AreEqual(new DateTime(2014, 9, 5, 6, 10, 0), commuteInfo.ToWork.NextDaylightTransition);
 
             Assert.IsFalse(commuteInfo.FromWork.IsCurrentlyInDaylight);
-            Assert.AreEqual(new DateTime(2014, 10, 5, 18, 30, 0), commuteInfo.FromWork.NextDaylightTransition); // not yet right
+            Assert.AreEqual(new DateTime(2014, 10, 06, 18, 59, 0), commuteInfo.FromWork.NextDaylightTransition); // start of summer time
         }
 
         [Test]
