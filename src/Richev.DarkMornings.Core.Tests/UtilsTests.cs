@@ -42,7 +42,6 @@ namespace Richev.DarkMornings.Core.Tests
             {
                 Console.WriteLine("{{ {0},  \"{1}\" }},", tz.BaseUtcOffset.Hours + tz.BaseUtcOffset.Minutes / 60d, tz.Id);
             }
-
         }
     }
 }

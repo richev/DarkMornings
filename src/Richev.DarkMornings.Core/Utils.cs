@@ -40,11 +40,5 @@ namespace Richev.DarkMornings.Core
 
             return d2 - d1;
         }
-
-
-        public static void AllTimeZones()
-        {
-            var tzCollection = TimeZoneInfo.GetSystemTimeZones();
-        }
     }
 }
