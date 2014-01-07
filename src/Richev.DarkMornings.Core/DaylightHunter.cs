@@ -53,12 +53,12 @@ namespace Richev.DarkMornings.Core
                 // We need to work out on which edge the transition happened
                 if (commuteIsAfterSunrise != (commuteStart.TimeOfDay >= sunRise.TimeOfDay))
                 {
-                    daylightInfo.NextDaylightTransition = sunRise;
+                    daylightInfo.NextDaylightTransition = sunRise.AddDays(-1);
                     daylightInfo.TransitionType = DaylightTransition.SunRise;
                 }
                 else if (commuteIsBeforeSunSet != (commuteEnd.TimeOfDay <= sunSet.TimeOfDay))
                 {
-                    daylightInfo.NextDaylightTransition = sunSet;
+                    daylightInfo.NextDaylightTransition = sunSet.AddDays(-1);
                     daylightInfo.TransitionType = DaylightTransition.SunSet;
                 }
                 else
