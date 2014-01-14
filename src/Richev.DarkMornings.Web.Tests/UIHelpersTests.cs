@@ -7,12 +7,12 @@ namespace Richev.DarkMornings.Web.Tests
     [TestFixture]
     public class UIHelpersTests
     {
-        private DaylightInfo _daylightInfo;
+        private DaylightInfoModel _daylightInfo;
 
         [SetUp]
         public void SetUp()
         {
-            _daylightInfo = new DaylightInfo();
+            _daylightInfo = new DaylightInfoModel();
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace Richev.DarkMornings.Web.Tests
         [Test]
         public void FormatCommuteTimeWorks()
         {
-            var commuteTime = new CommuteTime { h = 12, m = 5 };
+            var commuteTime = new CommuteTimeModel { h = 12, m = 5 };
 
             var formattedCommuteTime = UIHelpers.FormatCommuteTime(commuteTime);
 

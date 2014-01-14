@@ -6,6 +6,8 @@ namespace Richev.DarkMornings.Core.Tests
     [TestFixture]
     public class DaylightHunterTests
     {
+        private readonly TimeSpan _commuteDuration = new TimeSpan(0, 30, 0);
+
         private static readonly Location _locationLondon = new Location { Latitude = 51.5072, Longitude = 0.1275 };
         private const int TimeZoneLondon = 0;
 
@@ -31,7 +33,7 @@ namespace Richev.DarkMornings.Core.Tests
 
         // Values checked with http://www.timeanddate.com/worldclock/sunrise.html
 
-        private static readonly object[] _isCorrectForScenarioCases =
+        private static readonly object[] _getDaylightIsCorrectForCommuteCases =
         {
             new object[] { "London in the winter", _locationLondon, TimeZoneLondon, new DateTime(2013, 12, 24, 7, 10, 0), new DateTime(2013, 12, 24, 18, 0, 0), false, new DateTime(2014, 02, 20, 7, 10, 0), DaylightTransition.SunRise, false, new DateTime(2014, 3, 30, 19, 22, 0), DaylightTransition.SunSet },
             
@@ -59,29 +61,30 @@ namespace Richev.DarkMornings.Core.Tests
             
             new object[] { "Always dark midnight rollover", _locationLondon, TimeZoneLondon, new DateTime(2014, 6, 24, 0, 10, 0), new DateTime(2014, 6, 24, 23, 0, 0), false, null, null, false, null, null },
 
-            new object[] { "Always light", _locationLondon, TimeZoneLondon, new DateTime(2014, 6, 24, 12, 0, 0), new DateTime(014, 6, 24, 13, 0, 0), true, null, null, true, null, null },
+            new object[] { "Always light", _locationLondon, TimeZoneLondon, new DateTime(2014, 6, 24, 12, 0, 0), new DateTime(014, 6, 24, 13, 0, 0), true, null, null, true, null, null }
         };
 
         [Test]
-        [TestCaseSource("_isCorrectForScenarioCases")]
-        public void IsCorrectForScenario(
+        [TestCaseSource("_getDaylightIsCorrectForCommuteCases")]
+        public void GetDaylightIsCorrectForCommute(
             string scenarioName,
             Location location, double timeZone,
-            DateTime commuteToWorkStart, DateTime commuteToHomeStart,
+            DateTime commuteToWorkStart, DateTime commuteFromWorkStart,
             bool toWorkIsCurrentlyInDaylight, DateTime? toWorkNextDaylightTransition, DaylightTransition? toWorkDaylightTransition,
             bool fromWorkIsCurrentlyInDaylight, DateTime? fromWorkNextDaylightTransition, DaylightTransition? fromWorkDaylightTransition)
         {
             Console.WriteLine(scenarioName);
 
-            var commuteInfo = _daylightHunter.GetDaylight(location, timeZone, commuteToWorkStart, commuteToWorkStart.AddMinutes(30), commuteToHomeStart, commuteToHomeStart.AddMinutes(30));
+            var daylightInfoToWork = _daylightHunter.GetDaylight(location, timeZone, commuteToWorkStart, commuteToWorkStart.Add(_commuteDuration));
+            var daylightInfoFromWork = _daylightHunter.GetDaylight(location, timeZone, commuteFromWorkStart, commuteFromWorkStart.Add(_commuteDuration));
 
-            Assert.AreEqual(toWorkIsCurrentlyInDaylight, commuteInfo.ToWork.IsCurrentlyInDaylight);
-            Assert.AreEqual(toWorkNextDaylightTransition, commuteInfo.ToWork.NextDaylightTransition);
-            Assert.AreEqual(toWorkDaylightTransition, commuteInfo.ToWork.TransitionType);
+            Assert.AreEqual(toWorkIsCurrentlyInDaylight, daylightInfoToWork.IsCurrentlyInDaylight);
+            Assert.AreEqual(toWorkNextDaylightTransition, daylightInfoToWork.NextDaylightTransition);
+            Assert.AreEqual(toWorkDaylightTransition, daylightInfoToWork.TransitionType);
 
-            Assert.AreEqual(fromWorkIsCurrentlyInDaylight, commuteInfo.FromWork.IsCurrentlyInDaylight);
-            Assert.AreEqual(fromWorkNextDaylightTransition, commuteInfo.FromWork.NextDaylightTransition);
-            Assert.AreEqual(fromWorkDaylightTransition, commuteInfo.FromWork.TransitionType);
+            Assert.AreEqual(fromWorkIsCurrentlyInDaylight, daylightInfoFromWork.IsCurrentlyInDaylight);
+            Assert.AreEqual(fromWorkNextDaylightTransition, daylightInfoFromWork.NextDaylightTransition);
+            Assert.AreEqual(fromWorkDaylightTransition, daylightInfoFromWork.TransitionType);
         }
     }
 }

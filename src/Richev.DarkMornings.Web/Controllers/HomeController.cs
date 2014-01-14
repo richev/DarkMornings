@@ -80,12 +80,13 @@ namespace Richev.DarkMornings.Web.Controllers
                 
                 var location = new Location { Latitude = model.la.Value, Longitude = model.lo.Value };
 
-                var commuteInfo = daylightHunter.GetDaylight(location, model.tz.Value, outboundCommuteStart, outboundCommuteEnd, returnCommuteStart, returnCommuteEnd);
+                var toWorkDaylightInfo = daylightHunter.GetDaylight(location, model.tz.Value, outboundCommuteStart, outboundCommuteEnd);
+                var fromWorkDaylightInfo = daylightHunter.GetDaylight(location, model.tz.Value, returnCommuteStart, returnCommuteEnd);
 
                 var workingDays = model.wd.Select(d => d == UIHelpers.WorkingDayTrue).ToArray();
 
-                model.tw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.ToWork, Commute.ToWork, workingDays);
-                model.fw.Daylights = Builders.BuildDaylights(DateTime.Now, commuteInfo.FromWork, Commute.FromWork, workingDays);
+                model.tw.Daylights = Builders.BuildDaylightInfoModel(DateTime.Now, toWorkDaylightInfo, Commute.ToWork, workingDays);
+                model.fw.Daylights = Builders.BuildDaylightInfoModel(DateTime.Now, fromWorkDaylightInfo, Commute.FromWork, workingDays);
             }
 
             return View(model);

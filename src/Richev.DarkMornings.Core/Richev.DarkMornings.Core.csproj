@@ -39,7 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommuteInfo.cs" />
     <Compile Include="DaylightInfo.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Location.cs" />

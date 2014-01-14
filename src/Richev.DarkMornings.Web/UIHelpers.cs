@@ -79,7 +79,7 @@ namespace Richev.DarkMornings.Web
             return journeyDurations;
         }
 
-        public static HtmlString GetJourneyText(DaylightInfo daylightInfo)
+        public static HtmlString GetJourneyText(DaylightInfoModel daylightInfo)
         {
             string journeyText;
 
@@ -165,7 +165,7 @@ namespace Richev.DarkMornings.Web
             }
         }
 
-        public static string FormatCommuteTime(CommuteTime commuteTime)
+        public static string FormatCommuteTime(CommuteTimeModel commuteTime)
         {
             return string.Format("{0:00}:{1:00}", commuteTime.h, commuteTime.m);
         }

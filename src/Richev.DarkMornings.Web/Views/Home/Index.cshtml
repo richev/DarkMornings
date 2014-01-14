@@ -63,7 +63,7 @@
 }
 else
 {
-    <p class="question">Your journey to work is from @UIHelpers.FormatCommuteTime(Model.tw)&nbsp;to&nbsp;@UIHelpers.FormatCommuteTime(Builders.BuildEndCommuteTime(Model.tw, Model.d)) and your journey back home is from @UIHelpers.FormatCommuteTime(Model.fw)&nbsp;to&nbsp;@UIHelpers.FormatCommuteTime(Builders.BuildEndCommuteTime(Model.fw, Model.d)).</p>
+    <p class="question">Your journey to work is from @UIHelpers.FormatCommuteTime(Model.tw)&nbsp;to&nbsp;@UIHelpers.FormatCommuteTime(Builders.BuildEndCommuteTimeModel(Model.tw, Model.d)) and your journey back home is from @UIHelpers.FormatCommuteTime(Model.fw)&nbsp;to&nbsp;@UIHelpers.FormatCommuteTime(Builders.BuildEndCommuteTimeModel(Model.fw, Model.d)).</p>
     <p>You do this @UIHelpers.FormatDaysCount(@Model.wd) a week; every @UIHelpers.FormatWorkingDays(Model.wd.Select(d => d == UIHelpers.WorkingDayTrue).ToArray()).</p>
     <h3>This means&hellip;</h3>
     <div class="results journey with-icon">

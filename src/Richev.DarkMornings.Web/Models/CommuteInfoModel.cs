@@ -7,8 +7,8 @@ namespace Richev.DarkMornings.Web.Models
     {
         public CommuteInfoModel()
         {
-            tw = new CommuteTime();
-            fw = new CommuteTime();
+            tw = new CommuteTimeModel();
+            fw = new CommuteTimeModel();
             wd = string.Empty;
         }
 
@@ -51,12 +51,12 @@ namespace Richev.DarkMornings.Web.Models
         /// <summary>
         /// Commute to work
         /// </summary>
-        public CommuteTime tw { get; set; }
+        public CommuteTimeModel tw { get; set; }
 
         /// <summary>
         /// Commute from work
         /// </summary>
-        public CommuteTime fw { get; set; }
+        public CommuteTimeModel fw { get; set; }
 
         public bool HasDefaultValues()
         {

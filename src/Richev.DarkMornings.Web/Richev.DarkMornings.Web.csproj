@@ -165,8 +165,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CommuteInfoModel.cs" />
-    <Compile Include="Models\CommuteTime.cs" />
-    <Compile Include="Models\DaylightInfo.cs" />
+    <Compile Include="Models\CommuteTimeModel.cs" />
+    <Compile Include="Models\DaylightInfoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ILocationService.cs" />
     <Compile Include="Services\LocationService.cs" />

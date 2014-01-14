@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Richev.DarkMornings.Core;
 using Richev.DarkMornings.Web.Models;
 
 namespace Richev.DarkMornings.Web
 {
     public static class Builders
     {
-        public static DaylightInfo BuildDaylights(DateTime today, Core.DaylightInfo daylightInfo, Commute commuteType, bool[] workingDays)
+        public static DaylightInfoModel BuildDaylightInfoModel(DateTime today, DaylightInfo daylightInfo, Commute commuteType, bool[] workingDays)
         {
             var daysToTransition = 0;
             DateTime? nextWorkingDayDaylightTransition = null;
@@ -33,7 +34,7 @@ namespace Richev.DarkMornings.Web
                 nextWorkingDayDaylightTransition = days.Last();
             }
 
-            return new DaylightInfo
+            return new DaylightInfoModel
             {
                 IsCurrentlyInDaylight = daylightInfo.IsCurrentlyInDaylight,
                 NextWorkingDayDaylightTransition = nextWorkingDayDaylightTransition,
@@ -42,13 +43,13 @@ namespace Richev.DarkMornings.Web
             };
         }
 
-        public static CommuteTime BuildEndCommuteTime(CommuteTime commuteTime, int journeyDuration)
+        public static CommuteTimeModel BuildEndCommuteTimeModel(CommuteTimeModel commuteTime, int journeyDuration)
         {
             var time = new TimeSpan(commuteTime.h, commuteTime.m, 0);
 
             var endCommuteTime = time.Add(new TimeSpan(0, journeyDuration, 0));
 
-            return new CommuteTime { h = endCommuteTime.Hours, m = endCommuteTime.Minutes };
+            return new CommuteTimeModel { h = endCommuteTime.Hours, m = endCommuteTime.Minutes };
         }
     }
 }

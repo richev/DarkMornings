@@ -25,7 +25,7 @@ namespace Richev.DarkMornings.Web.Tests
         {
             _daylights.IsCurrentlyInDaylight = true;
 
-            var daylights = Builders.BuildDaylights(_today, _daylights, Commute.FromWork, _workingDays);
+            var daylights = Builders.BuildDaylightInfoModel(_today, _daylights, Commute.FromWork, _workingDays);
 
             Assert.IsNull(daylights.NextWorkingDayDaylightTransition);
             Assert.AreEqual(Commute.FromWork, daylights.CommuteType);
@@ -38,7 +38,7 @@ namespace Richev.DarkMornings.Web.Tests
         {
             _daylights.NextDaylightTransition = _today.AddDays(4); // a Friday
 
-            var daylights = Builders.BuildDaylights(_today, _daylights, Commute.FromWork, _workingDays);
+            var daylights = Builders.BuildDaylightInfoModel(_today, _daylights, Commute.FromWork, _workingDays);
 
             Assert.AreEqual(_today.AddDays(4), daylights.NextWorkingDayDaylightTransition); // same day as the NextDaylightTransition
             Assert.AreEqual(Commute.FromWork, daylights.CommuteType);
@@ -51,7 +51,7 @@ namespace Richev.DarkMornings.Web.Tests
         {
             _daylights.NextDaylightTransition = _today.AddDays(6); // a Sunday
 
-            var daylights = Builders.BuildDaylights(_today, _daylights, Commute.FromWork, _workingDays);
+            var daylights = Builders.BuildDaylightInfoModel(_today, _daylights, Commute.FromWork, _workingDays);
 
             Assert.AreEqual(_today.AddDays(7), daylights.NextWorkingDayDaylightTransition); // not quite the same as the NextDaylightTransition
             Assert.AreEqual(Commute.FromWork, daylights.CommuteType);

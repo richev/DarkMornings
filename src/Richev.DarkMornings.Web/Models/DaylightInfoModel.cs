@@ -2,7 +2,7 @@
 
 namespace Richev.DarkMornings.Web.Models
 {
-    public class DaylightInfo
+    public class DaylightInfoModel
     {
         public bool IsCurrentlyInDaylight { get; set; }
 
