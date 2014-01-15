@@ -6,6 +6,8 @@ namespace Richev.DarkMornings.Web.Models
     {
         public bool IsCurrentlyInDaylight { get; set; }
 
+        public double PercentageInDaylight { get; set; }
+
         /// <summary>
         /// <para>When there will next be a transition between daylight/not daylight or vice versa on ON A WORKING DAY for this commute.</para>
         /// <para>Will be null if this commute is always in daylight or dark.</para>

@@ -37,6 +37,7 @@ namespace Richev.DarkMornings.Web
             return new DaylightInfoModel
             {
                 IsCurrentlyInDaylight = daylightInfo.IsCurrentlyInDaylight,
+                PercentageInDaylight = ((double)(DaylightHunter.DaysInYear - daylightInfo.CommutesInDaylightPerYear) / DaylightHunter.DaysInYear) * 100,
                 NextWorkingDayDaylightTransition = nextWorkingDayDaylightTransition,
                 CommuteType = commuteType,
                 NumberOfDaysToTransition = daysToTransition

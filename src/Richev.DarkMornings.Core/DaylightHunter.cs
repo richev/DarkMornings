@@ -4,10 +4,7 @@ namespace Richev.DarkMornings.Core
 {
     public class DaylightHunter
     {
-        /// <summary>
-        /// Used as a bailout value
-        /// </summary>
-        private const int DaysInYear = 365;
+        public const int DaysInYear = 365;
 
         public DaylightInfo GetDaylight(Location location, double timeZoneOffset, DateTime commuteStart, DateTime commuteEnd)
         {
@@ -38,29 +35,33 @@ namespace Richev.DarkMornings.Core
 
             daylightInfo.IsCurrentlyInDaylight = commuteIsAfterSunrise && commuteIsBeforeSunSet;
 
-            var d = 0;
-
-            while (!DaylightTransitionHappened(sunRise, sunSet, commuteStart, commuteEnd, daylightInfo.IsCurrentlyInDaylight) && d <= DaysInYear)
+            for (var d = 0; d < DaysInYear; d++)
             {
-                sunRise = sunCalculator.CalculateSunRise(commuteStart.Date.AddDays(++d), timeZoneOffset);
+                sunRise = sunCalculator.CalculateSunRise(commuteStart.Date.AddDays(d), timeZoneOffset);
                 sunSet = sunCalculator.CalculateSunSet(commuteEnd.Date.AddDays(d), timeZoneOffset);
-            }
-            if (DaylightTransitionHappened(sunRise, sunSet, commuteStart, commuteEnd, daylightInfo.IsCurrentlyInDaylight))
-            {
-                // We need to work out on which edge the transition happened
-                if (commuteIsAfterSunrise != (commuteStart.TimeOfDay >= sunRise.TimeOfDay))
+
+                if (commuteStart.TimeOfDay >= sunRise.TimeOfDay && commuteEnd.TimeOfDay <= sunSet.TimeOfDay)
                 {
-                    daylightInfo.NextDaylightTransition = sunRise.AddDays(-1);
-                    daylightInfo.TransitionType = DaylightTransition.SunRise;
+                    daylightInfo.CommutesInDaylightPerYear++;
                 }
-                else if (commuteIsBeforeSunSet != (commuteEnd.TimeOfDay <= sunSet.TimeOfDay))
+
+                if (!daylightInfo.TransitionType.HasValue && DaylightTransitionHappened(sunRise, sunSet, commuteStart, commuteEnd, daylightInfo.IsCurrentlyInDaylight))
                 {
-                    daylightInfo.NextDaylightTransition = sunSet.AddDays(-1);
-                    daylightInfo.TransitionType = DaylightTransition.SunSet;
-                }
-                else
-                {
-                    throw new Exception("something went very wrong");
+                    // We need to work out on which edge the transition happened
+                    if (commuteIsAfterSunrise != (commuteStart.TimeOfDay >= sunRise.TimeOfDay))
+                    {
+                        daylightInfo.NextDaylightTransition = sunRise.AddDays(-1);
+                        daylightInfo.TransitionType = DaylightTransition.SunRise;
+                    }
+                    else if (commuteIsBeforeSunSet != (commuteEnd.TimeOfDay <= sunSet.TimeOfDay))
+                    {
+                        daylightInfo.NextDaylightTransition = sunSet.AddDays(-1);
+                        daylightInfo.TransitionType = DaylightTransition.SunSet;
+                    }
+                    else
+                    {
+                        throw new Exception("something went very wrong");
+                    }
                 }
             }
 
