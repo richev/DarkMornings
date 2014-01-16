@@ -58,7 +58,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
     
     <script type="text/javascript">
         var overlay;
@@ -77,5 +76,7 @@
             $(window).resize(resizeOverlay);
         });
     </script>
+
+    @RenderSection("scripts", required: false)
 </body>
 </html>

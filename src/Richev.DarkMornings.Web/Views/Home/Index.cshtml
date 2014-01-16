@@ -14,7 +14,10 @@
 {
     <p class="question">Ever wonder how much longer you'll be commuting in the dark?</p>
 
-    @Html.ValidationSummary()
+    <div id="warning" class="alert alert-warning" style="display: none;">
+    </div>
+
+    @Html.ValidationSummary(string.Empty, new { @class = "alert alert-danger" })
 
     using (Html.BeginForm("Index", "Home", FormMethod.Get))
     {
@@ -108,7 +111,11 @@ else
         }
 
         function failPosition(e) {
-            alert("Your location could not be figured out (" + e.message + ").\nThere should be a setting somewhere on your device that will allow this.\nFor now, we'll try to find this out using your IP address.");
+            if (e.code == 1) {
+                showWarning("<p>Your browser settings won't allow us to figure out your location.</p><p>Instead, we'll try to find this out using your IP address (less accurate, might not work).</p>");
+            } else {
+                showWarning("<p>Your location could not be figured out (" + e.message + ").</p><p>Instead, we'll try to find this out using your IP address (less accurate, might not work).</p>");
+            }
         }
 
         var setWorkingDaysString = function() {
@@ -156,12 +163,18 @@ else
             return intOffset / 60; // to adjust minutes to hours
         };
 
+        var showWarning = function(msgHtml) {
+            $("#warning").append(msgHtml);
+            $("#warning").show();
+            resizeOverlay();
+        };
+
         $(document).ready(function() {
             if ($("#la").val() == "" || $("#lo").val() == "") {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(storePosition, failPosition);
                 } else {
-                    alert("It looks like you're using a browser that won't tell us your location.\nWe'll try to find this out using your IP address instead.");
+                    showWarning("<p>You're using a browser that won't tell us your location.</p>Instead, we'll try to find this out using your IP address (less accurate, might not work).</p>");
                 }
             }
 

@@ -38,7 +38,7 @@ input[type="checkbox"].input-validation-error {
 }
 
 .validation-summary-errors {
-    color: #e74c3c;
+    /* using Twitter Bootstrap styles instead */
 }
 
 .validation-summary-errors ul {
@@ -235,7 +235,7 @@ hr.and {
 .with-icon {
     position: relative;
 }
-.with-icon span, .with-icon div {
+.with-icon > span, .with-icon > div {
     z-index: 20;
     position: relative;
 }
