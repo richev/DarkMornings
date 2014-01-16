@@ -67,11 +67,11 @@ else
     <p>You do this @UIHelpers.FormatDaysCount(@Model.wd) a week; every @UIHelpers.FormatWorkingDays(Model.wd.Select(d => d == UIHelpers.WorkingDayTrue).ToArray()).</p>
     <h3>This means&hellip;</h3>
     <div class="results journey with-icon">
-        @UIHelpers.GetJourneyText(Model.tw.Daylights)
+        @Html.Partial("_DaylightInfo", Model.tw.Daylights)
     </div>
     <hr class="and" />
     <div class="results journey with-icon">
-        @UIHelpers.GetJourneyText(Model.fw.Daylights)
+        @Html.Partial("_DaylightInfo", Model.fw.Daylights)
     </div>
     <p class="text-info excluding">(excluding Bank and national holidays)</p>
     <hr class="and" />

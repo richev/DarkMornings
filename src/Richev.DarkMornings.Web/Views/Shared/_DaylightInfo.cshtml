@@ -1,0 +1,33 @@
+﻿@model Richev.DarkMornings.Web.Models.DaylightInfoModel
+
+@if (Model.NextWorkingDayDaylightTransition.HasValue)
+{
+    <div class="days-more">
+        @UIHelpers.GetDaylightIcon(Model.IsCurrentlyInDaylight)
+        <div class="days-more-content">
+            @UIHelpers.GetCommuteDirectionIcon(Model.CommuteType)<span class= count>@Model.NumberOfDaysToTransition more</span> <span>@UIHelpers.GetDaylightText(Model.IsCurrentlyInDaylight) journeys</span>
+        </div>
+    </div>
+    <div class="until">
+        <span>@UIHelpers.GetCommuteText(Model.CommuteType),</span> until
+    </div>
+    <div class="calendar">
+        <span class="day">@Model.NextWorkingDayDaylightTransition.Value.ToString("dddd")</span>
+        <span class="date">@Model.NextWorkingDayDaylightTransition.Value.ToString("%d")</span>
+        <span class="month">@Model.NextWorkingDayDaylightTransition.Value.ToString("MMMM")</span>
+    </div>
+    @*<div class="percent">
+        <span>In the dark</span>@Model.PercentageInDaylight.ToString("0.#")%<span>of the time!</span>
+    </div>*@
+}
+else
+{
+    <div class="days-more always">
+        @UIHelpers.GetDaylightIcon(Model.IsCurrentlyInDaylight)
+        <div class="days-more-content always">
+            @UIHelpers.GetCommuteDirectionIcon(Model.CommuteType)
+            Your journey @UIHelpers.GetCommuteText(Model.CommuteType) is always in the @UIHelpers.GetDaylightText(Model.IsCurrentlyInDaylight)
+        </div>
+    </div>
+}
+
