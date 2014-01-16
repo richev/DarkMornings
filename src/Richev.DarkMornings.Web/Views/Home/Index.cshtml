@@ -112,7 +112,7 @@ else
 
         function failPosition(e) {
             if (e.code == 1) {
-                showWarning("<p>Your browser settings won't allow us to figure out your location.</p><p>Instead, we'll try to find this out using your IP address (less accurate, might not work).</p>");
+                showWarning("<p>Your browser is set to not tell us your location.</p><p>Instead, we'll try to figure this out using your IP address (less accurate, might not work).</p>");
             } else {
                 showWarning("<p>Your location could not be figured out (" + e.message + ").</p><p>Instead, we'll try to find this out using your IP address (less accurate, might not work).</p>");
             }
@@ -174,7 +174,7 @@ else
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(storePosition, failPosition);
                 } else {
-                    showWarning("<p>You're using a browser that won't tell us your location.</p>Instead, we'll try to find this out using your IP address (less accurate, might not work).</p>");
+                    showWarning("<p>You're using a browser that won't tell us your location (or it may just be set this way).</p>Instead, we'll try to find this out using your IP address (less accurate, might not work).</p>");
                 }
             }
 
