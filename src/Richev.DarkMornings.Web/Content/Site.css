@@ -97,7 +97,9 @@ select:hover {
     border-color: rgb(149, 165, 166);
 }
 
-.working-days button:hover, .working-days button.checked:hover {
+/* The :hover effect is not appropriate on a touch device; JavaScript will add the desktop class if we're running on a non-touch device. */
+body.notTouchDevice .working-days button:hover,
+body.notTouchDevice .working-days button.checked:hover {
     background-color: rgb(149, 165, 166);
 }
 
@@ -139,7 +141,11 @@ select {
     vertical-align: auto;
 }
 
-.working-days button.checked {
+.working-days button:focus {
+    color: inherit; /* because of a Bootstrap CSS style*/
+}
+
+.working-days button.checked, .working-days button.checked.focus {
     background-color: rgb(52, 152, 219);
     color: white;
 }
@@ -218,14 +224,14 @@ select {
 }
 
 .percent {
-    border-radius: 18px;
+    border-radius: 1em;
     color: white;
     background-color: rgb(52, 152, 219);
     font-size: 80%;
-    padding: 8px 12px;
+    padding: 0.4em 0.6em;
     position: absolute;
-    top: 32px;
-    right: -48px;
+    top: 1.8em;
+    right: -2.5em;
     line-height: 1.2;
     text-align: center;
     transform:rotate(7deg);
@@ -316,7 +322,7 @@ a .fa {
 .accordion .ui-icon {
     display: inline-block;
     width: 20px;
-    color: rgb(149, 165, 166);
+    color: rgb(52, 152, 219);
     text-align: center;
     font-family: FontAwesome;
     font-style: normal;

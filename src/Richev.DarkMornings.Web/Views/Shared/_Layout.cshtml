@@ -71,9 +71,15 @@
         $(document).ready(function () {
             overlay = $(".jumbotron.overlay");
             content = $(".jumbotron.content");
-            resizeOverlay();
+            window.setTimeout(resizeOverlay, 100); // initial overlay resize to happen after page is fully presented. Saw issues otherwise.
 
             $(window).resize(resizeOverlay);
+
+            var isTouchDevice = 'ontouchstart' in document.documentElement;
+            if (!isTouchDevice) {
+                // There are some CSS styles (:hover ones) that we only want on a non-touch device
+                $("body").addClass("notTouchDevice");
+            }
         });
     </script>
 
