@@ -25,38 +25,52 @@ namespace Richev.DarkMornings.Web.Tests
         {
             _daylights.IsCurrentlyInDaylight = true;
 
-            var daylights = Builders.BuildDaylightInfoModel(_today, _daylights, Commute.FromWork, _workingDays);
+            var daylightsModel = Builders.BuildDaylightInfoModel(_today, _daylights, Commute.FromWork, _workingDays);
 
-            Assert.IsNull(daylights.NextWorkingDayDaylightTransition);
-            Assert.AreEqual(Commute.FromWork, daylights.CommuteType);
-            Assert.AreEqual(0, daylights.NumberOfDaysToTransition);
-            Assert.IsTrue(daylights.IsCurrentlyInDaylight);
+            Assert.IsNull(daylightsModel.NextWorkingDayDaylightTransition);
+            Assert.AreEqual(Commute.FromWork, daylightsModel.CommuteType);
+            Assert.AreEqual(0, daylightsModel.NumberOfDaysToTransition);
+            Assert.IsTrue(daylightsModel.IsCurrentlyInDaylight);
+            Assert.AreEqual(100, daylightsModel.PercentOfTheYearInTheDark);
         }
 
         [Test]
-        public void ShouldBuildDaylightInfoWhenNextdaylightTransitionIsSetToWorkingDay()
+        public void ShouldBuildDaylightInfoWhenNextDaylightTransitionIsSetToWorkingDay()
         {
             _daylights.NextDaylightTransition = _today.AddDays(4); // a Friday
 
-            var daylights = Builders.BuildDaylightInfoModel(_today, _daylights, Commute.FromWork, _workingDays);
+            var daylightsModel = Builders.BuildDaylightInfoModel(_today, _daylights, Commute.FromWork, _workingDays);
 
-            Assert.AreEqual(_today.AddDays(4), daylights.NextWorkingDayDaylightTransition); // same day as the NextDaylightTransition
-            Assert.AreEqual(Commute.FromWork, daylights.CommuteType);
-            Assert.AreEqual(4, daylights.NumberOfDaysToTransition); // Tuesday to Friday
-            Assert.IsFalse(daylights.IsCurrentlyInDaylight);
+            Assert.AreEqual(_today.AddDays(4), daylightsModel.NextWorkingDayDaylightTransition); // same day as the NextDaylightTransition
+            Assert.AreEqual(Commute.FromWork, daylightsModel.CommuteType);
+            Assert.AreEqual(4, daylightsModel.NumberOfDaysToTransition); // Tuesday to Friday
+            Assert.IsFalse(daylightsModel.IsCurrentlyInDaylight);
+            Assert.AreEqual(100, daylightsModel.PercentOfTheYearInTheDark);
         }
 
         [Test]
-        public void ShouldBuildDaylightInfoWhenNextdaylightTransitionIsSetToNonWorkingDay()
+        public void ShouldBuildDaylightInfoWhenNextDaylightTransitionIsSetToNonWorkingDay()
         {
             _daylights.NextDaylightTransition = _today.AddDays(6); // a Sunday
 
-            var daylights = Builders.BuildDaylightInfoModel(_today, _daylights, Commute.FromWork, _workingDays);
+            var daylightsModel = Builders.BuildDaylightInfoModel(_today, _daylights, Commute.FromWork, _workingDays);
 
-            Assert.AreEqual(_today.AddDays(7), daylights.NextWorkingDayDaylightTransition); // not quite the same as the NextDaylightTransition
-            Assert.AreEqual(Commute.FromWork, daylights.CommuteType);
-            Assert.AreEqual(5, daylights.NumberOfDaysToTransition); // Tuesday to Friday, plus the next Monday
-            Assert.IsFalse(daylights.IsCurrentlyInDaylight);
+            Assert.AreEqual(_today.AddDays(7), daylightsModel.NextWorkingDayDaylightTransition); // not quite the same as the NextDaylightTransition
+            Assert.AreEqual(Commute.FromWork, daylightsModel.CommuteType);
+            Assert.AreEqual(5, daylightsModel.NumberOfDaysToTransition); // Tuesday to Friday, plus the next Monday
+            Assert.IsFalse(daylightsModel.IsCurrentlyInDaylight);
+            Assert.AreEqual(100, daylightsModel.PercentOfTheYearInTheDark);
+        }
+
+        [Test]
+        public void ShouldBuildDaylightInfoWhenInDarknessNinetyPercentOfTheYear()
+        {
+            _daylights.IsCurrentlyInDaylight = false;
+            _daylights.CommutesInDaylightPerYear = 36;
+
+            var daylightsModel = Builders.BuildDaylightInfoModel(_today, _daylights, Commute.FromWork, _workingDays);
+
+            Assert.AreEqual(90.14, Math.Round(daylightsModel.PercentOfTheYearInTheDark, 2));
         }
     }
 }

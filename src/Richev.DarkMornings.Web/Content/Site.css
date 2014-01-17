@@ -216,6 +216,28 @@ select {
     font-weight: bold;
     margin-bottom: 8px;
 }
+
+.percent {
+    border-radius: 18px;
+    color: white;
+    background-color: rgb(52, 152, 219);
+    font-size: 80%;
+    padding: 8px 12px;
+    position: absolute;
+    top: 32px;
+    right: -48px;
+    line-height: 1.2;
+    text-align: center;
+    transform:rotate(7deg);
+    -ms-transform:rotate(7deg); /* IE 9 */
+    -webkit-transform:rotate(7deg); /* Safari and Chrome, looks a bit awful in Chrome */
+}
+
+.percent > span {
+    display: block;
+    font-size: 60%;
+}
+
 .results > div {
     float: left;
 }

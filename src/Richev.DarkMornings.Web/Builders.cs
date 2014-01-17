@@ -37,11 +37,19 @@ namespace Richev.DarkMornings.Web
             return new DaylightInfoModel
             {
                 IsCurrentlyInDaylight = daylightInfo.IsCurrentlyInDaylight,
-                PercentageInDaylight = ((double)(DaylightHunter.DaysInYear - daylightInfo.CommutesInDaylightPerYear) / DaylightHunter.DaysInYear) * 100,
+                PercentOfTheYearInTheDark = GetPercentOfTheYearInTheDark(daylightInfo.CommutesInDaylightPerYear),
                 NextWorkingDayDaylightTransition = nextWorkingDayDaylightTransition,
                 CommuteType = commuteType,
                 NumberOfDaysToTransition = daysToTransition
             };
+        }
+
+        private static double GetPercentOfTheYearInTheDark(int commutesInDaylightPerYear)
+        {
+            var commutesInDarknessPerYear = DaylightHunter.DaysInYear - commutesInDaylightPerYear;
+            var percentOfTheYearInTheDark = ((double)commutesInDarknessPerYear / DaylightHunter.DaysInYear) * 100;
+
+            return percentOfTheYearInTheDark;
         }
 
         public static CommuteTimeModel BuildEndCommuteTimeModel(CommuteTimeModel commuteTime, int journeyDuration)

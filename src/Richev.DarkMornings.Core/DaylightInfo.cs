@@ -12,18 +12,18 @@ namespace Richev.DarkMornings.Core
         public bool IsCurrentlyInDaylight { get; set; }
 
         /// <summary>
-        /// The number of days that this commute will be in the daylight
+        /// The number of days that this commute will be in the daylight.
         /// </summary>
         public int CommutesInDaylightPerYear { get; set; }
 
         /// <summary>
         /// <para>When there will next be a transition between daylight/not daylight or vice versa for this commute.</para>
-        /// <para>Will be null if this commute is always in daylight or dark.</para>
+        /// <para>Will be null if this commute is always in daylight or darkness.</para>
         /// </summary>
         public DateTime? NextDaylightTransition { get; set; }
 
         /// <summary>
-        /// Whether the next commute daylight transition will be from night to day, or vice versa
+        /// Whether the next commute daylight transition will be a sunset or sunrise.
         /// </summary>
         public DaylightTransition? TransitionType { get; set; }
     }
