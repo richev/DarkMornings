@@ -141,6 +141,7 @@ select {
     vertical-align: auto;
 }
 
+.working-days button:hover,
 .working-days button:focus {
     color: inherit; /* because of a Bootstrap CSS style*/
 }

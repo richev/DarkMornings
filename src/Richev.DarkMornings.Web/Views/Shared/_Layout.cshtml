@@ -75,11 +75,12 @@
 
             $(window).resize(resizeOverlay);
 
-            var isTouchDevice = 'ontouchstart' in document.documentElement;
+            // not working....yet
+            /*var isTouchDevice = 'ontouchstart' in document.documentElement;
             if (!isTouchDevice) {
                 // There are some CSS styles (:hover ones) that we only want on a non-touch device
                 $("body").addClass("notTouchDevice");
-            }
+            }*/
         });
     </script>
 
