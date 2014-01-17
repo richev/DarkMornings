@@ -237,7 +237,7 @@ select {
     text-align: center;
     transform:rotate(7deg);
     -ms-transform:rotate(7deg); /* IE 9 */
-    -webkit-transform:rotate(7deg); /* Safari and Chrome, looks a bit awful in Chrome */
+    -webkit-transform:rotate(7deg) translate3d(0, 0, 0); /* Safari and Chrome */
 }
 
 .percent > span {
