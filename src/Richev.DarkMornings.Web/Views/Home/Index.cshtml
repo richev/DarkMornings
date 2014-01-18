@@ -82,7 +82,7 @@ else
         <h3><span class="header-text">Your location</span> <span class="text-info">This is where we think you are.</span></h3>
         <div class="location-map">
             <p class="text-info"><strong>X</strong> marks the spot.</p>
-            <img src="@Model.MapImageUrl" alt="This is where we think you are." title="This is where we think you are." width="640" height="320" />
+            <img src="@UIHelpers.GetMapImageUrl(Model.la.Value, Model.lo.Value)" alt="This is where we think you are." title="This is where we think you are." width="640" height="320" />
             <p class="text-info">This is the location we used when calculating sunrise and sunset times, as well as your time zone (important for daylight savings things!).</p>
         </div>
     </div>

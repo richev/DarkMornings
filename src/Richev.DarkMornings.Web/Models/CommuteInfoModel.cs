@@ -1,5 +1,4 @@
-﻿using System.Collections.Specialized;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Richev.DarkMornings.Web.Models
@@ -58,27 +57,6 @@ namespace Richev.DarkMornings.Web.Models
         /// Commute from work
         /// </summary>
         public CommuteTimeModel fw { get; set; }
-
-        public string MapImageUrl
-        {
-            get
-            {
-                var queryStringParameters = new NameValueCollection
-                            {
-                                { "center", string.Format("{0},{1}", la, lo) },
-                                { "zoom", "6" },
-                                { "scale", "2" },
-                                { "size", "320x160" },
-                                { "markers", string.Format("color:0xf39c12|label:X|{0},{1}", la, lo) },
-                                { "sensor", "false" },
-                                { "ApiKey", "AIzaSyCBYJC-vYYyh6GtkQHWPirwHprXL9C7ylE" }
-                            };
-
-                return string.Format(
-                    "http://maps.googleapis.com/maps/api/staticmap{0}",
-                    Builders.BuildQueryString(queryStringParameters));
-            }
-        }
 
         public bool HasDefaultValues()
         {
