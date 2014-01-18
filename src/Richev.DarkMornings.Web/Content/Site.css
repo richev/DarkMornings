@@ -462,7 +462,7 @@ a .fa {
         padding: 4px 0;
     }
 
-    .accordion .text-info {
+    .accordion h3 .text-info {
         display: none;
     }
 
