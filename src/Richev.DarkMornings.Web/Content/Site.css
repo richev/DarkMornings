@@ -365,6 +365,17 @@ a .fa {
     line-height: 1;
 }
 
+.location-map {
+    text-align: center;
+}
+
+.location-map img {
+    border: 2px solid rgb(52, 152, 219);
+    border-radius: 16px;
+    max-width: 100%;
+    height: auto;
+}
+
 @media (max-width: 768px) {
     h1 .fa {
         font-size: 70px;

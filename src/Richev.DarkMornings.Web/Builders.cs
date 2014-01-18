@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Web;
 using Richev.DarkMornings.Core;
 using Richev.DarkMornings.Web.Models;
 
@@ -59,6 +61,16 @@ namespace Richev.DarkMornings.Web
             var endCommuteTime = time.Add(new TimeSpan(0, journeyDuration, 0));
 
             return new CommuteTimeModel { h = endCommuteTime.Hours, m = endCommuteTime.Minutes };
+        }
+
+        public static string BuildQueryString(NameValueCollection nvc)
+        {
+            var array = (from key in nvc.AllKeys
+                         from value in nvc.GetValues(key)
+                         select string.Format("{0}={1}", HttpUtility.UrlEncode(key), HttpUtility.UrlEncode(value)))
+                .ToArray();
+
+            return "?" + string.Join("&", array);
         }
     }
 }
