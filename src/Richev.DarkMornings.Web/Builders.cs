@@ -17,9 +17,15 @@ namespace Richev.DarkMornings.Web
 
             if (daylightInfo.NextDaylightTransition.HasValue)
             {
+                var day = today;
+
+                if (day >= daylightInfo.NextDaylightTransition.Value)
+                {
+                    throw new InvalidOperationException(string.Format("daylightInfo.NextDaylightTransition.Value equals {0}; but it should be in the future.", daylightInfo.NextDaylightTransition.Value));
+                }
+
                 var days = new List<DateTime>();
 
-                var day = today;
                 while (day < daylightInfo.NextDaylightTransition.Value)
                 {
                     day = day.AddDays(1);
