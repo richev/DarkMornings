@@ -42,7 +42,8 @@ namespace Richev.DarkMornings.Web
                 PercentOfTheYearInTheDark = GetPercentOfTheYearInTheDark(daylightInfo.CommutesInDaylightPerYear),
                 NextWorkingDayDaylightTransition = nextWorkingDayDaylightTransition,
                 CommuteType = commuteType,
-                NumberOfDaysToTransition = daysToTransition
+                NumberOfDaysToTransition = daysToTransition,
+                DayStates = daylightInfo.DayStates
             };
         }
 

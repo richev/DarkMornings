@@ -152,7 +152,7 @@ select {
 }
 
 .calendar {
-    display: block;
+    float: left;
     text-align: center;
     background-color: white;
     border: 2px solid rgb(243, 156, 18);
@@ -181,6 +181,7 @@ select {
 }
 
 .until {
+    float: left;
     width: 6.5em;
     padding-top: 48px;
     text-align: center;
@@ -191,6 +192,7 @@ select {
 }
 
 .days-more {
+    float: left;
     width: 11.5em;
     margin-top: 26px;
     line-height: 1;
@@ -245,9 +247,6 @@ select {
     font-size: 60%;
 }
 
-.results > div {
-    float: left;
-}
 .results {
     clear: both;
 }
@@ -257,7 +256,6 @@ hr.and {
 }
 .results.journey {
     width: 24.5em;
-    height: 148px;
     margin: 0 auto;
 }
 
@@ -374,6 +372,26 @@ a .fa {
     border-radius: 16px;
     max-width: 100%;
     height: auto;
+}
+
+.year-bar {
+    margin-top: 1em;
+    width: 100%;
+    line-height: 1;
+    font-size: 50%;
+    border: 2px solid rgb(52, 152, 219);
+}
+
+.year-bar .dark {
+    background-color: gray;
+}
+
+.year-bar .twilight {
+    background-color: silver;
+}
+
+.year-bar .light {
+    background-color: white;
 }
 
 @media (max-width: 768px) {
