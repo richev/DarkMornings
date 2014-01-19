@@ -85,8 +85,8 @@ namespace Richev.DarkMornings.Web.Controllers
 
                 var workingDays = model.wd.Select(d => d == UIHelpers.WorkingDayTrue).ToArray();
 
-                model.tw.Daylights = Builders.BuildDaylightInfoModel(DateTime.Now, toWorkDaylightInfo, Commute.ToWork, workingDays);
-                model.fw.Daylights = Builders.BuildDaylightInfoModel(DateTime.Now, fromWorkDaylightInfo, Commute.FromWork, workingDays);
+                model.tw.Daylights = Builders.BuildDaylightInfoModel(DateTime.Now.Date, toWorkDaylightInfo, Commute.ToWork, workingDays);
+                model.fw.Daylights = Builders.BuildDaylightInfoModel(DateTime.Now.Date, fromWorkDaylightInfo, Commute.FromWork, workingDays);
             }
 
             return View(model);
