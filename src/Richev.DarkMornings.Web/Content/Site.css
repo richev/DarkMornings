@@ -407,7 +407,7 @@ a .fa {
         left: 205px;
     }
 
-    .results > div {
+    .results .calendar, .results .until, .results .days-more {
         float: inherit;
         margin: 0 auto;
     }
