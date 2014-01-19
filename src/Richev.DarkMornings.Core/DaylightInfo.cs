@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace Richev.DarkMornings.Core
 {
-    [DebuggerDisplay("{IsCurrentlyInDaylight} {CommutesInDaylightPerYear} {NextDaylightTransition}")]
+    [DebuggerDisplay("IsCurrentlyInDaylight={IsCurrentlyInDaylight} CommutesInDaylightPerYear={CommutesInDaylightPerYear} NextDaylightTransition={NextDaylightTransition} TransitionType={TransitionType}")]
     public class DaylightInfo
     {
         /// <summary>
