@@ -153,6 +153,7 @@ select {
 
 .calendar {
     float: left;
+    position: relative;
     text-align: center;
     background-color: white;
     border: 2px solid rgb(243, 156, 18);
@@ -193,6 +194,7 @@ select {
 
 .days-more {
     float: left;
+    position: relative;
     width: 11.5em;
     margin-top: 26px;
     line-height: 1;
@@ -260,10 +262,6 @@ hr.and {
 }
 
 .with-icon {
-    position: relative;
-}
-.with-icon > span, .with-icon > div {
-    z-index: 20;
     position: relative;
 }
 
