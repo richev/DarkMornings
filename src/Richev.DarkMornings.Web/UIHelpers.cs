@@ -82,6 +82,9 @@ namespace Richev.DarkMornings.Web
             return journeyDurations;
         }
 
+        /// <summary>
+        /// Returns an HtmlString for a sun or a moon icon.
+        /// </summary>
         public static HtmlString GetDaylightIcon(bool isCurrentlyInDaylight)
         {
             var daylightIcon = isCurrentlyInDaylight ? "<i class=\"fa fa-sun-o\"></i>" : "<i class=\"fa fa-moon-o\"></i>";
@@ -89,11 +92,39 @@ namespace Richev.DarkMornings.Web
             return new HtmlString(daylightIcon);
         }
 
+        /// <summary>
+        /// Returns "light" or "dark"
+        /// </summary>
         public static string GetDaylightText(bool isCurrentlyInDaylight)
         {
             return isCurrentlyInDaylight ? "light" : "dark";
         }
 
+        /// <summary>
+        /// Returns a string such as "light journeys".
+        /// </summary>
+        /// <param name="isCurrentlyInDaylight"></param>
+        /// <param name="numberOfDaysToTransition"></param>
+        /// <returns></returns>
+        public static string GetDaylightJourneysText(bool isCurrentlyInDaylight, int numberOfDaysToTransition)
+        {
+            var daylightJourneysText = GetDaylightText(isCurrentlyInDaylight);
+
+            if (numberOfDaysToTransition == 1)
+            {
+                daylightJourneysText += " journey";
+            }
+            else
+            {
+                daylightJourneysText += " journeys";
+            }
+
+            return daylightJourneysText;
+        }
+
+        /// <summary>
+        /// Returns an HtmlString for a right pointing (to work) or left pointing (from work) icon.
+        /// </summary>
         public static HtmlString GetCommuteDirectionIcon(Commute commuteType)
         {
             string commuteDirectionIcon;

@@ -27,19 +27,19 @@
         @Html.HiddenFor(model => model.tz)
         <h3>Journey timings</h3>
         <div class="with-icon">
-            <i class="fa fa-arrow-circle-o-right"></i><span>I leave home at</span>
+            <i class="fa fa-arrow-circle-o-right"></i>@Html.LabelFor(model => model.tw.h, "I leave home at")
             <span class="time-selector">
                 @Html.DropDownListFor(model => model.tw.h, UIHelpers.GetHours(Model.tw.h))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.tw.m, UIHelpers.GetMinutes(Model.tw.m))
             </span>
         </div>
         <div class="with-icon">
-            <i class="fa fa-arrow-circle-o-left"></i><span>I leave work at</span>
+            <i class="fa fa-arrow-circle-o-left"></i>@Html.LabelFor(model => model.fw.h, "I leave work at")
             <span class="time-selector">
                 @Html.DropDownListFor(model => model.fw.h, UIHelpers.GetHours(Model.fw.h))<span class="time-separator">:</span>@Html.DropDownListFor(model => model.fw.m, UIHelpers.GetMinutes(Model.fw.m))
             </span>
         </div>
         <div class="with-icon">
-            <i class="fa fa-clock-o"></i><span>My journey takes</span>
+            <i class="fa fa-clock-o"></i>@Html.LabelFor(model => model.d, "My journey takes")
             <span class="duration-selector">
                 @Html.DropDownListFor(model => model.d, UIHelpers.GetJourneyDurations(Model.d))
             </span>
