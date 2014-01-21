@@ -204,6 +204,7 @@ select {
     color: white;
     border-radius: 16px;
     background-color: rgb(52, 152, 219);
+    position: relative;
     z-index: 20;
 }
 .days-more.always {
