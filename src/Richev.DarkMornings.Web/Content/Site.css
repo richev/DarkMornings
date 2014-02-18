@@ -229,20 +229,23 @@ select {
     margin-bottom: 8px;
 }
 
+.calendar .percent {
+    position: absolute;
+    top: 1.8em;
+    right: -2.5em;
+    transform:rotate(7deg);
+    -ms-transform:rotate(7deg); /* IE 9 */
+    -webkit-transform:rotate(7deg) translate3d(0, 0, 0); /* Safari and Chrome */
+}
+
 .percent {
     border-radius: 1em;
     color: white;
     background-color: rgb(52, 152, 219);
     font-size: 80%;
     padding: 0.4em 0.6em;
-    position: absolute;
-    top: 1.8em;
-    right: -2.5em;
     line-height: 1.2;
     text-align: center;
-    transform:rotate(7deg);
-    -ms-transform:rotate(7deg); /* IE 9 */
-    -webkit-transform:rotate(7deg) translate3d(0, 0, 0); /* Safari and Chrome */
 }
 
 .percent > span {
@@ -378,25 +381,22 @@ a .fa {
     height: auto;
 }
 
-.year-bar {
-    margin-top: 1em;
-    width: 100%;
-    line-height: 1;
-    font-size: 50%;
-    border: 2px solid rgb(52, 152, 219);
+.as-mentioned {
+    margin-bottom: 30px;
+    font-size: 85%;
+}
+.as-mentioned a {
+    color: white;
+    opacity: 0.6;
+}
+.as-mentioned a:hover {
+    text-decoration: none;
+    opacity: 1;
+}
+.as-mentioned a span {
+    display: block;
 }
 
-.year-bar .dark {
-    background-color: gray;
-}
-
-.year-bar .twilight {
-    background-color: silver;
-}
-
-.year-bar .light {
-    background-color: white;
-}
 
 @media (max-width: 768px) {
     h1 .fa {
@@ -439,6 +439,9 @@ a .fa {
         background-attachment: fixed;
         background-position: bottom center;
         height: 100%;
+    }
+    .as-mentioned {
+        float: right;
     }
 }
 
