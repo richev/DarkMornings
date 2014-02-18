@@ -57,7 +57,6 @@ namespace Richev.DarkMornings.Web.Controllers
 
             var today = DateTime.Now.Date;
 
-
             var outboundCommuteStart = today.AddHours(model.tw.h).AddMinutes(model.tw.m);
             var returnCommuteStart = today.AddHours(model.fw.h).AddMinutes(model.fw.m);
 
@@ -73,6 +72,8 @@ namespace Richev.DarkMornings.Web.Controllers
 
             if (ModelState.IsValid)
             {
+                // TODO: Refactor from code in Builders
+
                 var daylightHunter = new DaylightHunter();
 
                 var outboundCommuteEnd = outboundCommuteStart.AddMinutes(model.d);
@@ -87,6 +88,9 @@ namespace Richev.DarkMornings.Web.Controllers
 
                 model.tw.Daylights = Builders.BuildDaylightInfoModel(DateTime.Now.Date, toWorkDaylightInfo, Commute.ToWork, workingDays);
                 model.fw.Daylights = Builders.BuildDaylightInfoModel(DateTime.Now.Date, fromWorkDaylightInfo, Commute.FromWork, workingDays);
+
+                // TODO: Complete this later on
+                //model.OtherLocations = Builders.BuildOtherLocations(model.wd, model.tw, model.fw, model.d);
             }
 
             return View(model);

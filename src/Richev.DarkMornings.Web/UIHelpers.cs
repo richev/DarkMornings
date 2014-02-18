@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Richev.DarkMornings.Core;
 using Richev.DarkMornings.Web.Models;
 
 namespace Richev.DarkMornings.Web
@@ -272,6 +273,27 @@ namespace Richev.DarkMornings.Web
 
             return string.Format(
                 "http://maps.googleapis.com/maps/api/staticmap{0}",
+                Builders.BuildQueryString(queryStringParameters));
+        }
+
+        public static string GetOtherLocationUrl(OtherLocationModel otherLocation, string workingDays, CommuteTimeModel toWork, CommuteTimeModel fromWork, int duration)
+        {
+            var queryStringParameters = new NameValueCollection
+                                        {
+                                            { "la", otherLocation.Latitude.ToString() },
+                                            { "lo", otherLocation.Longitude.ToString() },
+                                            { "wd", workingDays },
+                                            { "tz", otherLocation.TimeZoneOffset.ToString() },
+                                            { "tw.h", toWork.h.ToString() },
+                                            { "tw.m", toWork.m.ToString() },
+                                            { "fw.h", fromWork.h.ToString() },
+                                            { "fw.m", fromWork.m.ToString() },
+                                            { "d", duration.ToString() }
+                                        };
+
+            return string.Format("{0}://{1}/{2}",
+                HttpContext.Current.Request.Url.Scheme,
+                HttpContext.Current.Request.Url.Authority,
                 Builders.BuildQueryString(queryStringParameters));
         }
     }

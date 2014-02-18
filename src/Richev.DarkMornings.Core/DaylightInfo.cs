@@ -26,16 +26,5 @@ namespace Richev.DarkMornings.Core
         /// Whether the next commute daylight transition will be a sunset or sunrise.
         /// </summary>
         public DaylightTransition? TransitionType { get; set; }
-
-        public DayState[] DayStates { get; set; }
-    }
-
-    public enum DayState
-    {
-        Light,
-
-        Twilight,
-
-        Dark
     }
 }

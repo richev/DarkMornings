@@ -77,6 +77,26 @@ else
         @Html.Partial("_DaylightInfo", Model.fw.Daylights)
     </div>
     <p class="text-info excluding">(excluding Bank and national holidays)</p>
+    @*<hr class="and" />
+    <h3>What if I moved to one of the <a href="http://en.wikipedia.org/wiki/World's_most_livable_cities">top 10 cities in the world</a>?</h3>
+    <div>
+        <ol>
+            @foreach (var otherLocation in Model.OtherLocations)
+            {
+                <li>
+                    <a href="@UIHelpers.GetOtherLocationUrl(otherLocation, Model.wd, Model.tw, Model.fw, Model.d)">@otherLocation.City, @otherLocation.Country</a>
+                    <h4>To work</h4>
+                    <div class="percent">
+                        <span>In the dark</span>@otherLocation.ToWorkDaylights.PercentOfTheYearInTheDark.ToString("0.#")%<span>of the year!</span>
+                    </div>
+                    <h4>From work</h4>
+                    <div class="percent">
+                        <span>In the dark</span>@otherLocation.FromWorkDaylights.PercentOfTheYearInTheDark.ToString("0.#")%<span>of the year!</span>
+                    </div>
+                </li>
+            }
+        </ol>
+    </div>*@
     <hr class="and" />
     <div class="accordion">
         <h3><span class="header-text">Your location</span> <span class="text-info">This is where we think you are.</span></h3>

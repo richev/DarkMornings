@@ -58,6 +58,8 @@ namespace Richev.DarkMornings.Web.Models
         /// </summary>
         public CommuteTimeModel fw { get; set; }
 
+        public OtherLocationModel[] OtherLocations { get; set; }
+
         public bool HasDefaultValues()
         {
             return !la.HasValue &&

@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using Richev.DarkMornings.Core;
 
 namespace Richev.DarkMornings.Web.Tests
 {
@@ -8,14 +9,14 @@ namespace Richev.DarkMornings.Web.Tests
     {
         private readonly DateTime _today = new DateTime(2014, 2, 3, 21, 38, 0); // a Monday
 
-        private Core.DaylightInfo _daylights;
+        private DaylightInfo _daylights;
 
         private bool[] _workingDays;
 
         [SetUp]
         public void SetUp()
         {
-            _daylights = new Core.DaylightInfo { TransitionType = Core.DaylightTransition.SunRise };
+            _daylights = new DaylightInfo { TransitionType = DaylightTransition.SunRise };
 
             _workingDays = new[] { false, true, true, true, true, true, false }; // Mon-Fri
         }

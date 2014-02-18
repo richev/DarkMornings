@@ -1,5 +1,4 @@
 ﻿using System;
-using Richev.DarkMornings.Core;
 
 namespace Richev.DarkMornings.Web.Models
 {
@@ -21,10 +20,5 @@ namespace Richev.DarkMornings.Web.Models
         /// <para>Will be null if this commute is always in daylight or darkness.</para>
         /// </summary>
         public int NumberOfDaysToTransition { get; set; }
-
-        public DayState[] DayStates { get; set; }
-
-        //public YearBarModel YearBar { get; set; }
     }
-
 }

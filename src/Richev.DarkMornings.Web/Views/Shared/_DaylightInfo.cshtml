@@ -6,7 +6,7 @@
         <div class="days-more">
             @UIHelpers.GetDaylightIcon(Model.IsCurrentlyInDaylight)
             <div class="days-more-content">
-                @UIHelpers.GetCommuteDirectionIcon(Model.CommuteType)<span class=count>@Model.NumberOfDaysToTransition more</span> <span>@UIHelpers.GetDaylightText(Model.IsCurrentlyInDaylight) journeys</span>
+                @UIHelpers.GetCommuteDirectionIcon(Model.CommuteType)<span class=count>@Model.NumberOfDaysToTransition more</span> <span>@UIHelpers.GetDaylightJourneysText(Model.IsCurrentlyInDaylight, Model.NumberOfDaysToTransition)</span>
             </div>
         </div>
         <div class="until">
@@ -33,13 +33,3 @@
     }
 </div>
 <hr style="clear:both; border:none;" />
-<table class="year-bar">
-    <tbody>
-        <tr>
-            @for (var d = 0; d < Model.DayStates.Length; d++)
-            {
-                <td class="@Model.DayStates[d].ToString().ToLower()">&nbsp;</td>
-            }
-        </tr>
-    </tbody>
-</table>

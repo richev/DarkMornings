@@ -28,8 +28,6 @@ namespace Richev.DarkMornings.Core
             var commuteIsAfterSunrise = commuteStart.TimeOfDay >= sunRise.TimeOfDay;
             var commuteIsBeforeSunSet = commuteEnd.TimeOfDay <= sunSet.TimeOfDay;
 
-            var dayStates = new List<DayState>(DaysInYear);
-
             if (commuteEnd.Date > commuteStart.Date)
             {
                 // Special case; overlapping midnight. Just assume that it's always dark
@@ -46,11 +44,6 @@ namespace Richev.DarkMornings.Core
                 if (commuteStart.TimeOfDay >= sunRise.TimeOfDay && commuteEnd.TimeOfDay <= sunSet.TimeOfDay)
                 {
                     daylightInfo.CommutesInDaylightPerYear++;
-                    dayStates.Add(DayState.Light);
-                }
-                else
-                {
-                    dayStates.Add(DayState.Dark);
                 }
 
                 if (!daylightInfo.TransitionType.HasValue && DaylightTransitionHappened(sunRise, sunSet, commuteStart, commuteEnd, daylightInfo.IsCurrentlyInDaylight))
@@ -72,8 +65,6 @@ namespace Richev.DarkMornings.Core
                     }
                 }
             }
-
-            daylightInfo.DayStates = dayStates.ToArray();
 
             return daylightInfo;
         }

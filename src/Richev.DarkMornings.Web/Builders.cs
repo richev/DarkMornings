@@ -49,7 +49,6 @@ namespace Richev.DarkMornings.Web
                 NextWorkingDayDaylightTransition = nextWorkingDayDaylightTransition,
                 CommuteType = commuteType,
                 NumberOfDaysToTransition = daysToTransition,
-                DayStates = daylightInfo.DayStates
             };
         }
 
@@ -78,6 +77,48 @@ namespace Richev.DarkMornings.Web
                 .ToArray();
 
             return "?" + string.Join("&", array);
+        }
+
+        public static OtherLocationModel[] BuildOtherLocations(string workingDays, CommuteTimeModel toWork, CommuteTimeModel fromWork, int duration)
+        {
+            var otherLocations = new List<OtherLocationModel>();
+
+            otherLocations.Add(new OtherLocationModel { City = "Copenhagen", Country = "Denmark", TimeZoneOffset = 1, Latitude = 55.716667, Longitude = 12.566667 });
+            otherLocations.Add(new OtherLocationModel { City = "Melbourne", Country = "Australia", TimeZoneOffset = 10, Latitude = -37.813611, Longitude = 144.963056 });
+            otherLocations.Add(new OtherLocationModel { City = "Helsinki", Country = "Finland", TimeZoneOffset = 2, Latitude = 60.170833, Longitude = 24.9375 });
+            otherLocations.Add(new OtherLocationModel { City = "Tokyo", Country = "Japan", TimeZoneOffset = 9, Latitude = 35.689506, Longitude = 139.6917 });
+            otherLocations.Add(new OtherLocationModel { City = "Vienna", Country = "Austria", TimeZoneOffset = 1, Latitude = 48.2, Longitude = 16.366667 });
+            otherLocations.Add(new OtherLocationModel { City = "Zurich", Country = "Switzerland", TimeZoneOffset = 1, Latitude = 47.366667, Longitude = 8.55 });
+            otherLocations.Add(new OtherLocationModel { City = "Stockholm", Country = "Sweden", TimeZoneOffset = 1, Latitude = 59.329444, Longitude = 18.068611 });
+            otherLocations.Add(new OtherLocationModel { City = "Munich", Country = "Germany", TimeZoneOffset = 1, Latitude = 48.133333, Longitude = 11.566667 });
+            otherLocations.Add(new OtherLocationModel { City = "Sydney", Country = "Australia", TimeZoneOffset = 10, Latitude = -33.859972, Longitude = 151.211111 });
+            otherLocations.Add(new OtherLocationModel { City = "Auckland", Country = "New Zealand", TimeZoneOffset = 12, Latitude = -36.840417, Longitude = 174.739869 });
+
+            var today = DateTime.Now.Date;
+
+            var outboundCommuteStart = today.AddHours(toWork.h).AddMinutes(toWork.m);
+            var returnCommuteStart = today.AddHours(fromWork.h).AddMinutes(fromWork.m);
+
+            foreach (var otherLocation in otherLocations)
+            {
+                // TODO: Refactor from code in HomeController
+                var daylightHunter = new DaylightHunter();
+
+                var outboundCommuteEnd = outboundCommuteStart.AddMinutes(duration);
+                var returnCommuteEnd = returnCommuteStart.AddMinutes(duration);
+                
+                var location = new Location { Latitude = otherLocation.Latitude, Longitude = otherLocation.Longitude };
+
+                var toWorkDaylightInfo = daylightHunter.GetDaylight(location, otherLocation.TimeZoneOffset, outboundCommuteStart, outboundCommuteEnd);
+                var fromWorkDaylightInfo = daylightHunter.GetDaylight(location, otherLocation.TimeZoneOffset, returnCommuteStart, returnCommuteEnd);
+
+                var workingDaysBools = workingDays.Select(d => d == UIHelpers.WorkingDayTrue).ToArray();
+
+                otherLocation.ToWorkDaylights = BuildDaylightInfoModel(DateTime.Now.Date, toWorkDaylightInfo, Commute.ToWork, workingDaysBools);
+                otherLocation.FromWorkDaylights = BuildDaylightInfoModel(DateTime.Now.Date, fromWorkDaylightInfo, Commute.FromWork, workingDaysBools);
+            }
+
+            return otherLocations.ToArray();
         }
     }
 }
