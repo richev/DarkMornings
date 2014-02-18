@@ -8,5 +8,7 @@
   <FrameworkUtilisationTypeForMSpec>UseStaticAnalysis</FrameworkUtilisationTypeForMSpec>
   <FrameworkUtilisationTypeForMSTest>UseStaticAnalysis</FrameworkUtilisationTypeForMSTest>
   <MetricsExclusionList>
+RichEv.DarkMornings.Core.Tests\Richev.DarkMornings.Core.Tests.csproj
+RichEv.DarkMornings.Web.Tests\Richev.DarkMornings.Web.Tests.csproj
 </MetricsExclusionList>
 </SolutionConfiguration>
