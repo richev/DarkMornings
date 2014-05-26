@@ -5,7 +5,6 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Richev.DarkMornings.Core;
 using Richev.DarkMornings.Web.Models;
 
 namespace Richev.DarkMornings.Web
