@@ -50,7 +50,7 @@ namespace Richev.DarkMornings.Web.DependencyResolution
         /// </returns>
         public IDependencyScope BeginScope()
         {
-            IContainer child = this.Container.GetNestedContainer();
+            IContainer child = Container.GetNestedContainer();
             return new StructureMapDependencyResolver(child);
         }
 
