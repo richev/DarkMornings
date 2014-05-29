@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Richev.DarkMornings.Core", "RichEv.DarkMornings.Core\Richev.DarkMornings.Core.csproj", "{B81EE85D-96D6-406B-B791-B866AF0A3450}"
 EndProject
@@ -12,6 +12,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Richev.DarkMornings.Web", "RichEv.DarkMornings.Web\Richev.DarkMornings.Web.csproj", "{3FF6C027-0918-467D-9D4C-A81D98AA8DA5}"
 EndProject
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Richev.DarkMornings.Azure", "Richev.DarkMornings.Azure\Richev.DarkMornings.Azure.ccproj", "{F65B23C8-946F-43F3-BFC4-6928E3949479}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6C758B9F-D034-436B-97CF-F8C582FC731E}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE.txt = LICENSE.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
