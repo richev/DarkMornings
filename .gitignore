@@ -7,3 +7,5 @@ obj
 bin
 csx
 _NCrunch*
+src/packages/*
+!src/packages/repositories.config
