@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ServiceConfiguration serviceName="Richev.DarkMornings.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2013-10.2.2">
-  <Role name="Richev.DarkMornings.Web">
-    <Instances count="1" />
-    <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=facebookfriendsstorage;AccountKey=zZUynfoQ3LNRleGorWdf/IYgbH5c6NYeTZDM19z6OHUdIQ+1evRpAlToCrjmZOw4RHlvr6DPy8vjqnkaMI1+Zg==" />
-    </ConfigurationSettings>
-  </Role>
-</ServiceConfiguration>
