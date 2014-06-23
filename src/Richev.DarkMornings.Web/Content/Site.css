@@ -354,18 +354,6 @@ a .fa {
     margin-bottom: 4px;
 }
 
-.jumbotron.overlay {
-    opacity: 0.85;
-    position: absolute;
-    z-index: 5;
-}
-
-.jumbotron.content {
-    background-color: inherit;
-    position: relative;
-    z-index: 6;
-}
-
 .fb-share-button {
     line-height: 1;
 }
@@ -442,6 +430,10 @@ a .fa {
     }
     .as-mentioned {
         float: right;
+    }
+    .jumbotron {
+        background-color: rgb(236, 240, 241);
+        background-color: rgba(236, 240, 241, 0.85);
     }
 }
 
