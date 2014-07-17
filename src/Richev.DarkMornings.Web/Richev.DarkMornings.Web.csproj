@@ -213,6 +213,10 @@
     <Content Include="Views\Shared\_DaylightInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\FacebookFriends\src\Richev.Common.Web\Richev.Common.Web.csproj">
+      <Project>{73726fab-866b-46ab-bbf3-e35793a983cd}</Project>
+      <Name>Richev.Common.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RichEv.DarkMornings.Core\Richev.DarkMornings.Core.csproj">
       <Project>{b81ee85d-96d6-406b-b791-b866af0a3450}</Project>
       <Name>Richev.DarkMornings.Core</Name>
