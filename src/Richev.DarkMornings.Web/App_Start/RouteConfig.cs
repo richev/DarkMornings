@@ -10,6 +10,12 @@ namespace Richev.DarkMornings.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                "HttpError",
+                "HttpError/{statusCode}",
+                new { controller = "HttpError", action = "Index" }
+            );
+
+            routes.MapRoute(
                 name: "About",
                 url: "about",
                 defaults: new { controller = "Home", action = "About" }
