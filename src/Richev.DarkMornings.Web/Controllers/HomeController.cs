@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Web.Mvc;
 using Richev.DarkMornings.Core;
 using Richev.DarkMornings.Web.Models;
@@ -23,10 +22,10 @@ namespace Richev.DarkMornings.Web.Controllers
             {
                 model = new CommuteInfoModel
                 {
-                    tw = { h = 8 },
-                    fw = { h = 18, m = 30 },
-                    d = 30,
-                    wd = string.Format("{1}{0}{0}{0}{0}{0}{1}", UIHelpers.WorkingDayTrue, UIHelpers.WorkingDayFalse)
+                    t = "0800",
+                    f = "1830",
+                    j = 30,
+                    d = WorkingDays.Monday | WorkingDays.Tuesday | WorkingDays.Wednesday | WorkingDays.Thursday | WorkingDays.Friday
                 };
 
                 ModelState.Clear();
@@ -34,40 +33,45 @@ namespace Richev.DarkMornings.Web.Controllers
                 return View(model);
             }
 
-            if (!model.wd.ToArray().Where(d => d == UIHelpers.WorkingDayTrue).Any())
+            if (model.d == 0)
             {
                 ModelState.AddModelError("WorkingDays", "Please select at least one workday.");
             }
 
-            if (!model.la.HasValue || !model.lo.HasValue)
+            if (!model.y.HasValue || !model.x.HasValue)
             {
                 double? latitude;
                 double? longitude;
 
                 _locationService.GetLocationFromIPAddress(Request.UserHostAddress, out latitude, out longitude);
 
-                model.la = latitude;
-                model.lo = longitude;
+                model.y = latitude;
+                model.x = longitude;
             }
 
-            if (!model.la.HasValue || !model.lo.HasValue)
+            if (!model.y.HasValue || !model.x.HasValue)
             {
                 ModelState.AddModelError("Location", "Sorry, we couldn't figure out your location.");
             }
 
             var today = DateTime.Now.Date;
 
-            var outboundCommuteStart = today.AddHours(model.tw.h).AddMinutes(model.tw.m);
-            var returnCommuteStart = today.AddHours(model.fw.h).AddMinutes(model.fw.m);
+            // TODO: Cleaner approach?
+            var outboundCommuteStart = today.AddHours(UIHelpers.GetTime(model.t).Hour).AddMinutes(UIHelpers.GetTime(model.t).Minute);
+            var returnCommuteStart = today.AddHours(UIHelpers.GetTime(model.f).Hour).AddMinutes(UIHelpers.GetTime(model.f).Minute);
 
-            if (Utils.GetTimeOfDayDifference(outboundCommuteStart, returnCommuteStart) <= new TimeSpan(0, model.d, 0))
+            if (Utils.GetTimeOfDayDifference(outboundCommuteStart, returnCommuteStart) <= new TimeSpan(0, model.j, 0))
             {
                 ModelState.AddModelError("JourneysOverlap", "Your journeys overlap one another, that can't be right.");
             }
 
-            if (!TimeZones.Selected.ContainsKey(model.tz.Value))
+            if (!model.z.HasValue)
             {
-                ModelState.AddModelError("TimeZoneInvalid", string.Format("The selected time zone {0} is not valid.", model.tz.Value));
+                ModelState.AddModelError("TimeZoneInvalid", "No time zone is selected.");
+            }
+            else if (!TimeZones.Selected.ContainsKey(model.z.Value))
+            {
+                ModelState.AddModelError("TimeZoneInvalid", string.Format("The selected time zone {0} is not valid.", model.z.Value));
             }
 
             if (ModelState.IsValid)
@@ -76,18 +80,16 @@ namespace Richev.DarkMornings.Web.Controllers
 
                 var daylightHunter = new DaylightHunter();
 
-                var outboundCommuteEnd = outboundCommuteStart.AddMinutes(model.d);
-                var returnCommuteEnd = returnCommuteStart.AddMinutes(model.d);
+                var outboundCommuteEnd = outboundCommuteStart.AddMinutes(model.j);
+                var returnCommuteEnd = returnCommuteStart.AddMinutes(model.j);
                 
-                var location = new Location { Latitude = model.la.Value, Longitude = model.lo.Value };
+                var location = new Location { Latitude = model.y.Value, Longitude = model.x.Value };
 
-                var toWorkDaylightInfo = daylightHunter.GetDaylight(location, model.tz.Value, outboundCommuteStart, outboundCommuteEnd);
-                var fromWorkDaylightInfo = daylightHunter.GetDaylight(location, model.tz.Value, returnCommuteStart, returnCommuteEnd);
+                var toWorkDaylightInfo = daylightHunter.GetDaylight(location, model.z.Value, outboundCommuteStart, outboundCommuteEnd);
+                var fromWorkDaylightInfo = daylightHunter.GetDaylight(location, model.z.Value, returnCommuteStart, returnCommuteEnd);
 
-                var workingDays = model.wd.Select(d => d == UIHelpers.WorkingDayTrue).ToArray();
-
-                model.tw.Daylights = Builders.BuildDaylightInfoModel(DateTime.Now.Date, toWorkDaylightInfo, Commute.ToWork, workingDays);
-                model.fw.Daylights = Builders.BuildDaylightInfoModel(DateTime.Now.Date, fromWorkDaylightInfo, Commute.FromWork, workingDays);
+                model.ToWorkDaylights = Builders.BuildDaylightInfoModel(DateTime.Now.Date, toWorkDaylightInfo, Commute.ToWork, model.d);
+                model.FromWorkDaylights = Builders.BuildDaylightInfoModel(DateTime.Now.Date, fromWorkDaylightInfo, Commute.FromWork, model.d);
 
                 // TODO: Complete this later on
                 //model.OtherLocations = Builders.BuildOtherLocations(model.wd, model.tw, model.fw, model.d);

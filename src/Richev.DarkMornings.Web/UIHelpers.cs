@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
-using System.Linq;
+using System.Globalization;
 using System.Web;
 using System.Web.Mvc;
 using Richev.DarkMornings.Web.Models;
@@ -12,14 +12,11 @@ namespace Richev.DarkMornings.Web
     public static class UIHelpers
     {
         /// <summary>
-        /// <para>Character 'x', used in a Sunday-first seven-character string to indicate a working day</para>
-        /// <para>e.g. oxxxxxo indicates that Mon-Fri are working days.</para>
+        /// For model hours and minutes, important because of JavaScript assumptions.
         /// </summary>
-        public const char WorkingDayTrue = 'x';
+        private const string PadLeadingZero = "00";
 
-        public const char WorkingDayFalse = 'o';
-
-        public static List<SelectListItem> GetHours(int selectedHour)
+        public static List<SelectListItem> GetHours(DateTime selectedTime)
         {
             var hours = new List<SelectListItem>();
 
@@ -27,16 +24,16 @@ namespace Richev.DarkMornings.Web
             {
                 hours.Add(new SelectListItem
                               {
-                                  Text = h.ToString("00"),
-                                  Value = h.ToString(),
-                                  Selected = h == selectedHour
+                                  Text = h.ToString(PadLeadingZero),
+                                  Value = h.ToString(PadLeadingZero),
+                                  Selected = h == selectedTime.Hour
                               });
             }
 
             return hours;
         }
 
-        public static List<SelectListItem> GetMinutes(int selectedMinute)
+        public static List<SelectListItem> GetMinutes(DateTime selectedTime)
         {
             var minutes = new List<SelectListItem>();
 
@@ -44,9 +41,9 @@ namespace Richev.DarkMornings.Web
             {
                 minutes.Add(new SelectListItem
                                 {
-                                    Text = m.ToString("00"),
-                                    Value = m.ToString(),
-                                    Selected = m == selectedMinute
+                                    Text = m.ToString(PadLeadingZero),
+                                    Value = m.ToString(PadLeadingZero),
+                                    Selected = m == selectedTime.Minute
                                 });
             }
 
@@ -60,6 +57,7 @@ namespace Richev.DarkMornings.Web
                          new KeyValuePair<string, int>("5 minutes", 5),
                          new KeyValuePair<string, int>("10 minutes", 10),
                          new KeyValuePair<string, int>("15 minutes", 15),
+                         new KeyValuePair<string, int>("20 minutes", 20),
                          new KeyValuePair<string, int>("30 minutes", 30),
                          new KeyValuePair<string, int>("45 minutes", 45),
                          new KeyValuePair<string, int>("1 hour", 60),
@@ -161,9 +159,17 @@ namespace Richev.DarkMornings.Web
             }
         }
 
-        public static string FormatCommuteTime(CommuteTimeModel commuteTime)
+        public static DateTime GetTime(string commuteTime)
         {
-            return string.Format("{0:00}:{1:00}", commuteTime.h, commuteTime.m);
+            // TODO: Error handling
+            return DateTime.ParseExact(commuteTime, "HHmm", CultureInfo.CurrentCulture);
+        }
+
+        public static string FormatCommuteTime(string commuteTime)
+        {
+            var time = GetTime(commuteTime);
+
+            return string.Format("{0:00}:{1:00}", time.Hour, time.Minute);
         }
 
         public static string FormatWorkingDays(bool[] workingDays)
@@ -203,36 +209,29 @@ namespace Richev.DarkMornings.Web
             return result;
         }
 
-        public static string FormatDaysCount(string workingDays)
-        {
-            var workingDaysCount = workingDays.Count(d => d == WorkingDayTrue);
-
-            return string.Format("{0} day{1}", workingDaysCount, workingDaysCount == 1 ? " " : "s");
-        }
-
         public static string GetTweetText(CommuteInfoModel model)
         {
             string tweetText;
 
-            if (!model.tw.Daylights.NextWorkingDayDaylightTransition.HasValue &&
-                !model.fw.Daylights.NextWorkingDayDaylightTransition.HasValue &&
-                model.tw.Daylights.IsCurrentlyInDaylight == model.fw.Daylights.IsCurrentlyInDaylight)
+            if (!model.ToWorkDaylights.NextWorkingDayDaylightTransition.HasValue &&
+                !model.FromWorkDaylights.NextWorkingDayDaylightTransition.HasValue &&
+                model.ToWorkDaylights.IsCurrentlyInDaylight == model.FromWorkDaylights.IsCurrentlyInDaylight)
             {
                 tweetText = string.Format(
                     "My journeys {0} and {1} are always in the {2}!",
-                    GetCommuteText(model.tw.Daylights.CommuteType),
-                    GetCommuteText(model.fw.Daylights.CommuteType),
-                    GetDaylightText(model.tw.Daylights.IsCurrentlyInDaylight));
+                    GetCommuteText(model.ToWorkDaylights.CommuteType),
+                    GetCommuteText(model.FromWorkDaylights.CommuteType),
+                    GetDaylightText(model.ToWorkDaylights.IsCurrentlyInDaylight));
             }
             else
             {
-                var prefixToWorkWithIHave = model.tw.Daylights.NextWorkingDayDaylightTransition.HasValue;
-                var prefixFromWorkWithIHave = !prefixToWorkWithIHave && model.fw.Daylights.NextWorkingDayDaylightTransition.HasValue;
+                var prefixToWorkWithIHave = model.ToWorkDaylights.NextWorkingDayDaylightTransition.HasValue;
+                var prefixFromWorkWithIHave = !prefixToWorkWithIHave && model.FromWorkDaylights.NextWorkingDayDaylightTransition.HasValue;
 
                 tweetText = string.Format(
                     "{0} and {1}!",
-                    GetDaylightInfoTweetText(model.tw.Daylights, prefixToWorkWithIHave),
-                    GetDaylightInfoTweetText(model.fw.Daylights, prefixFromWorkWithIHave));
+                    GetDaylightInfoTweetText(model.ToWorkDaylights, prefixToWorkWithIHave),
+                    GetDaylightInfoTweetText(model.FromWorkDaylights, prefixFromWorkWithIHave));
             }
 
             return tweetText;
@@ -275,7 +274,7 @@ namespace Richev.DarkMornings.Web
                 Builders.BuildQueryString(queryStringParameters));
         }
 
-        public static string GetOtherLocationUrl(OtherLocationModel otherLocation, string workingDays, CommuteTimeModel toWork, CommuteTimeModel fromWork, int duration)
+        /*public static string GetOtherLocationUrl(OtherLocationModel otherLocation, string workingDays, CommuteTimeModel toWork, CommuteTimeModel fromWork, int duration)
         {
             var queryStringParameters = new NameValueCollection
                                         {
@@ -294,6 +293,6 @@ namespace Richev.DarkMornings.Web
                 HttpContext.Current.Request.Url.Scheme,
                 HttpContext.Current.Request.Url.Authority,
                 Builders.BuildQueryString(queryStringParameters));
-        }
+        }*/
     }
 }

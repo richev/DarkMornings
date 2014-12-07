@@ -1,75 +1,85 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Richev.DarkMornings.Web.Models
 {
+    [Flags]
+    public enum WorkingDays
+    {
+        Sunday = 1,
+        Monday = 2,
+        Tuesday = 4,
+        Wednesday = 8,
+        Thursday = 16,
+        Friday = 32,
+        Saturday = 64
+    }
+
     public class CommuteInfoModel
     {
-        public CommuteInfoModel()
-        {
-            tw = new CommuteTimeModel();
-            fw = new CommuteTimeModel();
-            wd = string.Empty;
-        }
-
         /// <summary>
         /// Latitude
         /// </summary>
-        [DisplayName("latitude (la)")]
+        [DisplayName("latitude (y)")]
         [Range(-90, 90)]
-        public double? la { get; set; }
+        public double? y { get; set; }
 
         /// <summary>
         /// Longitude
         /// </summary>
-        [DisplayName("longitude (lo)")]
+        [DisplayName("longitude (x)")]
         [Range(-180, 180)]
-        public double? lo { get; set; }
+        public double? x { get; set; }
 
         /// <summary>
         /// Journey duration minutes
         /// </summary>
-        [DisplayName("journey duration minutes (d)")]
+        [DisplayName("journey duration minutes (j)")]
         [Range(5, 120)]
-        public int d { get; set; }
+        public int j { get; set; }
 
         /// <summary>
         /// Timezone hours offset
         /// </summary>
-        [DisplayName("timezone hours offset (wd)")]
+        [DisplayName("timezone hours offset (z)")]
         [Required]
         [Range(-12, 13)]
-        public double? tz { get; set; } // not an int, because some timezones are half an hour out
+        public double? z { get; set; } // not an int, because some timezones are half an hour out
 
         /// <summary>
         /// Working days
         /// </summary>
-        [DisplayName("working days (wd)")]
-        [StringLength(7, MinimumLength = 7)]
-        public string wd { get; set; }
+        [DisplayName("working days (d)")]
+        public WorkingDays d { get; set; }
 
         /// <summary>
         /// Commute to work
         /// </summary>
-        public CommuteTimeModel tw { get; set; }
+        [DisplayName("to work time")]
+        [StringLength(4, MinimumLength = 4)]
+        public string t { get; set; }
 
         /// <summary>
         /// Commute from work
         /// </summary>
-        public CommuteTimeModel fw { get; set; }
+        [DisplayName("from work time")]
+        [StringLength(4, MinimumLength = 4)]
+        public string f { get; set; }
 
-        public OtherLocationModel[] OtherLocations { get; set; }
+        public DaylightInfoModel ToWorkDaylights { get; set; }
+
+        public DaylightInfoModel FromWorkDaylights { get; set; }
 
         public bool HasDefaultValues()
         {
-            return !la.HasValue &&
-                   !lo.HasValue &&
-                   !tz.HasValue &&
-                   tw.h == 0 &&
-                   tw.m == 0 &&
-                   fw.h == 0 &&
-                   fw.m == 0 &&
-                   d == 0;
+            return !y.HasValue &&
+                   !x.HasValue &&
+                   !z.HasValue &&
+                   string.IsNullOrEmpty(t) &&
+                   string.IsNullOrEmpty(f) &&
+                   d == 0 &&
+                   j == 0;
         }
     }
 }

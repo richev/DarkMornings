@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using Richev.DarkMornings.Core;
+using Richev.DarkMornings.Web.Models;
 
 namespace Richev.DarkMornings.Web.Tests
 {
@@ -11,14 +12,14 @@ namespace Richev.DarkMornings.Web.Tests
 
         private DaylightInfo _daylights;
 
-        private bool[] _workingDays;
+        private WorkingDays _workingDays;
 
         [SetUp]
         public void SetUp()
         {
             _daylights = new DaylightInfo { TransitionType = DaylightTransition.SunRise };
 
-            _workingDays = new[] { false, true, true, true, true, true, false }; // Mon-Fri
+            _workingDays = WorkingDays.Monday | WorkingDays.Tuesday | WorkingDays.Wednesday | WorkingDays.Thursday | WorkingDays.Friday;
         }
 
         [Test]

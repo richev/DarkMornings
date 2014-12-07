@@ -10,7 +10,7 @@ namespace Richev.DarkMornings.Web
 {
     public static class Builders
     {
-        public static DaylightInfoModel BuildDaylightInfoModel(DateTime today, DaylightInfo daylightInfo, Commute commuteType, bool[] workingDays)
+        public static DaylightInfoModel BuildDaylightInfoModel(DateTime today, DaylightInfo daylightInfo, Commute commuteType, WorkingDays workingDays)
         {
             var daysToTransition = 0;
             DateTime? nextWorkingDayDaylightTransition = null;
@@ -33,12 +33,14 @@ namespace Richev.DarkMornings.Web
                 }
 
                 // Nudge to the first working day, if necessary
-                while (!workingDays[(int)days.Last().DayOfWeek])
+                // TODO: Get rid of the flags variable here
+                var workingDayFlags = new[] { workingDays.HasFlag(WorkingDays.Sunday), workingDays.HasFlag(WorkingDays.Monday), workingDays.HasFlag(WorkingDays.Tuesday), workingDays.HasFlag(WorkingDays.Wednesday), workingDays.HasFlag(WorkingDays.Thursday), workingDays.HasFlag(WorkingDays.Friday), workingDays.HasFlag(WorkingDays.Saturday) };
+                while (!workingDayFlags[(int)days.Last().DayOfWeek])
                 {
                     days.Add(days.Last().AddDays(1));
                 }
 
-                daysToTransition = days.Count(d => workingDays[(int)d.DayOfWeek]);
+                daysToTransition = days.Count(d => workingDayFlags[(int)d.DayOfWeek]);
                 nextWorkingDayDaylightTransition = days.Last();
             }
 
@@ -60,14 +62,14 @@ namespace Richev.DarkMornings.Web
             return percentOfTheYearInTheDark;
         }
 
-        public static CommuteTimeModel BuildEndCommuteTimeModel(CommuteTimeModel commuteTime, int journeyDuration)
+        /*public static CommuteTimeModel BuildEndCommuteTimeModel(CommuteTimeModel commuteTime, int journeyDuration)
         {
             var time = new TimeSpan(commuteTime.h, commuteTime.m, 0);
 
             var endCommuteTime = time.Add(new TimeSpan(0, journeyDuration, 0));
 
             return new CommuteTimeModel { h = endCommuteTime.Hours, m = endCommuteTime.Minutes };
-        }
+        }*/
 
         public static string BuildQueryString(NameValueCollection nvc)
         {
@@ -79,7 +81,7 @@ namespace Richev.DarkMornings.Web
             return "?" + string.Join("&", array);
         }
 
-        public static OtherLocationModel[] BuildOtherLocations(string workingDays, CommuteTimeModel toWork, CommuteTimeModel fromWork, int duration)
+        /*public static OtherLocationModel[] BuildOtherLocations(string workingDays, CommuteTimeModel toWork, CommuteTimeModel fromWork, int duration)
         {
             var otherLocations = new List<OtherLocationModel>();
 
@@ -119,6 +121,6 @@ namespace Richev.DarkMornings.Web
             }
 
             return otherLocations.ToArray();
-        }
+        }*/
     }
 }

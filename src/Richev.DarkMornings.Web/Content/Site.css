@@ -89,8 +89,8 @@ form > div {
 }
 
 select {
-    background-color: #ecf0f1;
-    border: 2px solid #ecf0f1;
+    background-color: #ffffff;
+    border: 2px solid #ffffff;
     color: #2c3e50;
 }
 select:hover {
@@ -146,7 +146,13 @@ select {
     color: inherit; /* because of a Bootstrap CSS style*/
 }
 
-.working-days button.checked, .working-days button.checked.focus {
+.working-days button,
+.working-days button.focus {
+    background-color: white;
+}
+
+.working-days button.checked,
+.working-days button.checked.focus {
     background-color: rgb(52, 152, 219);
     color: white;
 }
@@ -282,6 +288,7 @@ hr.and {
 .with-icon label {
     position: relative;
     z-index: 20;
+    font-weight: normal;
 }
 
 .results.with-icon .fa {
