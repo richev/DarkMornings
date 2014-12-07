@@ -62,16 +62,16 @@ namespace Richev.DarkMornings.Web.Models
         /// Commute to work time, formatted as HH:mm
         /// </summary>
         [DisplayName("leave home at")]
-        [Required]
-        [RegularExpression(RegexTime, ErrorMessage = "The {0} time (t) must be represent a 24-hour time in the format hhmm")]
+        [Required(ErrorMessage = "The {0} time (t) must represent a 24-hour time in the format hhmm")]
+        [RegularExpression(RegexTime, ErrorMessage = "The {0} time (t) must represent a 24-hour time in the format hhmm")]
         public string t { get; set; }
 
         /// <summary>
         /// Commute from work time, formatted as HH:mm
         /// </summary>
         [DisplayName("leave work at")]
-        [Required]
-        [RegularExpression(RegexTime, ErrorMessage = "The {0} time (f) must be represent a 24-hour time in the format hhmm")]
+        [Required(ErrorMessage = "The {0} time (f) must represent a 24-hour time in the format hhmm")]
+        [RegularExpression(RegexTime, ErrorMessage = "The {0} time (f) must represent a 24-hour time in the format hhmm")]
         public string f { get; set; }
 
         public DaylightInfoModel ToWorkDaylights { get; set; }

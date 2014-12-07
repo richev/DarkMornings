@@ -71,7 +71,7 @@ namespace Richev.DarkMornings.Web.Controllers
 
             if (Utils.GetTimeOfDayDifference(outboundCommuteStart, returnCommuteStart) <= new TimeSpan(0, model.j, 0))
             {
-                ModelState.AddModelError("JourneysOverlap", "Your journeys overlap one another, that can't be right.");
+                ModelState.AddModelError("JourneysOverlap", "Your journeys overlap one another. That can't be right.");
             }
 
             if (!model.z.HasValue)

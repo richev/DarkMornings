@@ -86,6 +86,8 @@ $(document).ready(function () {
         }
     }
 
+    setWorkingDaysButtons();
+
     if ($("#z").val() == "") {
         $("#z").val(timezoneDetect());
     }
@@ -104,17 +106,10 @@ $(document).ready(function () {
         return false;
     });
 
-    if ($(".results").length > 0) {
-        // We have results, so hide the my commute section
-        $("#MyCommute").addClass("accordion");
+    if ($("a#Results").length > 0) {
+        // We have results, so scroll to them
+        $('html,body').delay(250).animate({
+            scrollTop: $("a#Results").offset().top - $(".navbar").height()
+        }, 500);
     }
-
-    $(".accordion").accordion({
-        header: "h3",
-        collapsible: true,
-        active: false,
-        heightStyle: "content"
-    });
-
-    setWorkingDaysButtons();
 });
