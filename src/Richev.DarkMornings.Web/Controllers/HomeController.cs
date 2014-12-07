@@ -57,8 +57,17 @@ namespace Richev.DarkMornings.Web.Controllers
             var today = DateTime.Now.Date;
 
             // TODO: Cleaner approach?
-            var outboundCommuteStart = today.AddHours(UIHelpers.GetTime(model.t).Hour).AddMinutes(UIHelpers.GetTime(model.t).Minute);
-            var returnCommuteStart = today.AddHours(UIHelpers.GetTime(model.f).Hour).AddMinutes(UIHelpers.GetTime(model.f).Minute);
+            DateTime outboundCommuteStart;
+            if (UIHelpers.TryGetTime(model.t, out outboundCommuteStart))
+            {
+                today.AddHours(outboundCommuteStart.Hour).AddMinutes(outboundCommuteStart.Minute);
+            }
+
+            DateTime returnCommuteStart;
+            if (UIHelpers.TryGetTime(model.f, out returnCommuteStart))
+            {
+                today.AddHours(returnCommuteStart.Hour).AddMinutes(returnCommuteStart.Minute);
+            }
 
             if (Utils.GetTimeOfDayDifference(outboundCommuteStart, returnCommuteStart) <= new TimeSpan(0, model.j, 0))
             {

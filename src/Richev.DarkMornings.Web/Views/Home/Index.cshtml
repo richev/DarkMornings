@@ -17,19 +17,19 @@
 
 @Html.ValidationSummary(string.Empty, new { @class = "alert alert-danger" })
 
-<div>
+<div id="MyCommute">
     <h3>My commute</h3>
     <div>
         <div class="with-icon">
             <i class="fa fa-arrow-circle-o-right"></i>@Html.Label("ToWorkHours", "I leave home at")
             <span class="time-selector">
-                @Html.DropDownList("ToWorkHours", UIHelpers.GetHours(UIHelpers.GetTime(Model.t)))<span class="time-separator">:</span>@Html.DropDownList("ToWorkMinutes", UIHelpers.GetMinutes(UIHelpers.GetTime(Model.t)))
+                @Html.DropDownList("ToWorkHours", UIHelpers.GetHours(Model.t))<span class="time-separator">:</span>@Html.DropDownList("ToWorkMinutes", UIHelpers.GetMinutes(Model.t))
             </span>
         </div>
         <div class="with-icon">
             <i class="fa fa-arrow-circle-o-left"></i>@Html.Label("FromWorkHours", "I leave work at")
             <span class="time-selector">
-                @Html.DropDownList("FromWorkHours", UIHelpers.GetHours(UIHelpers.GetTime(Model.f)))<span class="time-separator">:</span>@Html.DropDownList("FromWorkMinutes", UIHelpers.GetMinutes(UIHelpers.GetTime(Model.f)))
+                @Html.DropDownList("FromWorkHours", UIHelpers.GetHours(Model.f))<span class="time-separator">:</span>@Html.DropDownList("FromWorkMinutes", UIHelpers.GetMinutes(Model.f))
             </span>
         </div>
 
@@ -59,7 +59,7 @@
             </div>
             @Html.Hidden("d", (int)Model.d)
             @Html.HiddenFor(model => model.z)
-            <div style="clear: both;">
+            <div style="clear: both; margin-top: 20px;">
                 <button class="btn btn-lg btn-success" type="submit">Count the days &raquo;</button>
             </div>
         }
@@ -68,6 +68,8 @@
 
 @if (Model.ToWorkDaylights != null && Model.FromWorkDaylights != null)
 {
+    <hr class="and" />
+
     <h3>You have&hellip;</h3>
     <div class="results journey with-icon">
         @Html.Partial("_DaylightInfo", Model.ToWorkDaylights)

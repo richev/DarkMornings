@@ -19,6 +19,11 @@ namespace Richev.DarkMornings.Web.Models
     public class CommuteInfoModel
     {
         /// <summary>
+        /// 24-hour time in the format hhmm.
+        /// </summary>
+        private const string RegexTime = "^(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]$";
+
+        /// <summary>
         /// Latitude
         /// </summary>
         [DisplayName("latitude (y)")]
@@ -54,17 +59,19 @@ namespace Richev.DarkMornings.Web.Models
         public WorkingDays d { get; set; }
 
         /// <summary>
-        /// Commute to work
+        /// Commute to work time, formatted as HH:mm
         /// </summary>
-        [DisplayName("to work time")]
-        [StringLength(4, MinimumLength = 4)]
+        [DisplayName("leave home at")]
+        [Required]
+        [RegularExpression(RegexTime, ErrorMessage = "The {0} time (t) must be represent a 24-hour time in the format hhmm")]
         public string t { get; set; }
 
         /// <summary>
-        /// Commute from work
+        /// Commute from work time, formatted as HH:mm
         /// </summary>
-        [DisplayName("from work time")]
-        [StringLength(4, MinimumLength = 4)]
+        [DisplayName("leave work at")]
+        [Required]
+        [RegularExpression(RegexTime, ErrorMessage = "The {0} time (f) must be represent a 24-hour time in the format hhmm")]
         public string f { get; set; }
 
         public DaylightInfoModel ToWorkDaylights { get; set; }

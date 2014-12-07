@@ -16,36 +16,6 @@ namespace Richev.DarkMornings.Web.Tests
         }
 
         [Test]
-        public void FormatCommuteTimeWorks()
-        {
-            var commuteTime = "1205";
-
-            var formattedCommuteTime = UIHelpers.FormatCommuteTime(commuteTime);
-
-            Assert.AreEqual("12:05", formattedCommuteTime);
-        }
-
-        [Test]
-        public void FormatWorkingDaysWorksForSingleDay()
-        {
-            var workingDays = new[] { false, false, false, false, true, false, false };
-
-            var formattedWorkingDays = UIHelpers.FormatWorkingDays(workingDays);
-
-            Assert.AreEqual("Thursday", formattedWorkingDays);
-        }
-
-        [Test]
-        public void FormatWorkingDaysWorksForMultipleDays()
-        {
-            var workingDays = new[] { false, true, true, false, true, false, false };
-
-            var formattedWorkingDays = UIHelpers.FormatWorkingDays(workingDays);
-
-            Assert.AreEqual("Monday, Tuesday and Thursday", formattedWorkingDays);
-        }
-
-        [Test]
         public void GetTweetTextShouldWorkForGeneralScenario()
         {
             var model = new CommuteInfoModel

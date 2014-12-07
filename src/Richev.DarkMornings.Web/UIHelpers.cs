@@ -16,8 +16,11 @@ namespace Richev.DarkMornings.Web
         /// </summary>
         private const string PadLeadingZero = "00";
 
-        public static List<SelectListItem> GetHours(DateTime selectedTime)
+        public static List<SelectListItem> GetHours(string selectedTime)
         {
+            DateTime time;
+            TryGetTime(selectedTime, out time);
+
             var hours = new List<SelectListItem>();
 
             for (var h = 0; h < 24; h++)
@@ -26,15 +29,18 @@ namespace Richev.DarkMornings.Web
                               {
                                   Text = h.ToString(PadLeadingZero),
                                   Value = h.ToString(PadLeadingZero),
-                                  Selected = h == selectedTime.Hour
+                                  Selected = h == time.Hour
                               });
             }
 
             return hours;
         }
 
-        public static List<SelectListItem> GetMinutes(DateTime selectedTime)
+        public static List<SelectListItem> GetMinutes(string selectedTime)
         {
+            DateTime time;
+            TryGetTime(selectedTime, out time);
+
             var minutes = new List<SelectListItem>();
 
             for (var m = 0; m < 60; m += 5)
@@ -43,7 +49,7 @@ namespace Richev.DarkMornings.Web
                                 {
                                     Text = m.ToString(PadLeadingZero),
                                     Value = m.ToString(PadLeadingZero),
-                                    Selected = m == selectedTime.Minute
+                                    Selected = m == time.Minute
                                 });
             }
 
@@ -159,54 +165,9 @@ namespace Richev.DarkMornings.Web
             }
         }
 
-        public static DateTime GetTime(string commuteTime)
+        public static bool TryGetTime(string commuteTime, out DateTime time)
         {
-            // TODO: Error handling
-            return DateTime.ParseExact(commuteTime, "HHmm", CultureInfo.CurrentCulture);
-        }
-
-        public static string FormatCommuteTime(string commuteTime)
-        {
-            var time = GetTime(commuteTime);
-
-            return string.Format("{0:00}:{1:00}", time.Hour, time.Minute);
-        }
-
-        public static string FormatWorkingDays(bool[] workingDays)
-        {
-            var setWorkingDayNames = new List<string>();
-
-            var dayNames = Enum.GetNames(typeof(DayOfWeek));
-
-            if (workingDays.Length != dayNames.Length)
-            {
-                throw new InvalidOperationException();
-            }
-
-            for (int i = 0; i < dayNames.Length; i++)
-            {
-                if (workingDays[i])
-                {
-                    setWorkingDayNames.Add(dayNames[i]);
-                }
-            }
-
-            var formattedWorkingDays = string.Join(", ", setWorkingDayNames);
-
-            if (setWorkingDayNames.Count > 1)
-            {
-                formattedWorkingDays = ReplaceLastOccurrence(formattedWorkingDays, ", ", " and ");
-            }
-
-            return formattedWorkingDays;
-        }
-
-        private static string ReplaceLastOccurrence(string source, string find, string replace)
-        {
-            var place = source.LastIndexOf(find, StringComparison.InvariantCulture);
-            var result = source.Remove(place, find.Length).Insert(place, replace);
-
-            return result;
+            return DateTime.TryParseExact(commuteTime, "HHmm", CultureInfo.CurrentCulture, DateTimeStyles.None, out time);
         }
 
         public static string GetTweetText(CommuteInfoModel model)
@@ -273,26 +234,5 @@ namespace Richev.DarkMornings.Web
                 "http://maps.googleapis.com/maps/api/staticmap{0}",
                 Builders.BuildQueryString(queryStringParameters));
         }
-
-        /*public static string GetOtherLocationUrl(OtherLocationModel otherLocation, string workingDays, CommuteTimeModel toWork, CommuteTimeModel fromWork, int duration)
-        {
-            var queryStringParameters = new NameValueCollection
-                                        {
-                                            { "la", otherLocation.Latitude.ToString() },
-                                            { "lo", otherLocation.Longitude.ToString() },
-                                            { "wd", workingDays },
-                                            { "tz", otherLocation.TimeZoneOffset.ToString() },
-                                            { "tw.h", toWork.h.ToString() },
-                                            { "tw.m", toWork.m.ToString() },
-                                            { "fw.h", fromWork.h.ToString() },
-                                            { "fw.m", fromWork.m.ToString() },
-                                            { "d", duration.ToString() }
-                                        };
-
-            return string.Format("{0}://{1}/{2}",
-                HttpContext.Current.Request.Url.Scheme,
-                HttpContext.Current.Request.Url.Authority,
-                Builders.BuildQueryString(queryStringParameters));
-        }*/
     }
 }

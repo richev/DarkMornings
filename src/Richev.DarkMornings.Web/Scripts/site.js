@@ -104,6 +104,11 @@ $(document).ready(function () {
         return false;
     });
 
+    if ($(".results").length > 0) {
+        // We have results, so hide the my commute section
+        $("#MyCommute").addClass("accordion");
+    }
+
     $(".accordion").accordion({
         header: "h3",
         collapsible: true,
