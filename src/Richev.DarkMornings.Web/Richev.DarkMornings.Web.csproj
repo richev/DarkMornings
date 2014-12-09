@@ -176,7 +176,6 @@
     <Compile Include="Services\GeoService.cs" />
     <Compile Include="Services\ResponseParser.cs" />
     <Compile Include="Services\TimeZoneResponse.cs" />
-    <Compile Include="Services\UserDisplayableException.cs" />
     <Compile Include="UIHelpers.cs" />
   </ItemGroup>
   <ItemGroup>

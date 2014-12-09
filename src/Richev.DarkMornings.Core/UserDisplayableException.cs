@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Richev.DarkMornings.Web.Services
+namespace Richev.DarkMornings.Core
 {
     /// <summary>
     /// An exception containing information that will be shown to the user.
@@ -9,6 +9,12 @@ namespace Richev.DarkMornings.Web.Services
     {
         public UserDisplayableException(string message)
             : base(message)
+        {
+
+        }
+
+        public UserDisplayableException(string message, Exception innerException)
+            : base(message, innerException)
         {
 
         }

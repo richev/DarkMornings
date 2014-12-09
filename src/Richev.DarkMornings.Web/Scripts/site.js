@@ -13,16 +13,8 @@
             streetViewControl: false
         };
         locationMap.gmap = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    },
-
-    placeMarker: function(lat, lng) {
-        var mapPosition = new google.maps.LatLng(lat, lng);
-
-        locationMap.gmap.setCenter(mapPosition);
-        locationMap.gmap.setZoom(4);
 
         locationMap.gmarker = new google.maps.Marker({
-            position: mapPosition,
             map: locationMap.gmap,
             title: 'Drag to change!',
             draggable: true,
@@ -33,15 +25,43 @@
             $("#x").val(e.latLng.lng().toFixed(2));
             $("#y").val(e.latLng.lat().toFixed(2));
         });
+    },
+
+    placeMarker: function(lat, lng) {
+        var mapPosition = new google.maps.LatLng(lat, lng);
+
+        locationMap.gmap.setCenter(mapPosition);
+        locationMap.gmap.setZoom(4);
+
+        locationMap.gmarker.setPosition(mapPosition);
+    },
+
+    placeDefaultMarker: function () {
+        // Sticks a marker on London, for when we don't know where the user is located.
+
+        $("#x").val(0.12);
+        $("#y").val(51.51);
+
+        locationMap.placeMarker(51.5072, 0.1205);
+
+        locationMap.gmap.setZoom(2);
     }
 };
 
 var locate = {
     init: function() {
         if (navigator.geolocation) {
+            if ($("#x").val() == "" || $("#y").val() == "") {
+                locationMap.placeDefaultMarker();
+            }
+
             navigator.geolocation.getCurrentPosition(locate.storePosition, locate.failPosition);
         } else {
-            showWarning("<p>You're using a browser that won't tell us your location (or it may just be set this way).</p>Instead, we'll try to find this out using your IP address (less accurate, might not work).</p>");
+            if ($("#x").val() == "" || $("#y").val() == "") {
+                // Problematic...we couldn't figure out the user's location by IP address, and their browser won't tell us either...
+                showWarning("<p>Please select your location by dragging the marker on the map below.</p>");
+                locationMap.placeDefaultMarker();
+            }
         }
     },
 
@@ -56,10 +76,10 @@ var locate = {
     },
 
     failPosition: function (e) {
-        if (e.code == 1) {
-            showWarning("<p>Your browser is set to not tell us your location.</p><p>Instead, we'll try to figure this out using your IP address (less accurate, might not work).</p>");
-        } else {
-            showWarning("<p>Your location could not be figured out (" + e.message + ").</p><p>Instead, we'll try to find this out using your IP address (less accurate, might not work).</p>");
+        if ($("#x").val() == "" || $("#y").val() == "") {
+            // The user won't let their browser tell us their location, and we couldn't get it by IP address...
+            showWarning("<p>Please select your location by dragging the marker on the map below.</p>");
+            locationMap.placeDefaultMarker();
         }
     }
 };

@@ -43,7 +43,7 @@ namespace Richev.DarkMornings.Web.Services
                 if (response.Status != "OK")
                 {
                     var message = response.Status == "ZERO_RESULTS" ?
-                        "Sorry, but time zone for your location could not be obtained. Please make sure your location is on land." :
+                        "Sorry, but the time zone for your location could not be obtained. Please make sure your location is on land." :
                         string.Format("Sorry, but the time zone for your location could not be obtained ({0}: {1}).", response.Status, response.ErrorMessage);
 
                     throw new UserDisplayableException(message);

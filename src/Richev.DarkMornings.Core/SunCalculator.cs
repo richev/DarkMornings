@@ -76,7 +76,15 @@ namespace Richev.DarkMornings.Core
         {
             int hour = timeInMinutes / 60;
             int minute = timeInMinutes - (hour * 60);
-            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, hour, minute, 00, DateTimeKind.Utc);
+
+            try
+            {
+                return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, hour, minute, 00, DateTimeKind.Utc);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                throw new UserDisplayableException(string.Format("Timeout! {0}", ex.Message), ex);
+            }
         }
 
         private static int CalculateSunRiseInternal(double tanSunPosition, double differenceSunAndLocalTime)

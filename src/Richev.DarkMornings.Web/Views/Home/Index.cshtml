@@ -62,7 +62,7 @@
             </div>
             @Html.Hidden("d", (int)Model.d)
 
-            <h3>My location</h3>
+            <h3>My location <span class="text-info">You can drag the map marker to almost anywhere you like</span></h3>
             <div id="map-canvas" class="location-map-new"></div>
             
             <div style="clear: both; margin-top: 20px;">
@@ -84,7 +84,7 @@
     <div class="results journey with-icon">
         @Html.Partial("_DaylightInfo", Model.FromWorkDaylights)
     </div>
-    <p class="text-info excluding">(Using time zone <em>@Model.TimeZoneId</em> and excluding any Bank or national holidays)</p>
+    <p class="text-info excluding">Using time zone <em>@Model.TimeZoneId</em> and excluding any Bank or national holidays</p>
 
     <hr class="and" />
     <div>
