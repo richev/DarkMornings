@@ -32,7 +32,11 @@ namespace Richev.DarkMornings.Web.Services
         {
             var middayToday = DateTime.UtcNow.Date.AddHours(12);
 
-            var url = string.Format("https://maps.googleapis.com/maps/api/timezone/json?location={0},{1}&timestamp={2}", location.Latitude, location.Longitude, ToUnixTimeStamp(middayToday));
+            var url = string.Format(
+                "https://maps.googleapis.com/maps/api/timezone/json?location={0},{1}&timestamp={2}",
+                location.Latitude,
+                location.Longitude,
+                ToUnixTimeStamp(middayToday));
 
             using (var client = new WebClient())
             {

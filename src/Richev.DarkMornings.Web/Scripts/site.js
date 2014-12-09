@@ -21,6 +21,12 @@
             animation: google.maps.Animation.DROP
         });
 
+        if ($("#x").val() != "" && $("#y").val() != "") {
+            var latitude = parseInt($("#y").val());
+            var longitude = parseInt($("#x").val());
+            locationMap.placeMarker(latitude, longitude);
+        }
+
         google.maps.event.addListener(locationMap.gmarker, 'dragend', function (e) {
             $("#x").val(e.latLng.lng().toFixed(2));
             $("#y").val(e.latLng.lat().toFixed(2));
@@ -30,10 +36,10 @@
     placeMarker: function(lat, lng) {
         var mapPosition = new google.maps.LatLng(lat, lng);
 
+        locationMap.gmarker.setPosition(mapPosition);
+
         locationMap.gmap.setCenter(mapPosition);
         locationMap.gmap.setZoom(4);
-
-        locationMap.gmarker.setPosition(mapPosition);
     },
 
     placeDefaultMarker: function () {
@@ -131,10 +137,9 @@ var showWarning = function (msgHtml) {
 $(document).ready(function () {
     locationMap.init();
 
-    if ($("#x").val() == "" || $("#y").val() == "") {
+    if ($("a#Results").length == 0) {
+        // No results yet, so let's locate!
         locate.init();
-    } else {
-        locationMap.placeMarker(parseInt($("#y").val()), parseInt($("#x").val()));
     }
 
     setWorkingDaysButtons();

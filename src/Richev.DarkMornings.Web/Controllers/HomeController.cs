@@ -78,8 +78,8 @@ namespace Richev.DarkMornings.Web.Controllers
 
             var location = _geoService.GetLocationFromIPAddress(ipAddress);
 
-            model.y = location.HasValue ? location.Value.Latitude : default(double?);
-            model.x = location.HasValue ? location.Value.Longitude : default(double?);
+            model.y = location.HasValue ? Math.Round(location.Value.Latitude, 2) : default(double?);
+            model.x = location.HasValue ? Math.Round(location.Value.Longitude, 2) : default(double?);
         }
 
         [HttpGet]
