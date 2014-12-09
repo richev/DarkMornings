@@ -23,13 +23,13 @@
         <div class="with-icon">
             <i class="fa fa-arrow-circle-o-right"></i>@Html.Label("ToWorkHours", "I leave home at")
             <span class="time-selector">
-                @Html.DropDownList("ToWorkHours", UIHelpers.GetHours(Model.t))<span class="time-separator">:</span>@Html.DropDownList("ToWorkMinutes", UIHelpers.GetMinutes(Model.t))
+                @Html.DropDownList("ToWorkHours", UIHelpers.GetHours(Model.h))<span class="time-separator">:</span>@Html.DropDownList("ToWorkMinutes", UIHelpers.GetMinutes(Model.h))
             </span>
         </div>
         <div class="with-icon">
             <i class="fa fa-arrow-circle-o-left"></i>@Html.Label("FromWorkHours", "I leave work at")
             <span class="time-selector">
-                @Html.DropDownList("FromWorkHours", UIHelpers.GetHours(Model.f))<span class="time-separator">:</span>@Html.DropDownList("FromWorkMinutes", UIHelpers.GetMinutes(Model.f))
+                @Html.DropDownList("FromWorkHours", UIHelpers.GetHours(Model.w))<span class="time-separator">:</span>@Html.DropDownList("FromWorkMinutes", UIHelpers.GetMinutes(Model.w))
             </span>
         </div>
 
@@ -37,8 +37,8 @@
         {
             @Html.HiddenFor(model => model.x)
             @Html.HiddenFor(model => model.y)
-            @Html.HiddenFor(model => model.t)
-            @Html.HiddenFor(model => model.f)
+            @Html.HiddenFor(model => model.h)
+            @Html.HiddenFor(model => model.w)
             <div class="with-icon">
                 <i class="fa fa-clock-o"></i>@Html.LabelFor(model => model.d, "My journey takes")
                 <span class="duration-selector">

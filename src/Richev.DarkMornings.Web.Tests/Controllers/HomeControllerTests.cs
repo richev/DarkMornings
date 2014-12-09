@@ -44,7 +44,7 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
         [Ignore("Need to sort out the Moq")]
         public void IndexReturnsLocationErrorWhenLocationNotFound()
         {
-            var model = new CommuteInfoModel { t = "0700", z = 0, d = WorkingDaysMondayOnly };
+            var model = new CommuteInfoModel { h = "0700", z = 0, d = WorkingDaysMondayOnly };
 
             _homeController.Index(model);
 
@@ -54,7 +54,7 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
         [Test]
         public void IndexReturnsWorkingDaysErrorWhenNoWorkingDaysSet()
         {
-            var model = new CommuteInfoModel { t = "0700", f = "1800", z = 0 };
+            var model = new CommuteInfoModel { h = "0700", w = "1800", z = 0 };
 
             _homeController.Index(model);
 
@@ -64,7 +64,7 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
         [Test]
         public void IndexReturnsJourneysOverlapErrorIfJourneysAreTheSame()
         {
-            var model = new CommuteInfoModel { t = "0700", f = "0700", j = 30, z = 0, d = WorkingDaysMondayOnly };
+            var model = new CommuteInfoModel { h = "0700", w = "0700", j = 30, z = 0, d = WorkingDaysMondayOnly };
 
             _homeController.Index(model);
 
@@ -74,7 +74,7 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
         [Test]
         public void IndexReturnsJourneysOverlapErrorIfJourneysOverlap()
         {
-            var model = new CommuteInfoModel { t = "0700", f = "0730", j = 60, z = 0, d = WorkingDaysMondayOnly };
+            var model = new CommuteInfoModel { h = "0700", w = "0730", j = 60, z = 0, d = WorkingDaysMondayOnly };
 
             _homeController.Index(model);
 
@@ -84,7 +84,7 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
         [Test]
         public void IndexReturnsJourneysOverlapErrorIfJourneysTouch()
         {
-            var model = new CommuteInfoModel { t = "0700", f = "0730", j = 30, z = 0, d = WorkingDaysMondayOnly };
+            var model = new CommuteInfoModel { h = "0700", w = "0730", j = 30, z = 0, d = WorkingDaysMondayOnly };
 
             _homeController.Index(model);
 
@@ -94,7 +94,7 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
         [Test]
         public void IndexDoesNotReturnJourneysOverlapErrorIfJourneysDoNotOverlap()
         {
-            var model = new CommuteInfoModel { t = "0700", f = "1830", j = 30, z = 0, d = WorkingDaysMondayOnly };
+            var model = new CommuteInfoModel { h = "0700", w = "1830", j = 30, z = 0, d = WorkingDaysMondayOnly };
 
             _homeController.Index(model);
 
@@ -104,7 +104,7 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
         [Test]
         public void IndexReturnsTimeZoneErrorIfTimeZoneInvalid()
         {
-            var model = new CommuteInfoModel { t = "0700", f = "0800", j = 30, z = 0.1, d = WorkingDaysMondayOnly };
+            var model = new CommuteInfoModel { h = "0700", w = "0800", j = 30, z = 0.1, d = WorkingDaysMondayOnly };
 
             _homeController.Index(model);
 
@@ -114,7 +114,7 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
         [Test]
         public void IndexDoesNotCallLocationServiceIfLocationIsSet()
         {
-            var model = new CommuteInfoModel { t = "0700", f = "1800", d = WorkingDaysMondayOnly, z = 0 };
+            var model = new CommuteInfoModel { h = "0700", w = "1800", d = WorkingDaysMondayOnly, z = 0 };
 
             var actionResult = _homeController.Index(model);
 
@@ -135,8 +135,8 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
 
             var model = new CommuteInfoModel
                         {
-                            t = toWork,
-                            f = fromWork,
+                            h = toWork,
+                            w = fromWork,
                             d = WorkingDaysMondayOnly, 
                             y = _latitude, 
                             x = _longitude,
@@ -149,8 +149,8 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
 
             _locationServiceMock.Verify(s => s.GetLocationFromIPAddress(null, out _latitude, out _longitude), Times.Never());
             Assert.IsTrue(_homeController.ModelState.IsValid);
-            Assert.AreEqual(toWork, returnedModel.t);
-            Assert.AreEqual(fromWork, returnedModel.f);
+            Assert.AreEqual(toWork, returnedModel.h);
+            Assert.AreEqual(fromWork, returnedModel.w);
             Assert.AreEqual(WorkingDaysMondayOnly, returnedModel.d);
             Assert.AreEqual(_latitude, returnedModel.y);
             Assert.AreEqual(_longitude, returnedModel.x);

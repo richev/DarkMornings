@@ -15,11 +15,11 @@ function failPosition(e) {
 }
 
 var setToWorkTime = function() {
-    $("#t").val($("#ToWorkHours").val() + $("#ToWorkMinutes").val());
+    $("#h").val($("#ToWorkHours").val() + $("#ToWorkMinutes").val());
 };
 
 var setFromWorkTime = function() {
-    $("#f").val($("#FromWorkHours").val() + $("#FromWorkMinutes").val());
+    $("#w").val($("#FromWorkHours").val() + $("#FromWorkMinutes").val());
 };
 
 var setWorkingDaysValue = function () {

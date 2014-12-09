@@ -213,7 +213,7 @@ select {
     width: 16.7em;
 }
 .days-more-content.always {
-    padding: 1.05em 3em 1.05em 0.7em;
+    padding: 1.05em 100px 1.05em 0.7em;
 }
 .days-more-content.always .fa.commute-direction {
     left: 3.4em;
