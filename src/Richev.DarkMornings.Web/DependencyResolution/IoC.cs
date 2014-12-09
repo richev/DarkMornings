@@ -28,7 +28,7 @@ namespace Richev.DarkMornings.Web.DependencyResolution {
                                         scan.TheCallingAssembly();
                                         scan.WithDefaultConventions();
                                     });
-                            x.For<ILocationService>().Use<LocationService>();
+                            x.For<IGeoService>().Use<GeoService>();
                         });
             return ObjectFactory.Container;
         }

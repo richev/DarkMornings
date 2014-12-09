@@ -46,14 +46,6 @@ namespace Richev.DarkMornings.Web.Models
         public int j { get; set; }
 
         /// <summary>
-        /// Timezone hours offset
-        /// </summary>
-        [DisplayName("timezone hours offset (z)")]
-        [Required]
-        [Range(-12, 13)]
-        public double? z { get; set; } // not an int, because some timezones are half an hour out
-
-        /// <summary>
         /// Working days
         /// </summary>
         [DisplayName("working days (d)")]
@@ -74,6 +66,11 @@ namespace Richev.DarkMornings.Web.Models
         [Required(ErrorMessage = "The {0} time (w) must represent a 24-hour time in the format hhmm")]
         [RegularExpression(RegexTime, ErrorMessage = "The {0} time (w) must represent a 24-hour time in the format hhmm")]
         public string w { get; set; }
+
+        /// <summary>
+        /// The time zone that was used, for debug purposes really.
+        /// </summary>
+        public string TimeZoneId { get; set; }
 
         public DaylightInfoModel ToWorkDaylights { get; set; }
 
@@ -113,22 +110,12 @@ namespace Richev.DarkMornings.Web.Models
             {
                 modelState.AddModelError("JourneysOverlap", "Your journeys overlap one another. That can't be right.");
             }
-
-            if (!z.HasValue)
-            {
-                modelState.AddModelError("TimeZoneInvalid", "No time zone is selected.");
-            }
-            else if (!TimeZones.Selected.ContainsKey(z.Value))
-            {
-                modelState.AddModelError("TimeZoneInvalid", string.Format("The selected time zone {0} is not valid.", z.Value));
-            }            
         }
 
         public bool HasDefaultValues()
         {
             return !y.HasValue &&
                    !x.HasValue &&
-                   !z.HasValue &&
                    string.IsNullOrEmpty(h) &&
                    string.IsNullOrEmpty(w) &&
                    d == 0 &&

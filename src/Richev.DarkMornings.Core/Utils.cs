@@ -9,24 +9,20 @@ namespace Richev.DarkMornings.Core
             return timeZoneOffset * 15;
         }
 
-        public static DateTime UtcToUserTimeZone(DateTime dateTime, double timeZoneOffset)
+        public static DateTime UtcToUserTimeZone(DateTime dateTime, string timeZoneId)
         {
             dateTime = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
 
-            var timeZoneName = TimeZones.Selected[timeZoneOffset];
-
-            var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneName);
+            var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
 
             var userDateTime = TimeZoneInfo.ConvertTime(dateTime, timeZone);
 
             return userDateTime;
         }
 
-        public static bool IsGmtDaylightSavingTime(DateTime dateTime, double timeZoneOffset)
+        public static bool IsGmtDaylightSavingTime(DateTime dateTime, string timeZoneId)
         {
-            var timeZoneName = TimeZones.Selected[timeZoneOffset];
-
-            var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneName);
+            var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
 
             return timeZone.IsDaylightSavingTime(dateTime);
         }

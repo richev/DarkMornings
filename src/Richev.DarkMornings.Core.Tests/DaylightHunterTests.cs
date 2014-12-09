@@ -9,19 +9,19 @@ namespace Richev.DarkMornings.Core.Tests
         private readonly TimeSpan _commuteDuration = new TimeSpan(0, 30, 0);
 
         private static readonly Location _locationLondon = new Location { Latitude = 51.5072, Longitude = 0.1275 };
-        private const int TimeZoneLondon = 0;
+        private const string TimeZoneLondon = "GMT Standard Time";
 
         private static readonly Location _locationNewYork = new Location { Latitude = 40.67, Longitude = -73.94 };
-        private const int TimeZoneNewYork = -5;
+        private const string TimeZoneNewYork = "Eastern Standard Time";
 
         private static readonly Location _locationSeattle = new Location { Latitude = 47.6097, Longitude = -122.3331 };
-        private const int TimeZoneSeattle = -8;
+        private const string TimeZoneSeattle = "Pacific Standard Time";
 
         private static readonly Location _locationSydney = new Location { Latitude = -33.859972, Longitude = 151.211111 };
-        private const int TimeZoneSydney = 10;
+        private const string TimeZoneSydney = "AUS Eastern Standard Time";
 
         private static readonly Location _locationAuckland = new Location { Latitude = -36.8404, Longitude = 174.7399 };
-        private const int TimeZoneAuckland = 12;
+        private const string TimeZoneAuckland = "New Zealand Standard Time";
 
         private DaylightHunter _daylightHunter;
 
@@ -77,7 +77,7 @@ namespace Richev.DarkMornings.Core.Tests
         [TestCaseSource("_getDaylightIsCorrectForCommuteCases")]
         public void GetDaylightIsCorrectForCommute(
             string scenarioName,
-            Location location, double timeZone, DateTime commuteStart,
+            Location location, string timeZone, DateTime commuteStart,
             bool isCurrentlyInDaylightAssert, int commutesInDaylightPerYearAssert, DateTime? nextDaylightTransitionAssert, DaylightTransition? daylightTransitionAssert)
         {
             Console.WriteLine(scenarioName);

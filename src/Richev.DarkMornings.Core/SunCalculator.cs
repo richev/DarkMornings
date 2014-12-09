@@ -20,6 +20,9 @@ namespace Richev.DarkMornings.Core
 
         private readonly double _latituteInRadians;
 
+        /// <summary>
+        /// The nearest longitude in multiple of 15 of the timezone of which you are calculating the sun rise or sun set.
+        /// </summary>
         private readonly double _longituteTimeZone;
 
         /// <summary>
@@ -28,24 +31,16 @@ namespace Richev.DarkMornings.Core
         /// </summary>
         private bool _useSummerTime;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="longitude"></param>
-        /// <param name="latitude"></param>
-        /// <param name="longituteTimeZone">
-        /// The LongituteTimeZone is the nearest longitude in multiple of 15 of the timezone of which you are calculating the sun rise or sun set.
-        /// </param>
-        public SunCalculator(double longitude, double latitude, double longituteTimeZone)
+        public SunCalculator(double longitude, double latitude)
         {
             _longitude = longitude;
             _latituteInRadians = ConvertDegreeToRadian(latitude);
-            _longituteTimeZone = longituteTimeZone;
+            _longituteTimeZone = (int)(Math.Round(longitude / 15D) * 15);
         }
 
-        public DateTime CalculateSunRise(DateTime dateTime, double timeZoneOffset)
+        public DateTime CalculateSunRise(DateTime dateTime, string timeZoneId)
         {
-            _useSummerTime = Utils.IsGmtDaylightSavingTime(dateTime, timeZoneOffset);
+            _useSummerTime = Utils.IsGmtDaylightSavingTime(dateTime, timeZoneId);
 
             int dayNumberOfDateTime = ExtractDayNumber(dateTime);
             double differenceSunAndLocalTime = CalculateDifferenceSunAndLocalTime(dayNumberOfDateTime);
@@ -55,9 +50,9 @@ namespace Richev.DarkMornings.Core
             return CreateDateTime(dateTime, sunRiseInMinutes);
         }
 
-        public DateTime CalculateSunSet(DateTime dateTime, double timeZoneOffset)
+        public DateTime CalculateSunSet(DateTime dateTime, string timeZoneId)
         {
-            _useSummerTime = Utils.IsGmtDaylightSavingTime(dateTime, timeZoneOffset);
+            _useSummerTime = Utils.IsGmtDaylightSavingTime(dateTime, timeZoneId);
 
             int dayNumberOfDateTime = ExtractDayNumber(dateTime);
             double differenceSunAndLocalTime = CalculateDifferenceSunAndLocalTime(dayNumberOfDateTime);

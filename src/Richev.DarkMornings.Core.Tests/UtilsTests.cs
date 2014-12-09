@@ -28,9 +28,9 @@ namespace Richev.DarkMornings.Core.Tests
             var utcDateTime = new DateTime(2014, 6, 1, 12, 0, 0, DateTimeKind.Utc);
 
             Assert.IsFalse(utcDateTime.IsDaylightSavingTime());
-            var dateTime = Utils.UtcToUserTimeZone(utcDateTime, 0);
+            var dateTime = Utils.UtcToUserTimeZone(utcDateTime, "GMT Standard Time");
 
-            Assert.IsTrue(Utils.IsGmtDaylightSavingTime(dateTime, 0));
+            Assert.IsTrue(Utils.IsGmtDaylightSavingTime(dateTime, "GMT Standard Time"));
         }
 
         [Test]

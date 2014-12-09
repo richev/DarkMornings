@@ -8,11 +8,11 @@ namespace Richev.DarkMornings.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILocationService _locationService;
+        private readonly IGeoService _geoService;
 
-        public HomeController(ILocationService locationService)
+        public HomeController(IGeoService geoService)
         {
-            _locationService = locationService;
+            _geoService = geoService;
         }
 
         [HttpGet]
@@ -46,18 +46,27 @@ namespace Richev.DarkMornings.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                var daylightHunter = new DaylightHunter();
+                try
+                {
+                    var daylightHunter = new DaylightHunter();
 
-                var outboundCommuteEnd = outboundCommuteStart.AddMinutes(model.j);
-                var returnCommuteEnd = returnCommuteStart.AddMinutes(model.j);
-                
-                var location = new Location { Latitude = model.y.Value, Longitude = model.x.Value };
+                    var outboundCommuteEnd = outboundCommuteStart.AddMinutes(model.j);
+                    var returnCommuteEnd = returnCommuteStart.AddMinutes(model.j);
 
-                var toWorkDaylightInfo = daylightHunter.GetDaylight(location, model.z.Value, outboundCommuteStart, outboundCommuteEnd);
-                var fromWorkDaylightInfo = daylightHunter.GetDaylight(location, model.z.Value, returnCommuteStart, returnCommuteEnd);
+                    var location = new Location { Latitude = model.y.Value, Longitude = model.x.Value };
 
-                model.ToWorkDaylights = Builders.BuildDaylightInfoModel(DateTime.Now.Date, toWorkDaylightInfo, Commute.ToWork, model.d);
-                model.FromWorkDaylights = Builders.BuildDaylightInfoModel(DateTime.Now.Date, fromWorkDaylightInfo, Commute.FromWork, model.d);
+                    model.TimeZoneId = _geoService.GetTimeZoneId(location);
+
+                    var toWorkDaylightInfo = daylightHunter.GetDaylight(location, model.TimeZoneId, outboundCommuteStart, outboundCommuteEnd);
+                    var fromWorkDaylightInfo = daylightHunter.GetDaylight(location, model.TimeZoneId, returnCommuteStart, returnCommuteEnd);
+
+                    model.ToWorkDaylights = Builders.BuildDaylightInfoModel(DateTime.Now.Date, toWorkDaylightInfo, Commute.ToWork, model.d);
+                    model.FromWorkDaylights = Builders.BuildDaylightInfoModel(DateTime.Now.Date, fromWorkDaylightInfo, Commute.FromWork, model.d);
+                }
+                catch (UserDisplayableException ex)
+                {
+                    ModelState.AddModelError("UserDisplayable", ex.Message);
+                }
             }
 
             return View(model);
@@ -67,7 +76,7 @@ namespace Richev.DarkMornings.Web.Controllers
         {
             var ipAddress = Request.IsLocal ? "82.44.44.102" : Request.UserHostAddress;
 
-            var location = _locationService.GetLocationFromIPAddress(ipAddress);
+            var location = _geoService.GetLocationFromIPAddress(ipAddress);
 
             model.y = location.HasValue ? location.Value.Latitude : default(double?);
             model.x = location.HasValue ? location.Value.Longitude : default(double?);

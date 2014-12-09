@@ -61,7 +61,6 @@
                 </div>
             </div>
             @Html.Hidden("d", (int)Model.d)
-            @Html.HiddenFor(model => model.z)
 
             <h3>My location</h3>
             <div id="map-canvas" class="location-map-new"></div>
@@ -85,7 +84,7 @@
     <div class="results journey with-icon">
         @Html.Partial("_DaylightInfo", Model.FromWorkDaylights)
     </div>
-    <p class="text-info excluding">(excluding Bank and national holidays)</p>
+    <p class="text-info excluding">(Using time zone <em>@Model.TimeZoneId</em> and excluding any Bank or national holidays)</p>
 
     <hr class="and" />
     <div>

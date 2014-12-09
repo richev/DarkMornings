@@ -50,6 +50,10 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
+.alert {
+    line-height: 1.5;
+}
+
 h1 {
     position: relative;
     margin-bottom: 30px;

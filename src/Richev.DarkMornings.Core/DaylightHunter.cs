@@ -6,24 +6,21 @@ namespace Richev.DarkMornings.Core
     {
         public const int DaysInYear = 365;
 
-        public DaylightInfo GetDaylight(Location location, double timeZoneOffset, DateTime commuteStart, DateTime commuteEnd)
+        public DaylightInfo GetDaylight(Location location, string timeZoneId, DateTime commuteStart, DateTime commuteEnd)
         {
-            var sunCalculator = new SunCalculator(
-                location.Longitude,
-                location.Latitude,
-                Utils.CalculateLongitudeTimeZone(timeZoneOffset));
+            var sunCalculator = new SunCalculator(location.Longitude, location.Latitude);
 
-            var daylightInfo = CalculateDaylightInfo(commuteStart, commuteEnd, sunCalculator, timeZoneOffset);
+            var daylightInfo = CalculateDaylightInfo(commuteStart, commuteEnd, sunCalculator, timeZoneId);
 
             return daylightInfo;
         }
 
-        private DaylightInfo CalculateDaylightInfo(DateTime commuteStart, DateTime commuteEnd, SunCalculator sunCalculator, double timeZoneOffset)
+        private DaylightInfo CalculateDaylightInfo(DateTime commuteStart, DateTime commuteEnd, SunCalculator sunCalculator, string timeZoneId)
         {
             var daylightInfo = new DaylightInfo();
 
-            var sunRise = sunCalculator.CalculateSunRise(commuteStart.Date, timeZoneOffset);
-            var sunSet = sunCalculator.CalculateSunSet(commuteStart.Date, timeZoneOffset);
+            var sunRise = sunCalculator.CalculateSunRise(commuteStart.Date, timeZoneId);
+            var sunSet = sunCalculator.CalculateSunSet(commuteStart.Date, timeZoneId);
             var commuteIsAfterSunrise = commuteStart.TimeOfDay >= sunRise.TimeOfDay;
             var commuteIsBeforeSunSet = commuteEnd.TimeOfDay <= sunSet.TimeOfDay;
 
@@ -37,8 +34,8 @@ namespace Richev.DarkMornings.Core
 
             for (var d = 0; d < DaysInYear; d++)
             {
-                sunRise = sunCalculator.CalculateSunRise(commuteStart.Date.AddDays(d), timeZoneOffset);
-                sunSet = sunCalculator.CalculateSunSet(commuteEnd.Date.AddDays(d), timeZoneOffset);
+                sunRise = sunCalculator.CalculateSunRise(commuteStart.Date.AddDays(d), timeZoneId);
+                sunSet = sunCalculator.CalculateSunSet(commuteEnd.Date.AddDays(d), timeZoneId);
 
                 if (commuteStart.TimeOfDay >= sunRise.TimeOfDay && commuteEnd.TimeOfDay <= sunSet.TimeOfDay)
                 {
