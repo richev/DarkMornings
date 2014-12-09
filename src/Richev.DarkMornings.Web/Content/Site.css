@@ -365,11 +365,16 @@ a .fa {
     text-align: center;
 }
 
+.location-map-new,
 .location-map img {
     border: 2px solid rgb(52, 152, 219);
     border-radius: 16px;
     max-width: 100%;
     height: auto;
+}
+
+.location-map-new {
+    height: 300px;
 }
 
 .as-mentioned {

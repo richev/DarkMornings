@@ -28,20 +28,16 @@ namespace Richev.DarkMornings.Web.Controllers
                     d = WorkingDays.Monday | WorkingDays.Tuesday | WorkingDays.Wednesday | WorkingDays.Thursday | WorkingDays.Friday
                 };
 
+                SetLocation(model);
+
                 ModelState.Clear();
 
                 return View(model);
             }
 
-            if (!model.y.HasValue || !model.x.HasValue)
+            if (!model.y.HasValue || !model.x.HasValue) // shouldn't happen, but could
             {
-                double? latitude;
-                double? longitude;
-
-                _locationService.GetLocationFromIPAddress(Request.UserHostAddress, out latitude, out longitude);
-
-                model.y = latitude;
-                model.x = longitude;
+                SetLocation(model);
             }
 
             DateTime outboundCommuteStart;
@@ -50,8 +46,6 @@ namespace Richev.DarkMornings.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                // TODO: Refactor from code in Builders
-
                 var daylightHunter = new DaylightHunter();
 
                 var outboundCommuteEnd = outboundCommuteStart.AddMinutes(model.j);
@@ -67,6 +61,16 @@ namespace Richev.DarkMornings.Web.Controllers
             }
 
             return View(model);
+        }
+
+        private void SetLocation(CommuteInfoModel model)
+        {
+            var ipAddress = Request.IsLocal ? "82.44.44.102" : Request.UserHostAddress;
+
+            var location = _locationService.GetLocationFromIPAddress(ipAddress);
+
+            model.y = location.HasValue ? location.Value.Latitude : default(double?);
+            model.x = location.HasValue ? location.Value.Longitude : default(double?);
         }
 
         [HttpGet]

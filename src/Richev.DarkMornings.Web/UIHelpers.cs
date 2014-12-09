@@ -216,23 +216,5 @@ namespace Richev.DarkMornings.Web
                 GetCommuteText(daylightInfo.CommuteType),
                 GetDaylightText(daylightInfo.IsCurrentlyInDaylight));
         }
-
-        public static string GetMapImageUrl(double latitude, double longitude)
-        {
-            var queryStringParameters = new NameValueCollection
-                            {
-                                { "center", string.Format("{0},{1}", latitude, longitude) },
-                                { "zoom", "6" },
-                                { "scale", "2" },
-                                { "size", "320x160" },
-                                { "markers", string.Format("color:0xf39c12|label:X|{0},{1}", latitude, longitude) },
-                                { "sensor", "false" },
-                                { "ApiKey", ConfigurationManager.AppSettings["GoogleMapsStaticApiKey"] }
-                            };
-
-            return string.Format(
-                "http://maps.googleapis.com/maps/api/staticmap{0}",
-                Builders.BuildQueryString(queryStringParameters));
-        }
     }
 }

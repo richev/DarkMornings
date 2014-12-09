@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Moq;
 using NUnit.Framework;
+using Richev.DarkMornings.Core;
 using Richev.DarkMornings.Web.Controllers;
 using Richev.DarkMornings.Web.Models;
 using Richev.DarkMornings.Web.Services;
@@ -18,17 +19,13 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
 
         private const WorkingDays WorkingDaysMondayOnly = WorkingDays.Monday;
 
-        private double? _latitude = 10;
-        private double? _longitude = 20;
+        private Location _location = new Location { Latitude = 10, Longitude = 20 };
 
         [SetUp]
         public void SetUp()
         {
-            _latitude = 10;
-            _longitude = 20;
-
             _locationServiceMock = new Mock<ILocationService>();
-            _locationServiceMock.Setup(m => m.GetLocationFromIPAddress(null, out _latitude, out _longitude));
+            _locationServiceMock.Setup(m => m.GetLocationFromIPAddress(null)).Returns(_location);
 
             var request = new Mock<HttpRequestBase>();
             request.SetupGet(x => x.Headers).Returns(new System.Net.WebHeaderCollection { { "X-Requested-With", "XMLHttpRequest" } });
@@ -120,10 +117,10 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
 
             var returnedModel = (CommuteInfoModel)((ViewResult)actionResult).Model;
 
-            _locationServiceMock.Verify(s => s.GetLocationFromIPAddress(null, out _latitude, out _longitude), Times.Once());
+            _locationServiceMock.Verify(s => s.GetLocationFromIPAddress(null), Times.Once());
             Assert.IsTrue(_homeController.ModelState.IsValid);
-            Assert.AreEqual(_latitude, returnedModel.y);
-            Assert.AreEqual(_longitude, returnedModel.x);
+            Assert.AreEqual(_location.Latitude, returnedModel.y);
+            Assert.AreEqual(_location.Longitude, returnedModel.x);
         }
 
         [Test]
@@ -137,9 +134,9 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
                         {
                             h = toWork,
                             w = fromWork,
-                            d = WorkingDaysMondayOnly, 
-                            y = _latitude, 
-                            x = _longitude,
+                            d = WorkingDaysMondayOnly,
+                            y = _location.Latitude,
+                            x = _location.Longitude,
                             z = timeZone
                         };
 
@@ -147,13 +144,13 @@ namespace Richev.DarkMornings.Web.Tests.Controllers
 
             var returnedModel = (CommuteInfoModel)((ViewResult)actionResult).Model;
 
-            _locationServiceMock.Verify(s => s.GetLocationFromIPAddress(null, out _latitude, out _longitude), Times.Never());
+            _locationServiceMock.Verify(s => s.GetLocationFromIPAddress(null), Times.Never());
             Assert.IsTrue(_homeController.ModelState.IsValid);
             Assert.AreEqual(toWork, returnedModel.h);
             Assert.AreEqual(fromWork, returnedModel.w);
             Assert.AreEqual(WorkingDaysMondayOnly, returnedModel.d);
-            Assert.AreEqual(_latitude, returnedModel.y);
-            Assert.AreEqual(_longitude, returnedModel.x);
+            Assert.AreEqual(_location.Latitude, returnedModel.y);
+            Assert.AreEqual(_location.Longitude, returnedModel.x);
             Assert.AreEqual(timeZone, returnedModel.z);
         }
     }

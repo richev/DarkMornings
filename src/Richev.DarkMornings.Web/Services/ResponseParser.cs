@@ -1,11 +1,14 @@
 ﻿using System.Xml.Linq;
+using Richev.DarkMornings.Core;
 
 namespace Richev.DarkMornings.Web.Services
 {
     public static class ResponseParser
     {
-        public static void Parse(XDocument response, out double? latitude, out double? longitude)
+        public static Location? Parse(XDocument response)
         {
+            Location? location = null;
+
             XNamespace ns = "http://www.opengis.net/gml";
 
             var coordinates = GetNestedElementValue(response.Root, new[] { ns + "featureMember", "Hostip", "ipLocation", ns + "pointProperty", ns + "Point", ns + "coordinates" });
@@ -14,14 +17,13 @@ namespace Richev.DarkMornings.Web.Services
             {
                 var coordParts = coordinates.Split(',');
 
-                longitude = double.Parse(coordParts[0]);
-                latitude = double.Parse(coordParts[1]);
+                var longitude = double.Parse(coordParts[0]);
+                var latitude = double.Parse(coordParts[1]);
+
+                location = new Location { Latitude = latitude, Longitude = longitude };
             }
-            else
-            {
-                longitude = null;
-                latitude = null;
-            }
+
+            return location;
         }
 
         private static string GetNestedElementValue(XElement root, XName[] elementNames)

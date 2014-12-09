@@ -89,12 +89,12 @@ namespace Richev.DarkMornings.Web.Models
         {
             if (d == 0)
             {
-                modelState.AddModelError("UserError", "Please select at least one workday.");
+                modelState.AddModelError("WorkingDays", "Please select at least one workday.");
             }
 
             if (!y.HasValue || !x.HasValue)
             {
-                modelState.AddModelError("UserError", "Sorry, we couldn't figure out your location."); // TODO: Actually this is kind of a fatal error
+                modelState.AddModelError("Location", "Sorry, we couldn't figure out your location."); // TODO: Actually this is kind of a fatal error
             }
 
             var today = DateTime.Now.Date;
@@ -111,16 +111,16 @@ namespace Richev.DarkMornings.Web.Models
 
             if (Utils.GetTimeOfDayDifference(outboundCommuteStart, returnCommuteStart) <= new TimeSpan(0, j, 0))
             {
-                modelState.AddModelError("UserError", "Your journeys overlap one another. That can't be right.");
+                modelState.AddModelError("JourneysOverlap", "Your journeys overlap one another. That can't be right.");
             }
 
             if (!z.HasValue)
             {
-                modelState.AddModelError("UserError", "No time zone is selected.");
+                modelState.AddModelError("TimeZoneInvalid", "No time zone is selected.");
             }
             else if (!TimeZones.Selected.ContainsKey(z.Value))
             {
-                modelState.AddModelError("UserError", string.Format("The selected time zone {0} is not valid.", z.Value));
+                modelState.AddModelError("TimeZoneInvalid", string.Format("The selected time zone {0} is not valid.", z.Value));
             }            
         }
 

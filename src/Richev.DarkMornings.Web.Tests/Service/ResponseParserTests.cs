@@ -61,13 +61,12 @@ namespace Richev.DarkMornings.Web.Tests.Service
         {
             var response = XDocument.Parse(SuccessResponse);
 
-            double? latitude;
-            double? longitude;
 
-            ResponseParser.Parse(response, out latitude, out longitude);
+            var location = ResponseParser.Parse(response);
 
-            Assert.AreEqual(51.3167, latitude);
-            Assert.AreEqual(-0.5333, longitude);
+            Assert.IsTrue(location.HasValue);
+            Assert.AreEqual(51.3167, location.Value.Latitude);
+            Assert.AreEqual(-0.5333, location.Value.Longitude);
         }
 
         [Test]
@@ -75,13 +74,9 @@ namespace Richev.DarkMornings.Web.Tests.Service
         {
             var response = XDocument.Parse(FailureResponse);
 
-            double? latitude;
-            double? longitude;
+            var location = ResponseParser.Parse(response);
 
-            ResponseParser.Parse(response, out latitude, out longitude);
-
-            Assert.AreEqual(null, latitude);
-            Assert.AreEqual(null, longitude);
+            Assert.IsFalse(location.HasValue);
         }
     }
 }

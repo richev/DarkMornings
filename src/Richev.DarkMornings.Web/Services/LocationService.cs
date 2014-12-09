@@ -1,25 +1,29 @@
 ﻿using System;
 using System.Xml.Linq;
+using Richev.DarkMornings.Core;
 
 namespace Richev.DarkMornings.Web.Services
 {
     public class LocationService : ILocationService
     {
-        public void GetLocationFromIPAddress(string ipAddress, out double? latitude, out double? longitude)
+        public Location? GetLocationFromIPAddress(string ipAddress)
         {
+            Location? location = null;
+
             try
             {
                 var url = string.Format("http://api.hostip.info/get_xml.php?ip={0}&position=true", ipAddress);
 
                 var doc = XDocument.Load(url);
 
-                ResponseParser.Parse(doc, out latitude, out longitude);
+                location = ResponseParser.Parse(doc);
             }
-            catch (Exception) // a problem during parsing
+            catch (Exception) // TODO: Less generic catch
             {
-                latitude = null;
-                longitude = null;
+                // a problem during parsing
             }
+
+            return location;
         }
 
     }
