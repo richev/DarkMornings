@@ -83,7 +83,7 @@ namespace Richev.DarkMornings.Core
             }
             catch (ArgumentOutOfRangeException ex)
             {
-                throw new UserDisplayableException(string.Format("Timeout! {0}", ex.Message), ex);
+                throw new UserDisplayableException("Sorry, it looks like you're somewhere in the Arctic or Antarctic. Dark Mornings is rather buggy in the polar regions.", ex);
             }
         }
 

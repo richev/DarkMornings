@@ -382,12 +382,13 @@ a .fa {
 }
 
 .as-mentioned {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     font-size: 85%;
 }
 .as-mentioned a {
     color: white;
     opacity: 0.6;
+    display: block;
 }
 .as-mentioned a:hover {
     text-decoration: none;
@@ -395,6 +396,9 @@ a .fa {
 }
 .as-mentioned a span {
     display: block;
+}
+.as-mentioned a {
+    margin-bottom: 6px;
 }
 
 
