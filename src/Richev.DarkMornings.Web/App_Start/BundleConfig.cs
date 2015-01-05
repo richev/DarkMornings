@@ -13,6 +13,9 @@ namespace Richev.DarkMornings.Web
                 "~/Scripts/jquery-ui-{version}.custom.js",
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/respond.js",
+                "~/Scripts/hiddenFields.js",
+                "~/Scripts/locate.js",
+                "~/Scripts/locationMap.js",
                 "~/Scripts/site.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
