@@ -5,6 +5,8 @@
 //
 // (C) Patrick Kalkman http://www.semanticarchitecture.net
 //
+// http://www.codeproject.com/Articles/78486/Solar-Calculator-Calculate-Sunrise-Sunset-and-Maxi
+//
 
 using System;
 
