@@ -3,10 +3,11 @@
 <div>
     @if (Model.NextWorkingDayDaylightTransition.HasValue)
     {
-        <div class="days-more">
+        <div class="days-more with-icon">
             @UIHelpers.GetDaylightIcon(Model.IsCurrentlyInDaylight)
             <div class="days-more-content">
-                @UIHelpers.GetCommuteDirectionIcon(Model.CommuteType)<span class=count>@Model.NumberOfDaysToTransition more</span> <span>@UIHelpers.GetDaylightJourneysText(Model.IsCurrentlyInDaylight, Model.NumberOfDaysToTransition)</span>
+                @UIHelpers.GetCommuteDirectionIcon(Model.CommuteType)
+                <span class=count>@Model.NumberOfDaysToTransition more</span> <span>@UIHelpers.GetDaylightJourneysText(Model.IsCurrentlyInDaylight, Model.NumberOfDaysToTransition)</span>
             </div>
         </div>
         <div class="until">

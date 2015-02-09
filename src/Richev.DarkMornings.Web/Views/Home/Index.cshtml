@@ -21,15 +21,15 @@
 
 <div>
     <h3>My commute</h3>
-    <div>
-        <div class="with-icon">
-            <i class="fa fa-arrow-circle-o-right"></i>@Html.Label("ToWorkHours", "I leave home at")
+    <div class="form-rows">
+        <div>
+            <i class="fa with-icon fa-arrow-circle-o-right"></i>@Html.Label("ToWorkHours", "I leave home at")
             <span class="time-selector">
                 @Html.DropDownList("ToWorkHours", UIHelpers.GetHours(Model.h))<span class="time-separator">:</span>@Html.DropDownList("ToWorkMinutes", UIHelpers.GetMinutes(Model.h))
             </span>
         </div>
-        <div class="with-icon">
-            <i class="fa fa-arrow-circle-o-left"></i>@Html.Label("FromWorkHours", "I leave work at")
+        <div>
+            <i class="fa with-icon fa-arrow-circle-o-left"></i>@Html.Label("FromWorkHours", "I leave work at")
             <span class="time-selector">
                 @Html.DropDownList("FromWorkHours", UIHelpers.GetHours(Model.w))<span class="time-separator">:</span>@Html.DropDownList("FromWorkMinutes", UIHelpers.GetMinutes(Model.w))
             </span>
@@ -41,14 +41,14 @@
             @Html.HiddenFor(model => model.y)
             @Html.HiddenFor(model => model.h)
             @Html.HiddenFor(model => model.w)
-            <div class="with-icon">
-                <i class="fa fa-clock-o"></i>@Html.LabelFor(model => model.d, "My journey takes")
+            <div>
+                <i class="fa with-icon fa-clock-o"></i>@Html.LabelFor(model => model.d, "My journey takes")
                 <span class="duration-selector">
                     @Html.DropDownListFor(model => model.j, UIHelpers.GetJourneyDurations(Model.j))
                 </span>
             </div>
-            <div class="working-days with-icon">
-                <i class="fa fa-exchange"></i><span>I go to work on</span>
+            <div class="working-days">
+                <i class="fa with-icon fa-exchange"></i><span>I go to work on</span>
                 <div class="btn-group">
                     <button class="btn">Sun</button>
                     <button class="btn">Mon</button>
@@ -76,11 +76,11 @@
     <hr class="and" />
 
     <a id="Results"></a><h3>You have&hellip;</h3>
-    <div class="results journey with-icon">
+    <div class="results journey">
         @Html.Partial("_DaylightInfo", Model.ToWorkDaylights)
     </div>
     <hr class="and" />
-    <div class="results journey with-icon">
+    <div class="results journey">
         @Html.Partial("_DaylightInfo", Model.FromWorkDaylights)
     </div>
     <p class="text-info excluding">Using time zone <em>@Model.TimeZoneId</em> and ignoring any Bank or national holidays</p>

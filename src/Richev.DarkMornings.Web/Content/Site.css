@@ -2,7 +2,18 @@
     height: 100%;
 }
 
+.jumbotron {
+    background-color: rgb(236, 240, 241);
+    background-color: rgba(236, 240, 241, 0.85);
+}
+
 body {
+    background-image: url(/Content/driving-sunrise.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: bottom center;
+    height: 100%;
     padding-top: 50px;
     padding-bottom: 20px;
     background-color: rgb(59, 68, 99);
@@ -219,9 +230,6 @@ select {
 .days-more-content.always {
     padding: 1.05em 100px 1.05em 0.7em;
 }
-.days-more-content.always .fa.commute-direction {
-    left: 3.4em;
-}
 
 .days-more .fa {
     color: rgb(52, 152, 219);
@@ -271,11 +279,12 @@ hr.and {
     margin: 0 auto;
 }
 
-.with-icon {
+.form-rows > div,
+.form-rows > form > div {
     position: relative;
 }
 
-.with-icon .fa {
+ .fa.with-icon {
     color: rgb(52, 152, 219);
     font-size: 250%;
     position: absolute;
@@ -285,21 +294,22 @@ hr.and {
     z-index: 10;
 }
 
-.with-icon label {
+.form-rows label {
     position: relative;
     z-index: 20;
     font-weight: normal;
 }
 
-.results.with-icon .fa {
+.results .fa.with-icon {
     top: -0.2em;
 }
 
 .days-more-content .fa.commute-direction {
+    position: absolute;
     color: white;
     opacity: 1;
     font-size: 380%;
-    left: 2em;
+    right: 0.12em;
     top: 0.05em;
 }
 
@@ -382,6 +392,7 @@ a .fa {
 }
 
 .as-mentioned {
+    float: right;
     margin-bottom: 20px;
     font-size: 85%;
 }
@@ -417,39 +428,22 @@ a .fa {
         left: 205px;
     }
 
-    .results .calendar, .results .until, .results .days-more {
-        float: inherit;
-        margin: 0 auto;
+    .days-more {
+        width: 9em;
     }
 
-    .results.journey {
-        width: 100%;
-        height: auto;
+    .days-more.always {
+        width: 14em;
     }
 
-    .until {
-        width: auto;
-        padding: 0.8em 0;
+    .days-more.always .days-more-content {
+        padding-right: 50px;
     }
-    .until span {
-        display: inline;
-    }
-}
-@media (min-width: 480px) {
-    body {
-        background-image: url(/Content/driving-sunrise.jpg);
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-position: bottom center;
-        height: 100%;
-    }
-    .as-mentioned {
-        float: right;
-    }
-    .jumbotron {
-        background-color: rgb(236, 240, 241);
-        background-color: rgba(236, 240, 241, 0.85);
+
+    .days-more-content .fa.commute-direction {
+        font-size: 180%;
+        right: 0.25em;
+        top: 0.6em;
     }
 }
 
@@ -504,7 +498,7 @@ a .fa {
         font-size: 16px;
     }
 
-    form .with-icon .fa {
+    .form-rows .fa.with-icon {
         left: 0;
     }
 }

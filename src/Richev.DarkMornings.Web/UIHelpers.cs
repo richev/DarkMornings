@@ -91,7 +91,7 @@ namespace Richev.DarkMornings.Web
         /// </summary>
         public static HtmlString GetDaylightIcon(bool isCurrentlyInDaylight)
         {
-            var daylightIcon = isCurrentlyInDaylight ? "<i class=\"fa fa-sun-o\"></i>" : "<i class=\"fa fa-moon-o\"></i>";
+            var daylightIcon = isCurrentlyInDaylight ? "<i class=\"fa with-icon fa-sun-o\"></i>" : "<i class=\"fa with-icon fa-moon-o\"></i>";
 
             return new HtmlString(daylightIcon);
         }
