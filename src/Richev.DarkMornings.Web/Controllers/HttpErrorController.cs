@@ -3,6 +3,7 @@ using System.Web.Mvc;
 
 namespace Richev.DarkMornings.Web.Controllers
 {
+    [SessionState(System.Web.SessionState.SessionStateBehavior.Disabled)]
     public class HttpErrorController : Controller
     {
         [HttpGet]
