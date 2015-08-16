@@ -20,9 +20,9 @@ namespace Richev.DarkMornings.Web.Services
 
                 location = ResponseParser.Parse(doc);
             }
-            catch (Exception) // TODO: Less generic catch
+            catch (WebException)
             {
-                throw new UserDisplayableException(string.Format("Sorry, but your location could not be obtained from your IP address {0}.", ipAddress));
+                location = null;
             }
 
             return location;
