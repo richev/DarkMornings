@@ -14,5 +14,10 @@ namespace Richev.DarkMornings.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             MvcHandler.DisableMvcResponseHeader = true;
         }
+
+        protected void Application_PreSendRequestHeaders()
+        {
+            Response.Headers.Remove("Server");
+        }
     }
 }
