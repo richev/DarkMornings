@@ -4,6 +4,9 @@ using System.Web.Mvc;
 namespace Richev.DarkMornings.Web.Controllers
 {
     [SessionState(System.Web.SessionState.SessionStateBehavior.Disabled)]
+#if !DEBUG
+    [RequireHttps]
+#endif
     public class HttpErrorController : Controller
     {
         [HttpGet]
