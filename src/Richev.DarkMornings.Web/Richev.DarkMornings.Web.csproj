@@ -225,7 +225,7 @@
     <Content Include="Views\HttpError\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FacebookFriends\src\Richev.Common.Web\Richev.Common.Web.csproj">
+    <ProjectReference Include="..\..\..\RichevWebsites\src\Richev.Common.Web\Richev.Common.Web.csproj">
       <Project>{73726fab-866b-46ab-bbf3-e35793a983cd}</Project>
       <Name>Richev.Common.Web</Name>
     </ProjectReference>
