@@ -7,9 +7,6 @@ using Richev.DarkMornings.Web.Services;
 namespace Richev.DarkMornings.Web.Controllers
 {
     [SessionState(System.Web.SessionState.SessionStateBehavior.Disabled)]
-#if !DEBUG
-    [RequireHttps]
-#endif
     public class HomeController : Controller
     {
         private readonly IGeoService _geoService;
