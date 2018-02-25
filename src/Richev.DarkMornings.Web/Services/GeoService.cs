@@ -14,7 +14,7 @@ namespace Richev.DarkMornings.Web.Services
 
             try
             {
-                var url = string.Format("http://api.hostip.info/get_xml.php?ip={0}&position=true", ipAddress);
+                var url = $"http://api.hostip.info/get_xml.php?ip={ipAddress}&position=true";
 
                 var doc = XDocument.Load(url);
 
@@ -48,7 +48,7 @@ namespace Richev.DarkMornings.Web.Services
                 {
                     var message = response.Status == "ZERO_RESULTS" ?
                         "Sorry, but the time zone for your location could not be obtained. Please make sure your location is on land." :
-                        string.Format("Sorry, but the time zone for your location could not be obtained ({0}: {1}).", response.Status, response.ErrorMessage);
+                        $"Sorry, but the time zone for your location could not be obtained ({response.Status}: {response.ErrorMessage}).";
 
                     throw new UserDisplayableException(message);
                 }
@@ -57,7 +57,7 @@ namespace Richev.DarkMornings.Web.Services
 
                 if (id == null)
                 {
-                    throw new UserDisplayableException(string.Format("Sorry, but the time zone information for your location could not be found ({0}).", response.TimeZoneId));
+                    throw new UserDisplayableException($"Sorry, but the time zone information for your location could not be found ({response.TimeZoneId}).");
                 }
 
                 return id;

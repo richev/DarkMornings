@@ -21,7 +21,7 @@ namespace Richev.DarkMornings.Web
 
                 if (day >= daylightInfo.NextDaylightTransition.Value)
                 {
-                    throw new InvalidOperationException(string.Format("daylightInfo.NextDaylightTransition.Value equals {0}; but it should be in the future.", daylightInfo.NextDaylightTransition.Value));
+                    throw new InvalidOperationException($"daylightInfo.NextDaylightTransition.Value equals {daylightInfo.NextDaylightTransition.Value}; but it should be in the future.");
                 }
 
                 var days = new List<DateTime>();
@@ -75,7 +75,7 @@ namespace Richev.DarkMornings.Web
         {
             var array = (from key in nvc.AllKeys
                          from value in nvc.GetValues(key)
-                         select string.Format("{0}={1}", HttpUtility.UrlEncode(key), HttpUtility.UrlEncode(value)))
+                         select $"{HttpUtility.UrlEncode(key)}={HttpUtility.UrlEncode(value)}")
                 .ToArray();
 
             return "?" + string.Join("&", array);

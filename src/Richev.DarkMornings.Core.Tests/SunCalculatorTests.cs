@@ -82,7 +82,7 @@ namespace Richev.DarkMornings.Core.Tests
                 light = (time >= sunRiseTime && time <= sunSetTime) ? 3 : 4;
             }*/
 
-            addFunc(string.Format("{0:yyyy-MM-dd},{1},{2}", date, time, light));
+            addFunc($"{date:yyyy-MM-dd},{time},{light}");
         }
     }
 }
