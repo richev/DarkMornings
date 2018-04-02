@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using Richev.Common.Web.Attributes;
 using Richev.DarkMornings.Core;
 using Richev.DarkMornings.Web.Models;
 using Richev.DarkMornings.Web.Services;
@@ -7,6 +8,7 @@ using Richev.DarkMornings.Web.Services;
 namespace Richev.DarkMornings.Web.Controllers
 {
     [SessionState(System.Web.SessionState.SessionStateBehavior.Disabled)]
+    [RequireHttpsUnlessLocalhost]
     public class HomeController : Controller
     {
         private readonly IGeoService _geoService;
