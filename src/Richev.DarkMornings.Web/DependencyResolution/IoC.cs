@@ -25,7 +25,7 @@ namespace Richev.DarkMornings.Web.DependencyResolution
     {
         public static IContainer Initialize()
         {
-            ObjectFactory.Initialize(x =>
+            var container = new Container(x =>
             {
                 x.Scan(scan =>
                 {
@@ -35,7 +35,8 @@ namespace Richev.DarkMornings.Web.DependencyResolution
 
                 x.For<IGeoService>().Use<GeoService>();
             });
-            return ObjectFactory.Container;
+
+            return container;
         }
     }
 }
