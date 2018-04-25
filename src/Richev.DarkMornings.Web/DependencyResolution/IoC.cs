@@ -17,19 +17,24 @@
 
 using Richev.DarkMornings.Web.Services;
 using StructureMap;
+using StructureMap.Graph;
 
-namespace Richev.DarkMornings.Web.DependencyResolution {
-    public static class IoC {
-        public static IContainer Initialize() {
+namespace Richev.DarkMornings.Web.DependencyResolution
+{
+    public static class IoC
+    {
+        public static IContainer Initialize()
+        {
             ObjectFactory.Initialize(x =>
-                        {
-                            x.Scan(scan =>
-                                    {
-                                        scan.TheCallingAssembly();
-                                        scan.WithDefaultConventions();
-                                    });
-                            x.For<IGeoService>().Use<GeoService>();
-                        });
+            {
+                x.Scan(scan =>
+                {
+                    scan.TheCallingAssembly();
+                    scan.WithDefaultConventions();
+                });
+
+                x.For<IGeoService>().Use<GeoService>();
+            });
             return ObjectFactory.Container;
         }
     }
