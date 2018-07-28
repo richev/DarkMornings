@@ -5,10 +5,10 @@ namespace Richev.DarkMornings.Web.Controllers
     [RoutePrefix(".well-known")]
     public class LetsEncryptController : Common.Web.LetsEncryptController
     {
-        [Route("acme-challenge/{challenge}/{filename?}")]
-        public override ActionResult Index(string challenge, string filename = null)
+        [Route("acme-challenge/{challenge}")]
+        public override ActionResult Index(string challenge)
         {
-            return base.Index(challenge, filename);
+            return base.Index(challenge);
         }
     }
 }
