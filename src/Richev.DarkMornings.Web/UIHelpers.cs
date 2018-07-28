@@ -144,7 +144,7 @@ namespace Richev.DarkMornings.Web
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException("commuteType");
+                    throw new ArgumentOutOfRangeException(nameof(commuteType));
             }
 
             return new HtmlString(commuteDirectionIcon);
@@ -161,7 +161,7 @@ namespace Richev.DarkMornings.Web
                     return "back home";
 
                 default:
-                    throw new ArgumentOutOfRangeException("commuteType");
+                    throw new ArgumentOutOfRangeException(nameof(commuteType));
             }
         }
 

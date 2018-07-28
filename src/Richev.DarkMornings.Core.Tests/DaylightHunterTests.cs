@@ -74,7 +74,7 @@ namespace Richev.DarkMornings.Core.Tests
         };
 
         [Test]
-        [TestCaseSource("_getDaylightIsCorrectForCommuteCases")]
+        [TestCaseSource(nameof(_getDaylightIsCorrectForCommuteCases))]
         public void GetDaylightIsCorrectForCommute(
             string scenarioName,
             Location location, string timeZone, DateTime commuteStart,
