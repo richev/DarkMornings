@@ -43,9 +43,7 @@ namespace Richev.DarkMornings.Web.Controllers
                 SetLocation(model);
             }
 
-            DateTime outboundCommuteStart;
-            DateTime returnCommuteStart;
-            model.Validate(ModelState, out outboundCommuteStart, out returnCommuteStart);
+            model.Validate(ModelState, out var outboundCommuteStart, out var returnCommuteStart);
 
             if (ModelState.IsValid)
             {
