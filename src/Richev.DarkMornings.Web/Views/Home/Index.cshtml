@@ -1,6 +1,7 @@
-﻿@model Richev.DarkMornings.Web.Models.CommuteInfoModel
+﻿@using System.Configuration
+@model Richev.DarkMornings.Web.Models.CommuteInfoModel
 
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=@ConfigurationManager.AppSettings["GoogleMapsApiKey"]" type="text/javascript"></script>
 
 <div id="fb-root"></div>
 <script>

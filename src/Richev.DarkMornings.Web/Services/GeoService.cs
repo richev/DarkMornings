@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Net;
 using System.Xml.Linq;
 using Newtonsoft.Json;
@@ -32,8 +33,11 @@ namespace Richev.DarkMornings.Web.Services
         {
             var middayToday = DateTime.UtcNow.Date.AddHours(12);
 
+            var apiKey = ConfigurationManager.AppSettings["GoogleMapsApiKey"];
+
             var url = string.Format(
-                "https://maps.googleapis.com/maps/api/timezone/json?location={0},{1}&timestamp={2}",
+                "https://maps.googleapis.com/maps/api/timezone/json?key={0}&location={1},{2}&timestamp={3}",
+                apiKey,
                 location.Latitude,
                 location.Longitude,
                 ToUnixTimeStamp(middayToday));
