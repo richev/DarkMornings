@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Configuration;
 using System.Globalization;
 using System.Web;
 using System.Web.Mvc;
@@ -18,19 +16,18 @@ namespace Richev.DarkMornings.Web
 
         public static List<SelectListItem> GetHours(string selectedTime)
         {
-            DateTime time;
-            TryGetTime(selectedTime, out time);
+            TryGetTime(selectedTime, out var time);
 
             var hours = new List<SelectListItem>();
 
             for (var h = 0; h < 24; h++)
             {
                 hours.Add(new SelectListItem
-                              {
-                                  Text = h.ToString(PadLeadingZero),
-                                  Value = h.ToString(PadLeadingZero),
-                                  Selected = h == time.Hour
-                              });
+                {
+                    Text = h.ToString(PadLeadingZero),
+                    Value = h.ToString(PadLeadingZero),
+                    Selected = h == time.Hour
+                });
             }
 
             return hours;
@@ -38,8 +35,7 @@ namespace Richev.DarkMornings.Web
 
         public static List<SelectListItem> GetMinutes(string selectedTime)
         {
-            DateTime time;
-            TryGetTime(selectedTime, out time);
+            TryGetTime(selectedTime, out var time);
 
             var minutes = new List<SelectListItem>();
 

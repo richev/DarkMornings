@@ -77,8 +77,13 @@ namespace Richev.DarkMornings.Core.Tests
         [TestCaseSource(nameof(_getDaylightIsCorrectForCommuteCases))]
         public void GetDaylightIsCorrectForCommute(
             string scenarioName,
-            Location location, string timeZone, DateTime commuteStart,
-            bool isCurrentlyInDaylightAssert, int commutesInDaylightPerYearAssert, DateTime? nextDaylightTransitionAssert, DaylightTransition? daylightTransitionAssert)
+            Location location,
+            string timeZone,
+            DateTime commuteStart,
+            bool isCurrentlyInDaylightAssert,
+            int commutesInDaylightPerYearAssert,
+            DateTime? nextDaylightTransitionAssert,
+            DaylightTransition? daylightTransitionAssert)
         {
             Console.WriteLine(scenarioName);
 

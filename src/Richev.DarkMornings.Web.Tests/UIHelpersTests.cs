@@ -7,34 +7,26 @@ namespace Richev.DarkMornings.Web.Tests
     [TestFixture]
     public class UIHelpersTests
     {
-        private DaylightInfoModel _daylightInfo;
-
-        [SetUp]
-        public void SetUp()
-        {
-            _daylightInfo = new DaylightInfoModel();
-        }
-
         [Test]
         public void GetTweetTextShouldWorkForGeneralScenario()
         {
             var model = new CommuteInfoModel
-                        {
-                            ToWorkDaylights = new DaylightInfoModel
-                                              {
-                                                  IsCurrentlyInDaylight = false,
-                                                  NumberOfDaysToTransition = 13,
-                                                  CommuteType = Commute.ToWork,
-                                                  NextWorkingDayDaylightTransition = new DateTime(2014, 2, 1)
-                                              },
-                            FromWorkDaylights = new DaylightInfoModel
-                                                {
-                                                    IsCurrentlyInDaylight = true,
-                                                    NumberOfDaysToTransition = 54,
-                                                    CommuteType = Commute.FromWork,
-                                                    NextWorkingDayDaylightTransition = new DateTime(2014, 2, 1)
-                                                }
-                        };
+            {
+                ToWorkDaylights = new DaylightInfoModel
+                {
+                    IsCurrentlyInDaylight = false,
+                    NumberOfDaysToTransition = 13,
+                    CommuteType = Commute.ToWork,
+                    NextWorkingDayDaylightTransition = new DateTime(2014, 2, 1)
+                },
+                FromWorkDaylights = new DaylightInfoModel
+                {
+                    IsCurrentlyInDaylight = true,
+                    NumberOfDaysToTransition = 54,
+                    CommuteType = Commute.FromWork,
+                    NextWorkingDayDaylightTransition = new DateTime(2014, 2, 1)
+                }
+            };
 
             var tweetText = UIHelpers.GetTweetText(model);
 
@@ -47,20 +39,20 @@ namespace Richev.DarkMornings.Web.Tests
         public void GetTweetTextShouldWorkWhenJourneyToWorkAlwaysInDark()
         {
             var model = new CommuteInfoModel
-                        {
-                            ToWorkDaylights = new DaylightInfoModel
-                                              {
-                                                  IsCurrentlyInDaylight = false,
-                                                  CommuteType = Commute.ToWork
-                                              },
-                            FromWorkDaylights = new DaylightInfoModel
-                                                {
-                                                    IsCurrentlyInDaylight = true,
-                                                    NumberOfDaysToTransition = 54,
-                                                    CommuteType = Commute.FromWork,
-                                                    NextWorkingDayDaylightTransition = new DateTime(2014, 2, 1)
-                                                }
-                        };
+            {
+                ToWorkDaylights = new DaylightInfoModel
+                {
+                    IsCurrentlyInDaylight = false,
+                    CommuteType = Commute.ToWork
+                },
+                FromWorkDaylights = new DaylightInfoModel
+                {
+                    IsCurrentlyInDaylight = true,
+                    NumberOfDaysToTransition = 54,
+                    CommuteType = Commute.FromWork,
+                    NextWorkingDayDaylightTransition = new DateTime(2014, 2, 1)
+                }
+            };
 
             var tweetText = UIHelpers.GetTweetText(model);
 
@@ -73,20 +65,20 @@ namespace Richev.DarkMornings.Web.Tests
         public void GetTweetTextShouldWorkWhenJourneyFromWorkAlwaysInLight()
         {
             var model = new CommuteInfoModel
-                        {
-                            ToWorkDaylights = new DaylightInfoModel
-                                              {
-                                                  IsCurrentlyInDaylight = false,
-                                                  CommuteType = Commute.ToWork,
-                                                  NumberOfDaysToTransition = 54,
-                                                  NextWorkingDayDaylightTransition = new DateTime(2014, 2, 1)
-                                              },
-                            FromWorkDaylights = new DaylightInfoModel
-                                                {
-                                                    IsCurrentlyInDaylight = true,
-                                                    CommuteType = Commute.FromWork,
-                                                }
-                        };
+            {
+                ToWorkDaylights = new DaylightInfoModel
+                {
+                    IsCurrentlyInDaylight = false,
+                    CommuteType = Commute.ToWork,
+                    NumberOfDaysToTransition = 54,
+                    NextWorkingDayDaylightTransition = new DateTime(2014, 2, 1)
+                },
+                FromWorkDaylights = new DaylightInfoModel
+                {
+                    IsCurrentlyInDaylight = true,
+                    CommuteType = Commute.FromWork,
+                }
+            };
 
             var tweetText = UIHelpers.GetTweetText(model);
             
@@ -99,18 +91,18 @@ namespace Richev.DarkMornings.Web.Tests
         public void GetTweetTextShouldWorkWhenJourneyToWorkAlwaysInDarkAndFromWorkAlwaysInLight()
         {
             var model = new CommuteInfoModel
-                        {
-                            ToWorkDaylights = new DaylightInfoModel
-                                              {
-                                                  IsCurrentlyInDaylight = false,
-                                                  CommuteType = Commute.ToWork,
-                                              },
-                            FromWorkDaylights = new DaylightInfoModel
-                                                {
-                                                    IsCurrentlyInDaylight = true,
-                                                    CommuteType = Commute.FromWork,
-                                                }
-                        };
+            {
+                ToWorkDaylights = new DaylightInfoModel
+                {
+                    IsCurrentlyInDaylight = false,
+                    CommuteType = Commute.ToWork,
+                },
+                FromWorkDaylights = new DaylightInfoModel
+                {
+                    IsCurrentlyInDaylight = true,
+                    CommuteType = Commute.FromWork,
+                }
+            };
 
             var tweetText = UIHelpers.GetTweetText(model);
 
@@ -123,18 +115,18 @@ namespace Richev.DarkMornings.Web.Tests
         public void GetTweetTextShouldWorkWhenJourneyToWorkAlwaysInDarkAndFromWorkAlwaysInDark()
         {
             var model = new CommuteInfoModel
-                        {
-                            ToWorkDaylights = new DaylightInfoModel
-                                              {
-                                                  IsCurrentlyInDaylight = false,
-                                                  CommuteType = Commute.ToWork,
-                                              },
-                            FromWorkDaylights = new DaylightInfoModel
-                                                {
-                                                    IsCurrentlyInDaylight = false,
-                                                    CommuteType = Commute.FromWork,
-                                                }
-                        };
+            {
+                ToWorkDaylights = new DaylightInfoModel
+                {
+                    IsCurrentlyInDaylight = false,
+                    CommuteType = Commute.ToWork,
+                },
+                FromWorkDaylights = new DaylightInfoModel
+                {
+                    IsCurrentlyInDaylight = false,
+                    CommuteType = Commute.FromWork,
+                }
+            };
 
             var tweetText = UIHelpers.GetTweetText(model);
 

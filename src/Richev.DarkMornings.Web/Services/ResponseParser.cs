@@ -37,7 +37,7 @@ namespace Richev.DarkMornings.Web.Services
                 element = element.Element(elementName);
             }
 
-            return element != null ? element.Value : null;
+            return element?.Value;
         }
     }
 }

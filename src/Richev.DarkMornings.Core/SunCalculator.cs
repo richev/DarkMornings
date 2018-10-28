@@ -20,12 +20,12 @@ namespace Richev.DarkMornings.Core
     {
         private readonly double _longitude;
 
-        private readonly double _latituteInRadians;
+        private readonly double _latitudeInRadians;
 
         /// <summary>
         /// The nearest longitude in multiple of 15 of the timezone of which you are calculating the sun rise or sun set.
         /// </summary>
-        private readonly double _longituteTimeZone;
+        private readonly double _longitudeTimeZone;
 
         /// <summary>
         /// <para>For locations that use daylight savings, you should set UseSummerTime to the actual daylight savings status.</para>
@@ -36,19 +36,20 @@ namespace Richev.DarkMornings.Core
         public SunCalculator(double longitude, double latitude)
         {
             _longitude = longitude;
-            _latituteInRadians = ConvertDegreeToRadian(latitude);
-            _longituteTimeZone = (int)(Math.Round(longitude / 15D) * 15);
+            _latitudeInRadians = ConvertDegreeToRadian(latitude);
+            _longitudeTimeZone = (int)(Math.Round(longitude / 15D) * 15);
         }
 
         public DateTime CalculateSunRise(DateTime dateTime, string timeZoneId)
         {
             _useSummerTime = Utils.IsGmtDaylightSavingTime(dateTime, timeZoneId);
 
-            int dayNumberOfDateTime = ExtractDayNumber(dateTime);
-            double differenceSunAndLocalTime = CalculateDifferenceSunAndLocalTime(dayNumberOfDateTime);
-            double declanationOfTheSun = CalculateDeclination(dayNumberOfDateTime);
-            double tanSunPosition = CalculateTanSunPosition(declanationOfTheSun);
-            int sunRiseInMinutes = CalculateSunRiseInternal(tanSunPosition, differenceSunAndLocalTime);
+            var dayNumberOfDateTime = ExtractDayNumber(dateTime);
+            var differenceSunAndLocalTime = CalculateDifferenceSunAndLocalTime(dayNumberOfDateTime);
+            var declinationOfTheSun = CalculateDeclination(dayNumberOfDateTime);
+            var tanSunPosition = CalculateTanSunPosition(declinationOfTheSun);
+            var sunRiseInMinutes = CalculateSunRiseInternal(tanSunPosition, differenceSunAndLocalTime);
+
             return CreateDateTime(dateTime, sunRiseInMinutes);
         }
 
@@ -56,15 +57,16 @@ namespace Richev.DarkMornings.Core
         {
             _useSummerTime = Utils.IsGmtDaylightSavingTime(dateTime, timeZoneId);
 
-            int dayNumberOfDateTime = ExtractDayNumber(dateTime);
-            double differenceSunAndLocalTime = CalculateDifferenceSunAndLocalTime(dayNumberOfDateTime);
-            double declanationOfTheSun = CalculateDeclination(dayNumberOfDateTime);
-            double tanSunPosition = CalculateTanSunPosition(declanationOfTheSun);
-            int sunSetInMinutes = CalculateSunSetInternal(tanSunPosition, differenceSunAndLocalTime);
+            var dayNumberOfDateTime = ExtractDayNumber(dateTime);
+            var differenceSunAndLocalTime = CalculateDifferenceSunAndLocalTime(dayNumberOfDateTime);
+            var declinationOfTheSun = CalculateDeclination(dayNumberOfDateTime);
+            var tanSunPosition = CalculateTanSunPosition(declinationOfTheSun);
+            var sunSetInMinutes = CalculateSunSetInternal(tanSunPosition, differenceSunAndLocalTime);
+
             return CreateDateTime(dateTime, sunSetInMinutes);
         }
 
-        internal double CalculateDeclination(int numberOfDaysSinceFirstOfJanuary)
+        private static double CalculateDeclination(int numberOfDaysSinceFirstOfJanuary)
         {
             return Math.Asin(-0.39795 * Math.Cos(2.0 * Math.PI * (numberOfDaysSinceFirstOfJanuary + 10.0) / 365.0));
         }
@@ -76,8 +78,8 @@ namespace Richev.DarkMornings.Core
 
         private static DateTime CreateDateTime(DateTime dateTime, int timeInMinutes)
         {
-            int hour = timeInMinutes / 60;
-            int minute = timeInMinutes - (hour * 60);
+            var hour = timeInMinutes / 60;
+            var minute = timeInMinutes - (hour * 60);
 
             try
             {
@@ -91,43 +93,43 @@ namespace Richev.DarkMornings.Core
 
         private static int CalculateSunRiseInternal(double tanSunPosition, double differenceSunAndLocalTime)
         {
-            int sunRise = (int)(720.0 - 720.0 / Math.PI * Math.Acos(-tanSunPosition) - differenceSunAndLocalTime);
+            var sunRise = (int)(720.0 - 720.0 / Math.PI * Math.Acos(-tanSunPosition) - differenceSunAndLocalTime);
             sunRise = LimitSunRise(sunRise);
             return sunRise;
         }
 
         private static int CalculateSunSetInternal(double tanSunPosition, double differenceSunAndLocalTime)
         {
-            int sunSet = (int)(720.0 + 720.0 / Math.PI * Math.Acos(-tanSunPosition) - differenceSunAndLocalTime);
+            var sunSet = (int)(720.0 + 720.0 / Math.PI * Math.Acos(-tanSunPosition) - differenceSunAndLocalTime);
             sunSet = LimitSunSet(sunSet);
             return sunSet;
         }
 
-        private double CalculateTanSunPosition(double declanationOfTheSun)
+        private double CalculateTanSunPosition(double declinationOfTheSun)
         {
-            double sinSunPosition = CalculateSinSunPosition(declanationOfTheSun);
-            double cosSunPosition = CalculateCosSunPosition(declanationOfTheSun);
-            double tanSunPosition = sinSunPosition / cosSunPosition;
+            var sinSunPosition = CalculateSinSunPosition(declinationOfTheSun);
+            var cosSunPosition = CalculateCosSunPosition(declinationOfTheSun);
+            var tanSunPosition = sinSunPosition / cosSunPosition;
             tanSunPosition = LimitTanSunPosition(tanSunPosition);
             return tanSunPosition;
         }
 
-        private double CalculateCosSunPosition(double declanationOfTheSun)
+        private double CalculateCosSunPosition(double declinationOfTheSun)
         {
-            return Math.Cos(_latituteInRadians) * Math.Cos(declanationOfTheSun);
+            return Math.Cos(_latitudeInRadians) * Math.Cos(declinationOfTheSun);
         }
 
-        private double CalculateSinSunPosition(double declanationOfTheSun)
+        private double CalculateSinSunPosition(double declinationOfTheSun)
         {
-            return Math.Sin(_latituteInRadians) * Math.Sin(declanationOfTheSun);
+            return Math.Sin(_latitudeInRadians) * Math.Sin(declinationOfTheSun);
         }
 
         private double CalculateDifferenceSunAndLocalTime(int dayNumberOfDateTime)
         {
-            double ellipticalOrbitPart1 = 7.95204 * Math.Sin((0.01768 * dayNumberOfDateTime) + 3.03217);
-            double ellipticalOrbitPart2 = 9.98906 * Math.Sin((0.03383 * dayNumberOfDateTime) + 3.46870);
+            var ellipticalOrbitPart1 = 7.95204 * Math.Sin((0.01768 * dayNumberOfDateTime) + 3.03217);
+            var ellipticalOrbitPart2 = 9.98906 * Math.Sin((0.03383 * dayNumberOfDateTime) + 3.46870);
 
-            double differenceSunAndLocalTime = ellipticalOrbitPart1 + ellipticalOrbitPart2 + (_longitude - _longituteTimeZone) * 4;
+            var differenceSunAndLocalTime = ellipticalOrbitPart1 + ellipticalOrbitPart2 + (_longitude - _longitudeTimeZone) * 4;
 
             if (_useSummerTime) differenceSunAndLocalTime -= 60;
             return differenceSunAndLocalTime;
