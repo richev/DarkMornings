@@ -109,7 +109,8 @@ a:hover {
 }
 
 .btn-success,
-.btn-success:hover {
+.btn-success:hover,
+.btn-success:active {
     background-color: #4385D3;
     border: none;
 }
