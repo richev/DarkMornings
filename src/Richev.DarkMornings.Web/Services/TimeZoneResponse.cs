@@ -19,7 +19,7 @@ namespace Richev.DarkMornings.Web.Services
         [JsonProperty("timeZoneName")]
         public string TimeZoneName { get; set; }
 
-        [JsonProperty("error_message")]
+        [JsonProperty("errorMessage")]
         public string ErrorMessage { get; set; }
     }
 }
