@@ -15,7 +15,7 @@ body {
     background-position: bottom center;
     height: 100%;
     padding-top: 50px;
-    padding-bottom: 20px;
+    padding-bottom: 50px;
     background-color: rgb(59, 68, 99);
 }
 
@@ -80,7 +80,7 @@ h1 a:hover, h1 a:active {
 }
 h1 .fa {
     font-size: 120px;
-    color: rgb(52, 152, 219);
+    color: #4385D3;
     opacity: 0.2;
     position: absolute;
     z-index: 10;
@@ -97,6 +97,32 @@ h1 .fa-moon-o {
 
 h3 {
     font-weight: bold;
+}
+
+a, select, button {
+    transition: .25s;
+}
+
+a,
+a:hover {
+    color: #4385D3;
+}
+
+.btn-success,
+.btn-success:hover {
+    background-color: #4385D3;
+    border: none;
+}
+
+a:hover,
+input:hover,
+button:hover {
+    filter: brightness(1.3);
+}
+
+.about {
+    float: right;
+    line-height: 0.8;
 }
 
 select {
@@ -164,7 +190,7 @@ select {
 
 .working-days button.checked,
 .working-days button.checked.focus {
-    background-color: rgb(52, 152, 219);
+    background-color: #4385D3;
     color: white;
 }
 
@@ -173,8 +199,8 @@ select {
     position: relative;
     text-align: center;
     background-color: white;
-    border: 2px solid rgb(243, 156, 18);
-    color: rgb(243, 156, 18);
+    border: 2px solid #FEB33E;
+    color: #FEB33E;
     width: 6.5em;
     border-radius: 16px;
     line-height:normal;
@@ -184,7 +210,7 @@ select {
     padding: 0.3em 0;
 }
 .calendar .day {
-    background-color: rgb(243, 156, 18);
+    background-color: #FEB33E;
     color: white;
     border-radius: 12px 12px 0 0;
 }
@@ -220,7 +246,7 @@ select {
     padding: 0.7em;
     color: white;
     border-radius: 16px;
-    background-color: rgb(52, 152, 219);
+    background-color: #4385D3;
     position: relative;
     z-index: 20;
 }
@@ -232,7 +258,7 @@ select {
 }
 
 .days-more .fa {
-    color: rgb(52, 152, 219);
+    color: #4385D3;
 }
 .days-more span {
     display: block;
@@ -255,7 +281,7 @@ select {
 .percent {
     border-radius: 1em;
     color: white;
-    background-color: rgb(52, 152, 219);
+    background-color: #4385D3;
     font-size: 80%;
     padding: 0.4em 0.6em;
     line-height: 1.2;
@@ -284,8 +310,8 @@ hr.and {
     position: relative;
 }
 
- .fa.with-icon {
-    color: rgb(52, 152, 219);
+.fa.with-icon {
+    color: #4385D3;
     font-size: 250%;
     position: absolute;
     left: -0.45em;
@@ -345,7 +371,7 @@ a .fa {
 .accordion .ui-icon {
     display: inline-block;
     width: 20px;
-    color: rgb(52, 152, 219);
+    color: #4385D3;
     text-align: center;
     font-family: FontAwesome;
     font-style: normal;
@@ -362,9 +388,11 @@ a .fa {
     content: "\f0d7"; /* fa-caret-down */
 }
 
-.text-info {
+.text-info,
+.text-info:hover {
     font-size: 15px;
     font-weight: normal;
+    color: rgb(149, 165, 166);
 }
 
 .working-days .btn-group {
@@ -381,7 +409,7 @@ a .fa {
 
 .location-map-new,
 .location-map img {
-    border: 2px solid rgb(52, 152, 219);
+    border: 2px solid rgb(149, 165, 166);
     border-radius: 16px;
     max-width: 100%;
     height: auto;
@@ -414,6 +442,11 @@ a .fa {
 
 
 @media (max-width: 768px) {
+    body {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
     h1 .fa {
         font-size: 70px;
     }
@@ -448,12 +481,13 @@ a .fa {
 }
 
 @media (max-width: 480px) {
-    .jumbotron, .working-days button {
-        font-size: 16px;
+    body {
+        padding-top: 5px;
+        padding-bottom: 5px;
     }
 
-    h1 {
-        display: none;
+    .jumbotron, .working-days button {
+        font-size: 16px;
     }
 
     h3 {
