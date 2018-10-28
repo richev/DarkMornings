@@ -68,7 +68,7 @@ namespace Richev.DarkMornings.Web.Models
         public string w { get; set; }
 
         /// <summary>
-        /// The time zone that was used, for debug purposes really.
+        /// The time zone that was used.
         /// </summary>
         public string TimeZoneId { get; set; }
 
