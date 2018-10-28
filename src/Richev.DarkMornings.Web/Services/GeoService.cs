@@ -33,7 +33,7 @@ namespace Richev.DarkMornings.Web.Services
         {
             var middayToday = DateTime.UtcNow.Date.AddHours(12);
 
-            var apiKey = ConfigurationManager.AppSettings["GoogleMapsApiKey"];
+            var apiKey = ConfigurationManager.AppSettings["GoogleTimeZoneApiKey"];
 
             var url = string.Format(
                 "https://maps.googleapis.com/maps/api/timezone/json?key={0}&location={1},{2}&timestamp={3}",
