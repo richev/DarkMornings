@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Net;
+using System.Xml;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 using Richev.DarkMornings.Core;
@@ -22,6 +23,10 @@ namespace Richev.DarkMornings.Web.Services
                 location = ResponseParser.Parse(doc);
             }
             catch (WebException)
+            {
+                location = null;
+            }
+            catch (XmlException)
             {
                 location = null;
             }
